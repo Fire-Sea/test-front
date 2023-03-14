@@ -12,22 +12,123 @@ div{
 
 .navbar{
   width: 100%;
-  height: 80px;
-  background-color: black;
+  height: 50px;
+  background-color: rgb(228, 76, 76);
   color: white;
   padding: 1px;
 }
 
-.navbar h1{
-  margin-left: 20px;
+.navbar a{
+  float:left;
+  cursor: pointer;
+}
+.navbar a:hover{
+  color: lightgray;
 }
 
-button{
-  width: 100px;
-  margin: 20px;
-  cursor: pointer;
-  height: 30px;
-  color: white;
-  background-color: red;
-  border: none;
+
+.navbar-logo{
+  font-size: 30px;
+  margin: 0px 40px 0px 20px;
 }
+
+.navbar-item{
+  font-size: 18px;
+  margin: 10px 20px 0px 0px;
+}
+
+
+
+.content{
+  width: 100%;
+}
+
+.search{
+  width: 100%;
+  height: 120px;
+  text-align: center;
+  padding-top: 40px;
+}
+
+.search-container{
+  position: relative;
+}
+
+.search-input{
+  width: 20%;
+  min-width: 350px;
+  height: 40px;
+  padding-left: 10px;
+  font-size: 15px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 2px solid rgb(228, 76, 76);
+  outline: none;
+  transition: 0.5s all;
+}
+.search-input:focus{
+  width: 40%;
+  transition: 0.5s all;
+}
+
+.search-btn{
+  position: absolute;
+  width: 50px;
+  height: 40px;
+  font-size: 13px;
+  margin-left: -10px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  background-color: rgb(228, 76, 76);
+}
+
+.search-btn:hover{
+  color: lightgray;
+  background-color: rgb(167, 56, 56);
+}
+
+.board{
+  width: 50%;
+  height: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+.board-category{
+  width: 100%;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgb(228, 76, 76);
+}
+
+table{
+  width: 100%;
+  text-align: center;
+  border-collapse: separate;
+  border-spacing: 0px;
+  margin-top: -10px;
+}
+
+th{
+  padding-bottom: 10px;
+  border-bottom: solid 1px rgb(228, 76, 76);
+}
+
+td{
+  border-bottom: solid 1px rgb(223, 162, 162);
+}
+
+.board-id{
+  width: 10%;
+}
+.board-title{
+  width: 60%;
+  text-align: left;
+}
+.board-date{
+  width: 20%;
+}
+
