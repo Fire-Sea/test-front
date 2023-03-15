@@ -15,11 +15,15 @@ div{
   height: 80px;
   background-color: black;
   color: white;
-  padding: 1px;
+  padding-left: 20px;
 }
-
 .navbar h1{
-  margin-left: 20px;
+  float: left;
+}
+.navbar a{
+  cursor: pointer;
+  float: left;
+  margin: 35px;
 }
 
 button{
