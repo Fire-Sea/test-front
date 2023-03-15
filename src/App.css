@@ -242,6 +242,26 @@ td{
   background-color: rgb(167, 56, 56);
 }
 
+.detail-container{
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+.detail-title{
+  width: 100%;
+  padding-left: 10px;
+  border: 1px solid lightcoral;
+}
+.detail-title h3{
+  margin: 0px;
+}
+.detail-body{
+  border: 1px solid lightcoral;
+  padding-left: 10px;
+  height: 500px;
+}
 
 .start{
   opacity : 0;
@@ -251,3 +271,4 @@ td{
   opacity : 1;
   transition: opacity 0.5s;
 }
+

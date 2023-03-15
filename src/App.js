@@ -4,6 +4,8 @@ import { Routes, Route, useNavigate, Outlet} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 function App() {
+  let [textList, setTextList] = useState([]);
+
   return (
     <div className="App">
 
@@ -11,10 +13,15 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Main/>}/>
-        <Route path="/server/:page" element={<Board category={'server'}/>}/>
-        <Route path="/front/:page" element={<Board category={'front'}/>}/>
+        <Route path="/server/list/:page" element={<Board category={'Server'} textList={textList} setTextList={setTextList}/>}/>
+        <Route path="/front/list/:page" element={<Board category={'Front'} textList={textList} setTextList={setTextList}/>}/>
         <Route path="/detail/:id" element={<Detail/>}/>
-        <Route path="/edit" element={<Edit/>}/>
+        <Route path="/server/detail/:id" element={<Detail/>}/>
+        <Route path="/front/detail/:id" element={<Detail/>}/>
+
+        <Route path="/:category/edit" element={<Edit/>}/>
+
+
         <Route path="*" element={<Error/>}/>
       </Routes>
 
@@ -56,11 +63,11 @@ function Main(){
       <Input/>
       <div className='main'>
         <div className='main-img'>
-          <div className='img-overlay' onClick={()=>{navigate('/front/0')}}>Front</div>
+          <div className='img-overlay' onClick={()=>{navigate('/front/list/0')}}>Front</div>
           <img src={process.env.PUBLIC_URL + '/main_img1.jpg'}/>
         </div>
         <div className='main-img'>
-        <div className='img-overlay' onClick={()=>{navigate('/server/0')}}>Server</div>
+        <div className='img-overlay' onClick={()=>{navigate('/server/list/0')}}>Server</div>
           <img src={process.env.PUBLIC_URL + '/main_img2.jpg'}/>
         </div>
       </div>
@@ -75,9 +82,8 @@ function Error(){
   )
 }
 
-function Board({category}){
+function Board({category, textList, setTextList}){
   let navigate = useNavigate();
-  let [textList, setTextList] = useState([]);
 
   useEffect(()=>{
 
@@ -114,7 +120,7 @@ function Board({category}){
               return(
                 <tr className='board-tr' key={i}>
                   <td className='board-id'>{data.id}</td>
-                  <td className='board-title' onClick={()=>{navigate(`/detail/${data.id}`)}}><a>{data.textTitle}</a></td>
+                  <td className='board-title' onClick={()=>{navigate(`/${category}/detail/${data.id}`)}}><a>{data.textTitle}</a></td>
                   <td className='board-date'>{data.createdDate}</td>
                 </tr>
               )
@@ -129,7 +135,10 @@ function Board({category}){
         </tbody>
       </table>
       <button onClick={()=>{navigate('/')}}>홈으로</button>
-      <button className='board-new' onClick={()=>{navigate('/edit')}}>글작성</button>
+      <button className='board-new' onClick={()=>{
+        let cat = category.toLowerCase();;
+        navigate(`/${cat}/edit`);
+      }}>글작성</button>
       <Outlet/>
     </div>
     </>
@@ -139,21 +148,21 @@ function Board({category}){
 
 function Edit(){
   let navigate = useNavigate();
+  let {category} = useParams();
+
   return(
     <>
       <Input/>
       <div className='edit-container'>
-        <select className='edit-select'>
-          <option>front</option>
-          <option>server</option>
-        </select>
         <input className='edit-title' placeholder='제목을 입력하세요'/>
         <textarea className='edit-body' placeholder='내용을 작성하세요'/>
         <div className='edit-btn'>
-          <button onClick={()=>{navigate('/')}}>취소</button>
+          <button onClick={()=>{navigate(-1)}}>취소</button>
           <button onClick={()=>{
             let textTitle = document.querySelector('.edit-title').value;
             let textBody = document.querySelector('.edit-body').value;
+            let textCategory = category;
+
             if(!textTitle){
               alert('제목을 입력하세요');
             }
@@ -167,6 +176,7 @@ function Edit(){
                   "content-type" : "application/json"
                 },
                 body: JSON.stringify({
+                  textCategory: textCategory,
                   textTitle: textTitle,
                   textBody: textBody
                 })
@@ -175,7 +185,7 @@ function Edit(){
                 .then((res)=>{
                   if(res === 'success'){
                     alert('글이 저장되었습니다.');
-                    navigate('/server');
+                    navigate(`/${category}/list/0`);
                   }
                 })
                 .catch(err=>console.log(err));
@@ -190,10 +200,36 @@ function Edit(){
 
 function Detail(){
   let {id} = useParams();
+  let [textData, setTextData] = useState({});
+  let navigate = useNavigate();
+  useEffect(()=>{
+
+    fetch(`http://localhost:8080/list/${id}`, {
+    method: 'GET',
+    headers: {
+      "content-type" : "application/json"
+    },
+  })
+    .then(res=>res.json())
+    .then(data=>{
+      setTextData(data);
+    })
+    .catch(err=>console.log(err))
+  
+  }, [])
   return(
     <>
       <Input/>
-      <div>{id}</div>
+
+      <div className='detail-container'>
+        <div className='detail-title'>
+          <h3>{textData.textTitle}</h3>
+        </div>
+        <div className='detail-body'>
+          <p>{textData.textBody}</p>
+        </div>
+      </div>
+      <button onClick={()=>{navigate(-1)}}>뒤로가기</button>
     </>
   )
 }
