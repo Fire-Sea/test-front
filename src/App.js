@@ -11,34 +11,14 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Main/>}/>
-
-        <Route path="/server" element={<Board category={'server'}/>}/>
-        <Route path="/front" element={<Board category={'front'}/>}/>
+        <Route path="/server/:page" element={<Board category={'server'}/>}/>
+        <Route path="/front/:page" element={<Board category={'front'}/>}/>
+        <Route path="/detail/:id" element={<Detail/>}/>
         <Route path="/edit" element={<Edit/>}/>
         <Route path="*" element={<Error/>}/>
       </Routes>
 
-      <div className='content'>
-
-        
-
-        <button onClick={()=>{
-            fetch("http://172.30.1.48:8080/hello3")
-            .then((res)=>res.text())
-            .then((result)=>console.log(result));
-          }}>hi</button>
-
-          <button onClick={()=>{
-            fetch("http://172.30.1.48:8080/hello2", {
-              method: "POST",
-              body: JSON.stringify({
-                email: "id",
-                password: "pw"
-              })
-            })
-            .then((result) => console.log(result));
-          }}>POST</button>
-      </div>
+  
     </div>
   );
 }
@@ -49,8 +29,8 @@ function Navbar(){
     <div className='header'>
       <div className='navbar'>
         <a className='navbar-logo' onClick={()=>{navigate('/')}}>Fire Sea</a>
-        <a className='navbar-item' onClick={()=>{navigate('/server')}}>Server</a>
-        <a className='navbar-item' onClick={()=>{navigate('/front')}}>Front</a>
+        <a className='navbar-item' onClick={()=>{navigate('/server/0')}}>Server</a>
+        <a className='navbar-item' onClick={()=>{navigate('/front/0')}}>Front</a>
       </div>
     </div>
   )
@@ -69,11 +49,20 @@ function Input(){
 }
 
 function Main(){
+  let navigate = useNavigate();
+
   return(
     <>
       <Input/>
       <div className='main'>
-        <img src={process.env.PUBLIC_URL + '/main_img.jpg'} width="40%"/>
+        <div className='main-img'>
+          <div className='img-overlay' onClick={()=>{navigate('/front/0')}}>Front</div>
+          <img src={process.env.PUBLIC_URL + '/main_img1.jpg'}/>
+        </div>
+        <div className='main-img'>
+        <div className='img-overlay' onClick={()=>{navigate('/server/0')}}>Server</div>
+          <img src={process.env.PUBLIC_URL + '/main_img2.jpg'}/>
+        </div>
       </div>
     </>
   )
@@ -88,7 +77,24 @@ function Error(){
 
 function Board({category}){
   let navigate = useNavigate();
-  let id=9;
+  let [textList, setTextList] = useState([]);
+
+  useEffect(()=>{
+
+    fetch('http://localhost:8080/list', {
+    method: 'GET',
+    headers: {
+      "content-type" : "application/json"
+    },
+  })
+    .then(res=>res.json())
+    .then(data=>{
+      setTextList([...data].reverse());
+    })
+    .catch(err=>console.log(err))
+  
+  }, [])
+
   return(
     <>
     <Input/>
@@ -103,19 +109,26 @@ function Board({category}){
           </tr>
         </thead>
         <tbody>
-          <tr>
+          {
+            textList.map((data, i)=>{
+              return(
+                <tr className='board-tr' key={i}>
+                  <td className='board-id'>{data.id}</td>
+                  <td className='board-title' onClick={()=>{navigate(`/detail/${data.id}`)}}><a>{data.textTitle}</a></td>
+                  <td className='board-date'>{data.createdDate}</td>
+                </tr>
+              )
+            })
+          }
+          {/* <tr>
             <td className='board-id'>id1</td>
-            <td className='board-title'><a onClick={()=>{navigate(`${id}`)}}>tasdfsssssale1</a></td>
+            <td className='board-title'><a>tasdfsssssale1</a></td>
             <td className='board-date'>date1</td>
-          </tr>
-          <tr>
-            <td className='board-id'>id1</td>
-            <td className='board-title'><a href='*'>tasdfale1</a></td>
-            <td className='board-date'>date1</td>
-          </tr>
+          </tr> */}
+          <tr><td className='board-line' colSpan={3}></td></tr>
         </tbody>
       </table>
-
+      <button onClick={()=>{navigate('/')}}>홈으로</button>
       <button className='board-new' onClick={()=>{navigate('/edit')}}>글작성</button>
       <Outlet/>
     </div>
@@ -125,15 +138,63 @@ function Board({category}){
 
 
 function Edit(){
-  console.log('졸려')
+  let navigate = useNavigate();
   return(
     <>
-    <div>cival</div>
-    <div>cival</div>
-    <div>cival</div>
-    <div>cival</div>
-    <div>cival</div>
-    <div>cival</div></>
+      <Input/>
+      <div className='edit-container'>
+        <select className='edit-select'>
+          <option>front</option>
+          <option>server</option>
+        </select>
+        <input className='edit-title' placeholder='제목을 입력하세요'/>
+        <textarea className='edit-body' placeholder='내용을 작성하세요'/>
+        <div className='edit-btn'>
+          <button onClick={()=>{navigate('/')}}>취소</button>
+          <button onClick={()=>{
+            let textTitle = document.querySelector('.edit-title').value;
+            let textBody = document.querySelector('.edit-body').value;
+            if(!textTitle){
+              alert('제목을 입력하세요');
+            }
+            else if(!textBody){
+              alert('내용을 입력하세요');
+            }
+            else{
+              fetch("http://localhost:8080/post", {
+                method: "POST",
+                headers:{
+                  "content-type" : "application/json"
+                },
+                body: JSON.stringify({
+                  textTitle: textTitle,
+                  textBody: textBody
+                })
+              })
+                .then(res=>res.text())
+                .then((res)=>{
+                  if(res === 'success'){
+                    alert('글이 저장되었습니다.');
+                    navigate('/server');
+                  }
+                })
+                .catch(err=>console.log(err));
+            }
+          }}>글 저장하기</button>
+        </div>
+      </div>
+    </>
+  )
+}
+
+
+function Detail(){
+  let {id} = useParams();
+  return(
+    <>
+      <Input/>
+      <div>{id}</div>
+    </>
   )
 }
 export default App;
