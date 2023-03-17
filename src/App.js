@@ -2,6 +2,9 @@ import './App.css';
 import { useParams } from 'react-router-dom';
 import { Routes, Route, useNavigate, Outlet} from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import a from './example.js';
+import { isCompositeComponent } from 'react-dom/test-utils';
+import { paste } from '@testing-library/user-event/dist/paste';
 
 function App() {
   let [textList, setTextList] = useState([]);
@@ -13,11 +16,11 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Main/>}/>
-        <Route path="/server/list/:page" element={<Board category={'Server'} textList={textList} setTextList={setTextList}/>}/>
-        <Route path="/front/list/:page" element={<Board category={'Front'} textList={textList} setTextList={setTextList}/>}/>
+        <Route path="/server/list/:id" element={<Board category={'Server'} textList={textList} setTextList={setTextList}/>}/>
+        <Route path="/front/list/:id" element={<Board category={'Front'} textList={textList} setTextList={setTextList}/>}/>
         <Route path="/detail/:id" element={<Detail/>}/>
-        <Route path="/server/detail/:id" element={<Detail/>}/>
-        <Route path="/front/detail/:id" element={<Detail/>}/>
+        <Route path="/server/detail/:id" element={<Detail category={'server'}/>}/>
+        <Route path="/front/detail/:id" element={<Detail category={'front'}/>}/>
 
         <Route path="/:category/edit" element={<Edit/>}/>
 
@@ -86,7 +89,7 @@ function Board({category, textList, setTextList}){
   let navigate = useNavigate();
   useEffect(()=>{
 
-    fetch('http://localhost:8080/list', {
+    fetch(`http://172.30.1.84:8080/api/list?category=${category}&page=0`, {
     method: 'GET',
     headers: {
       "content-type" : "application/json"
@@ -94,7 +97,8 @@ function Board({category, textList, setTextList}){
   })
     .then(res=>res.json())
     .then(data=>{
-      setTextList([...data].reverse());
+      setTextList(data.content);
+      console.log(data.numberOfElements);
     })
     .catch((err)=>{
       console.log(err);
@@ -106,6 +110,7 @@ function Board({category, textList, setTextList}){
     <>
     <Input/>
     <div className='board'>
+      
       <h1 className='board-category'>{category}</h1>
       <table>
         <thead>
@@ -122,11 +127,11 @@ function Board({category, textList, setTextList}){
                 <tr className='board-tr' key={i}>
                   <td className='board-id'>{data.id}</td>
                   <td className='board-title' onClick={()=>{navigate(`/${category}/detail/${data.id}`)}}><a>{data.textTitle}</a></td>
-                  <td className='board-date'>{data.createdDate}</td>
+                  <td className='board-date'>{data.createdTime}</td>
                 </tr>
               )
             })
-          }
+          }  
           {/* <tr>
             <td className='board-id'>id1</td>
             <td className='board-title'><a>tasdfsssssale1</a></td>
@@ -146,6 +151,7 @@ function Board({category, textList, setTextList}){
   )
 }
 
+// post api : :8080/api/send textTitle textBody
 
 function Edit(){
   let navigate = useNavigate();
@@ -162,8 +168,7 @@ function Edit(){
           <button onClick={()=>{
             let textTitle = document.querySelector('.edit-title').value;
             let textBody = document.querySelector('.edit-body').value;
-            let textCategory = category;
-
+            textBody = textBody.replaceAll('\r\n', '<br>');
             if(!textTitle){
               alert('제목을 입력하세요');
             }
@@ -171,22 +176,23 @@ function Edit(){
               alert('내용을 입력하세요');
             }
             else{
-              fetch("http://localhost:8080/post", {
+              fetch("http://172.30.1.84:8080/api/send", {
                 method: "POST",
                 headers:{
                   "content-type" : "application/json"
                 },
                 body: JSON.stringify({
-                  textCategory: textCategory,
+                  category: category,
                   textTitle: textTitle,
                   textBody: textBody
                 })
               })
-                .then(res=>res.text())
+                .then(res=>res.json())
                 .then((res)=>{
-                  if(res === 'success'){
-                    alert('글이 저장되었습니다.');
-                    navigate(`/${category}/list/0`);
+                  
+                  if(parseInt(res.statusCode) === 20000){
+                     alert('글이 저장되었습니다.');
+                     navigate(`/${category}/list/0`);
                   }
                 })
                 .catch(err=>console.log(err));
@@ -199,13 +205,13 @@ function Edit(){
 }
 
 
-function Detail(){
+function Detail({category}){
   let {id} = useParams();
   let [textData, setTextData] = useState({});
   let navigate = useNavigate();
   useEffect(()=>{
 
-    fetch(`http://localhost:8080/list/${id}`, {
+    fetch(`http://172.30.1.84:8080/api/detail/?category=${category}&id=${id}`, {
     method: 'GET',
     headers: {
       "content-type" : "application/json"
@@ -221,15 +227,16 @@ function Detail(){
   return(
     <>
       <Input/>
-
+      
       <div className='detail-container'>
         <div className='detail-title'>
           <h3>{textData.textTitle}</h3>
         </div>
         <div className='detail-body'>
-          <p>{textData.textBody}</p>
+          <textarea className='detail-body' value={textData.textBody} disabled/>
+          {/* <p>{textData.textBody}</p> */}
         </div>
-      </div>
+        </div>
       <button onClick={()=>{navigate(-1)}}>뒤로가기</button>
     </>
   )

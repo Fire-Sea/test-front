@@ -24,7 +24,7 @@ button{
   height: 50px;
   background-color: rgb(228, 76, 76);
   color: white;
-  padding: 1px;
+  padding-left: 20px;
 }
 
 .navbar a{
@@ -35,15 +35,14 @@ button{
   color: lightgray;
 }
 
-
 .navbar-logo{
   font-size: 30px;
-  margin: 0px 40px 0px 20px;
+  margin: 5px 40px 0px 20px;
 }
 
 .navbar-item{
   font-size: 18px;
-  margin: 10px 20px 0px 0px;
+  margin: 13px 20px 0px 0px;
 }
 
 .main{
@@ -260,7 +259,7 @@ td{
 .detail-body{
   border: 1px solid lightcoral;
   padding-left: 10px;
-  height: 500px;
+  height: 300px;
 }
 
 .start{
@@ -272,3 +271,49 @@ td{
   transition: opacity 0.5s;
 }
 
+.board-new{
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.edit-container{
+  width: 100%;
+  text-align: center;
+}
+
+.edit-title{
+  width: 80%;
+  height: 30px;
+  margin-bottom: 1px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.edit-body{
+  width: 80%;
+  height: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+  display: block;
+  box-sizing: border-box;
+}
+
+.edit-send{
+  width: 100px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: rgb(228, 76, 76);
+  color: white;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+
+.edit-send:hover{
+  background-color: rgb(167, 56, 56);
+}
+
+textarea{
+  resize: none;
+}
