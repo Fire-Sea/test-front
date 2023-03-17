@@ -84,7 +84,6 @@ function Error(){
 
 function Board({category, textList, setTextList}){
   let navigate = useNavigate();
-
   useEffect(()=>{
 
     fetch('http://localhost:8080/list', {
@@ -97,7 +96,9 @@ function Board({category, textList, setTextList}){
     .then(data=>{
       setTextList([...data].reverse());
     })
-    .catch(err=>console.log(err))
+    .catch((err)=>{
+      console.log(err);
+    })
   
   }, [])
 
