@@ -1,12 +1,13 @@
-import { Routes, Route, useNavigate, Outlet} from 'react-router-dom';
+import { useNavigate, Outlet} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Input } from '../Input';
 
 function Board({category, textList, setTextList}){
     let navigate = useNavigate();
+    let [getErr, setGetErr] = useState(false);
     useEffect(()=>{
   
-      fetch(`http://172.30.1.84:8080/api/list?category=${category}&page=0`, {
+      fetch(`http://localhost:8080/api/list?category=${category}&page=0`, {
       method: 'GET',
       headers: {
         "content-type" : "application/json"
@@ -16,9 +17,11 @@ function Board({category, textList, setTextList}){
       .then(data=>{
         setTextList(data.content);
         console.log(data.numberOfElements);
+        setGetErr(false);
       })
       .catch((err)=>{
         console.log(err);
+        setGetErr(true);
       })
     
     }, [])
@@ -27,7 +30,6 @@ function Board({category, textList, setTextList}){
       <>
       <Input/>
       <div className='board'>
-        
         <h1 className='board-category'>{category}</h1>
         <table>
           <thead>
@@ -39,6 +41,10 @@ function Board({category, textList, setTextList}){
           </thead>
           <tbody>
             {
+               getErr && <tr><td colSpan={3}><h1>서버가 일을 안해 시발</h1></td></tr> 
+            }
+            {
+              
               textList.map((data, i)=>{
                 return(
                   <tr className='board-tr' key={i}>
@@ -49,11 +55,7 @@ function Board({category, textList, setTextList}){
                 )
               })
             }  
-            {/* <tr>
-              <td className='board-id'>id1</td>
-              <td className='board-title'><a>tasdfsssssale1</a></td>
-              <td className='board-date'>date1</td>
-            </tr> */}
+            
             <tr><td className='board-line' colSpan={3}></td></tr>
           </tbody>
         </table>

@@ -63,6 +63,13 @@ function Main(){
           <img src={process.env.PUBLIC_URL + '/main_img2.jpg'}/>
         </div>
       </div>
+
+      <button onClick={()=>{
+        fetch('http://localhost:8080/hello', {
+          method: 'POST',
+        })``
+        .then((d)=>{console.log(d)})
+      }}>ajax 테스트</button>
     </>
   )
 }
@@ -134,7 +141,7 @@ function Detail({category}){
   let navigate = useNavigate();
   useEffect(()=>{
 
-    fetch(`http://172.30.1.84:8080/api/detail/?category=${category}&id=${id}`, {
+    fetch(`http://localhost:8080/api/detail/?category=${category}&id=${id}`, {
     method: 'GET',
     headers: {
       "content-type" : "application/json"
