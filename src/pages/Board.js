@@ -1,12 +1,33 @@
-import { Routes, Route, useNavigate, Outlet} from 'react-router-dom';
+import { Routes, Route, useNavigate, Outlet, useParams} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Input } from '../Input';
 
 function Board({category, textList, setTextList}){
     let navigate = useNavigate();
+    let [currentPage, setCurrentPage] = useState(0);
+    let [totalNum, setTotalNum] = useState(0);
+    let [totalPage, setTotalPage] = useState(0);
+
+    let test = 0;
+
+
+    const addCnt = (pageNum, category, currentPage)=>{
+      const newArr = [];
+      for(let i=0; i<pageNum; i++){
+        let template = '';
+        if(i == currentPage){
+          template = <button className='board-clicked' onClick={()=>{setCurrentPage(i);}} key={i}>{i+1}</button>;
+        }
+        else{
+          template = <button onClick={()=>{setCurrentPage(i);}} key={i}>{i+1}</button>;
+        }
+        newArr.push(template);
+      }
+      return newArr;
+    }
+
     useEffect(()=>{
-  
-      fetch(`http://172.30.1.84:8080/api/list?category=${category}&page=0`, {
+      fetch(`http://firesea.o-r.kr:8080/api/list?category=${category}&page=${currentPage}`, {
       method: 'GET',
       headers: {
         "content-type" : "application/json"
@@ -15,13 +36,22 @@ function Board({category, textList, setTextList}){
       .then(res=>res.json())
       .then(data=>{
         setTextList(data.content);
-        console.log(data.numberOfElements);
+        setTotalNum(data.totalElements);
+        setTotalPage(data.totalPages);
+
+        console.log(data);
+        test = totalNum-(currentPage*10);
+
+        data.content.forEach((a,i)=>{
+          let date = new Date(a.createdTime);
+          data.content[i].createdTime = date.toLocaleString()
+        })
       })
       .catch((err)=>{
         console.log(err);
       })
     
-    }, [])
+    }, [currentPage])
   
     return(
       <>
@@ -32,9 +62,9 @@ function Board({category, textList, setTextList}){
         <table>
           <thead>
             <tr>
-              <th>id</th>
-              <th>title</th>
-              <th>date</th>
+              <th>번호</th>
+              <th>제목</th>
+              <th>작성일</th>
             </tr>
           </thead>
           <tbody>
@@ -42,23 +72,24 @@ function Board({category, textList, setTextList}){
               textList.map((data, i)=>{
                 return(
                   <tr className='board-tr' key={i}>
-                    <td className='board-id'>{data.id}</td>
+                    <td className='board-id'>{totalNum-(currentPage*10)-i}</td>
                     <td className='board-title' onClick={()=>{navigate(`/${category}/detail/${data.id}`)}}><a>{data.textTitle}</a></td>
                     <td className='board-date'>{data.createdTime}</td>
                   </tr>
                 )
               })
             }  
-            {/* <tr>
-              <td className='board-id'>id1</td>
-              <td className='board-title'><a>tasdfsssssale1</a></td>
-              <td className='board-date'>date1</td>
-            </tr> */}
             <tr><td className='board-line' colSpan={3}></td></tr>
           </tbody>
         </table>
-        <button onClick={()=>{navigate('/')}}>홈으로</button>
-        <button className='board-new' onClick={()=>{
+        <div className='board-pages'>
+          {
+            addCnt(totalPage, category,currentPage)
+          }
+        </div>
+      
+        <button className='board-homeBtn' onClick={()=>{navigate('/')}}>홈으로</button>
+        <button className='board-newBtn' onClick={()=>{
           let cat = category.toLowerCase();;
           navigate(`/${cat}/edit`);
         }}>글작성</button>
@@ -67,5 +98,6 @@ function Board({category, textList, setTextList}){
       </>
     )
   }
+
 
 export {Board};

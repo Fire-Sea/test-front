@@ -1,3 +1,8 @@
+@import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+.nanumgothic * {
+ font-family: 'Nanum Gothic', sans-serif;
+}
 body{
   margin: 0;
 }
@@ -21,7 +26,7 @@ button{
 
 .navbar{
   width: 100%;
-  height: 50px;
+  height: 55px;
   background-color: rgb(228, 76, 76);
   color: white;
   padding-left: 20px;
@@ -42,7 +47,7 @@ button{
 
 .navbar-item{
   font-size: 18px;
-  margin: 13px 20px 0px 0px;
+  margin: 15px 20px 0px 0px;
 }
 
 .main{
@@ -177,6 +182,7 @@ td{
   text-align: left;
   overflow: hidden;
   cursor: pointer;
+  font-size: 14px;
 }
 .board-date{
   width: 15%;
@@ -187,9 +193,32 @@ td{
   border-top: 2px solid rgb(228, 76, 76);
 }
 
-.board-new{
-  cursor: pointer;
+.board-homeBtn{
+  width: 100px;
+  height: 30px;
+  float: left;
+}
+
+.board-newBtn{
+  width: 100px;
+  height: 30px;
   float: right;
+}
+
+.board-pages{
+  text-align: center;
+}
+.board-pages button{
+  margin: 2px;
+}
+.board-pages button:hover{
+  color: lightgray;
+  background-color: rgb(167, 56, 56);
+}
+
+.board-clicked{
+  color: lightgray;
+  background-color: rgb(167, 56, 56);
 }
 
 .edit-select{
@@ -213,6 +242,7 @@ td{
   margin-bottom: 1px;
   padding: 10px;
   box-sizing: border-box;
+  font-size: 15px;
 }
 
 .edit-body{
@@ -226,7 +256,6 @@ td{
   box-sizing: border-box;
 }
 
-
 .edit-btn{
   margin: 10px 0px 0px 20%;
 }
@@ -237,8 +266,50 @@ td{
   margin-right: 10px;
 }
 
-.edit-send:hover{
+.edit-container{
+  width: 100%;
+  text-align: center;
+}
+
+.edit-title{
+  width: 60%;
+  height: 30px;
+  margin-bottom: 1px;
+  padding: 10px;
+  border: 1px solid lightcoral;
+}
+
+.edit-body{
+  width: 60%;
+  height: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+  display: block;
+}
+.edit-btn{
+  width: 60%;
+}
+
+.edit-btn button{
+  float: left;
+}
+.edit-btn button:hover{
+  color: lightgray;
   background-color: rgb(167, 56, 56);
+}
+
+textarea{
+  resize: none;
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border: 1px solid lightcoral;
+  font-size: 15px;
+  color: black;
+  font-family: 'SDSamliphopangche_Outline';
+  font-weight: 500;
 }
 
 .detail-container{
@@ -248,72 +319,34 @@ td{
   text-align: left;
 }
 
+.detail-category{
+  border-bottom: 3px solid lightcoral;
+  margin: 0px;
+}
+
 .detail-title{
   width: 100%;
-  padding-left: 10px;
+  height: 35px;
+  padding: 5px;
   border: 1px solid lightcoral;
 }
 .detail-title h3{
   margin: 0px;
+  float:left;
+}
+.detail-title p{
+  margin: 2px 0px 0px 0px;
+  float:right;
+  font-size: 14px;
 }
 .detail-body{
-  border: 1px solid lightcoral;
-  padding-left: 10px;
-  height: 300px;
-}
-
-.start{
-  opacity : 0;
-}
-
-.end{
-  opacity : 1;
-  transition: opacity 0.5s;
-}
-
-.board-new{
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-.edit-container{
   width: 100%;
-  text-align: center;
-}
-
-.edit-title{
-  width: 80%;
-  height: 30px;
-  margin-bottom: 1px;
-  padding: 10px;
-  box-sizing: border-box;
-}
-
-.edit-body{
-  width: 80%;
   height: 400px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 10px;
-  display: block;
-  box-sizing: border-box;
+  margin: 0px;
 }
-
-.edit-send{
+.detail-backBtn{
+  float: left;
   width: 100px;
-  height: 40px;
-  border-radius: 5px;
-  background-color: rgb(228, 76, 76);
-  color: white;
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
-}
-
-.edit-send:hover{
-  background-color: rgb(167, 56, 56);
-}
-
-textarea{
-  resize: none;
+  height: 35px;
+  margin-top: 10px;
 }
