@@ -7,11 +7,11 @@ function Board({category, textList, setTextList}){
     let [currentPage, setCurrentPage] = useState(0);
     let [totalNum, setTotalNum] = useState(0);
     let [totalPage, setTotalPage] = useState(0);
-
+    let [serverErr, setServerErr] = useState(false);
     let test = 0;
 
 
-    const addCnt = (pageNum, category, currentPage)=>{
+    const addCnt = (pageNum, currentPage)=>{
       const newArr = [];
       for(let i=0; i<pageNum; i++){
         let template = '';
@@ -49,7 +49,7 @@ function Board({category, textList, setTextList}){
       })
       .catch((err)=>{
         console.log(err);
-        setGetErr(true);
+        setServerErr(true);
       })
     
     }, [currentPage])
@@ -69,7 +69,7 @@ function Board({category, textList, setTextList}){
           </thead>
           <tbody>
             {
-               getErr && <tr><td colSpan={3}><h1>서버가 일을 안해 시발</h1></td></tr> 
+               serverErr && <tr><td colSpan={3}><h1>서버가 일을 안해 시발</h1></td></tr> 
             }
             {
               
@@ -88,7 +88,7 @@ function Board({category, textList, setTextList}){
         </table>
         <div className='board-pages'>
           {
-            addCnt(totalPage, category,currentPage)
+            addCnt(totalPage, currentPage)
           }
         </div>
       

@@ -65,12 +65,6 @@ function Main(){
         </div>
       </div>
 
-      <button onClick={()=>{
-        fetch('http://localhost:8080/hello', {
-          method: 'POST',
-        })``
-        .then((d)=>{console.log(d)})
-      }}>ajax 테스트</button>
     </>
   )
 }
