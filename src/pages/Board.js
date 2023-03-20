@@ -2,13 +2,13 @@ import { Routes, Route, useNavigate, Outlet, useParams} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Input } from '../Input';
 
-function Board({category, textList, setTextList}){
+function Board({category}){
+  let [textList, setTextList] = useState([]);
     let navigate = useNavigate();
     let [currentPage, setCurrentPage] = useState(0);
     let [totalNum, setTotalNum] = useState(0);
     let [totalPage, setTotalPage] = useState(0);
     let [serverErr, setServerErr] = useState(false);
-    let test = 0;
 
 
     const addCnt = (pageNum, currentPage)=>{
@@ -40,7 +40,6 @@ function Board({category, textList, setTextList}){
         setTotalPage(data.totalPages);
 
         console.log(data);
-        test = totalNum-(currentPage*10);
 
         data.content.forEach((a,i)=>{
           let date = new Date(a.createdTime);

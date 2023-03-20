@@ -310,6 +310,7 @@ textarea{
   color: black;
   font-family: 'SDSamliphopangche_Outline';
   font-weight: 500;
+  padding: 5px;
 }
 
 .detail-container{
@@ -326,18 +327,22 @@ textarea{
 
 .detail-title{
   width: 100%;
-  height: 35px;
+  height: 40px;
   padding: 5px;
   border: 1px solid lightcoral;
 }
 .detail-title h3{
   margin: 0px;
+  margin-top: 5px;
+  font-size: 16px;
   float:left;
 }
 .detail-title p{
-  margin: 2px 0px 0px 0px;
+  margin: 0px;
   float:right;
-  font-size: 14px;
+  width: 60px;
+  font-size: 12px;
+  font-weight: 500;
 }
 .detail-body{
   width: 100%;
@@ -349,4 +354,98 @@ textarea{
   width: 100px;
   height: 35px;
   margin-top: 10px;
+}
+
+.login-bg{
+  position: absolute;
+  left: 30%;
+  right: 30%;
+  top: 20%;
+  background-color: rgb(238, 238, 238);
+  border-radius: 5px;
+  z-index: 5;
+  width: 40%;
+  height: 60%;
+  min-width: 300px;
+}
+.login-logo{
+  width: 100%;
+  height: 50px;
+  background-color: rgb(228, 76, 76);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding: 1px;
+  text-align: center;
+  color: white;
+}
+.login-logo h1{
+  margin: 0px;
+}
+.login-container{
+  text-align: center;
+  display: grid;
+}
+.login-container h1{
+  margin-top: 4%;
+}
+.login-container input, .login-container button{
+  width: 70%;
+  height: 40px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.login-container input{
+  font-size: 18px;
+  padding-left: 5px;
+  box-sizing: border-box;
+  margin-bottom: 2px;
+}
+
+.login-container button{
+  margin-top: 5px;
+}
+.login-container p{
+  text-align: left;
+  margin-left: 15%;
+  width: 100%;
+  margin-bottom: 0px;
+  font-size: 14px;
+}
+
+.login-container button:hover{
+  color: lightgray;
+  background-color: rgb(167, 56, 56);
+}
+
+.register-container{
+  width: 100%;
+  text-align: center;
+}
+.register-container h1{
+  margin-bottom: 100px;
+}
+.register-container input{
+  height: 30px;
+  width: 300px;
+  padding-left: 5px;
+  box-sizing: border-box;
+}
+.register-container p{
+  margin-bottom: 5px;
+}
+
+.register-registerBtn{
+  display: block;
+  width: 300px;
+  height: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+}
+
+#email-chk, #passwd-chk{
+  font-size: 10px;
+  color: red;
+  margin: 0px;
 }

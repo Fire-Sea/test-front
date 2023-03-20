@@ -17,6 +17,8 @@ function Detail({category}){
     })
       .then(res=>res.json())
       .then(data=>{
+        let time = new Date(data.createdTime);
+        data.createdTime = `${time.getFullYear()}/${time.getMonth()+1}/${time.getDate()} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`
         setTextData(data);
       })
       .catch(err=>console.log(err))
@@ -33,7 +35,7 @@ function Detail({category}){
                 <p>{textData.createdTime}</p>
             </div>
             <div className='detail-body'>
-                <textarea className='detail-body' value={textData.textBody} disabled/>
+                <textarea value={textData.textBody} disabled/>
             </div>
             <button className='detail-backBtn' onClick={()=>{navigate(-1)}}>뒤로가기</button>
         </div>
