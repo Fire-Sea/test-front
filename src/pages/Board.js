@@ -49,6 +49,7 @@ function Board({category, textList, setTextList}){
       })
       .catch((err)=>{
         console.log(err);
+        setGetErr(true);
       })
     
     }, [currentPage])
@@ -57,7 +58,6 @@ function Board({category, textList, setTextList}){
       <>
       <Input/>
       <div className='board'>
-        
         <h1 className='board-category'>{category}</h1>
         <table>
           <thead>
@@ -69,6 +69,10 @@ function Board({category, textList, setTextList}){
           </thead>
           <tbody>
             {
+               getErr && <tr><td colSpan={3}><h1>서버가 일을 안해 시발</h1></td></tr> 
+            }
+            {
+              
               textList.map((data, i)=>{
                 return(
                   <tr className='board-tr' key={i}>

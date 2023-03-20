@@ -1,5 +1,4 @@
 import './App.css';
-import { useParams } from 'react-router-dom';
 import { Routes, Route, useNavigate, Outlet} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import {Input} from './Input'
@@ -65,6 +64,13 @@ function Main(){
           <img src={process.env.PUBLIC_URL + '/main_img2.jpg'}/>
         </div>
       </div>
+
+      <button onClick={()=>{
+        fetch('http://localhost:8080/hello', {
+          method: 'POST',
+        })``
+        .then((d)=>{console.log(d)})
+      }}>ajax 테스트</button>
     </>
   )
 }
