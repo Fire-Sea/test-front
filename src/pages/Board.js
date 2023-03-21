@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate, Outlet, useParams} from 'react-router-dom';
+import { useNavigate, Outlet } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Input } from '../Input';
 
@@ -10,7 +10,7 @@ function Board({category, ip, loginInfo}){
     let [totalPage, setTotalPage] = useState(0);
     let [serverErr, setServerErr] = useState(false);
 
-    console.log(loginInfo);
+    console.log('Board의 loginInfo: ' + loginInfo);
 
     const addCnt = (pageNum, currentPage)=>{
       const newArr = [];
@@ -28,7 +28,7 @@ function Board({category, ip, loginInfo}){
     }
 
     useEffect(()=>{
-      let sub = 'firesea.o-r.kr:8080';
+      
       fetch(`http://${ip}/api/list?category=${category}&page=${currentPage}`, {
       method: 'GET',
       headers: {
@@ -40,8 +40,6 @@ function Board({category, ip, loginInfo}){
         setTextList(data.content);
         setTotalNum(data.totalElements);
         setTotalPage(data.totalPages);
-
-        console.log(data);
 
         data.content.forEach((a,i)=>{
           let date = new Date(a.createdTime);
@@ -86,7 +84,7 @@ function Board({category, ip, loginInfo}){
                 )
               })
             }  
-            <tr><td className='board-line' colSpan={3}></td></tr>
+            <tr><td className='board-line' colSpan={4}></td></tr>
           </tbody>
         </table>
         <div className='board-pages'>
