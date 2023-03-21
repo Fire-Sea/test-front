@@ -2,7 +2,7 @@ import { Routes, Route, useNavigate, Outlet, useParams} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Input } from '../Input';
 
-function Board({category}){
+function Board({category, ip, loginInfo}){
   let [textList, setTextList] = useState([]);
     let navigate = useNavigate();
     let [currentPage, setCurrentPage] = useState(0);
@@ -10,6 +10,7 @@ function Board({category}){
     let [totalPage, setTotalPage] = useState(0);
     let [serverErr, setServerErr] = useState(false);
 
+    console.log(loginInfo);
 
     const addCnt = (pageNum, currentPage)=>{
       const newArr = [];
@@ -27,7 +28,8 @@ function Board({category}){
     }
 
     useEffect(()=>{
-      fetch(`http://firesea.o-r.kr:8080/api/list?category=${category}&page=${currentPage}`, {
+      let sub = 'firesea.o-r.kr:8080';
+      fetch(`http://${ip}/api/list?category=${category}&page=${currentPage}`, {
       method: 'GET',
       headers: {
         "content-type" : "application/json"
@@ -63,6 +65,7 @@ function Board({category}){
             <tr>
               <th>번호</th>
               <th>제목</th>
+              <th>작성자</th>
               <th>작성일</th>
             </tr>
           </thead>
@@ -77,6 +80,7 @@ function Board({category}){
                   <tr className='board-tr' key={i}>
                     <td className='board-id'>{totalNum-(currentPage*10)-i}</td>
                     <td className='board-title' onClick={()=>{navigate(`/${category}/detail/${data.id}`)}}><a>{data.textTitle}</a></td>
+                    <td className='board-nickname'>{data.nickname}</td>
                     <td className='board-date'>{data.createdTime}</td>
                   </tr>
                 )

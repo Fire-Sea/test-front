@@ -2,10 +2,10 @@ import { Input } from '../Input';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-function Edit(){
+function Edit({ip, loginInfo}){
     let navigate = useNavigate();
     let {category} = useParams();
-  
+    console.log('지금 로그인된 닉네임 : ' + loginInfo)
     return(
       <>
         <Input/>
@@ -24,13 +24,14 @@ function Edit(){
                 alert('내용을 입력하세요');
               }
               else{
-                fetch("http://firesea.o-r.kr:8080/api/send", {
+                fetch(`http://${ip}/api/send`, {
                   method: "POST",
                   headers:{
                     "content-type" : "application/json"
                   },
                   body: JSON.stringify({
                     category: category,
+                    nickname: loginInfo,
                     textTitle: textTitle,
                     textBody: textBody
                   })

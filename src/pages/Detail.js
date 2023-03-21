@@ -3,13 +3,13 @@ import { useEffect, useState } from 'react';
 import { Input } from '../Input';
 import { useParams } from "react-router-dom";
 
-function Detail({category}){
+function Detail({category, ip}){
     let {id} = useParams();
     let [textData, setTextData] = useState({});
     let navigate = useNavigate();
     useEffect(()=>{
   
-      fetch(`http://firesea.o-r.kr:8080/api/detail/?category=${category}&id=${id}`, {
+      fetch(`http://${ip}/api/detail/?category=${category}&id=${id}`, {
       method: 'GET',
       headers: {
         "content-type" : "application/json"

@@ -141,7 +141,7 @@ button{
 }
 
 .board{
-  width: 50%;
+  width: 80%;
   margin-left: auto;
   margin-right: auto;
   text-align: left;
@@ -178,11 +178,15 @@ td{
   font-size: 12px;
 }
 .board-title{
-  width: 75%;
+  width: 60%;
   text-align: left;
   overflow: hidden;
   cursor: pointer;
   font-size: 14px;
+}
+.board-nickname{
+  width: 15%;
+  font-size: 12px;
 }
 .board-date{
   width: 15%;
