@@ -1,10 +1,14 @@
 import { Input } from '../Input';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import {useSelector} from 'react-redux';
 
-function Edit({ip, loginInfo}){
+function Edit({loginInfo}){
     let navigate = useNavigate();
     let {category} = useParams();
+    let ip = useSelector((state) => {return state.ip});
+    
     console.log('지금 로그인된 닉네임 : ' + loginInfo)
     return(
       <>
@@ -24,22 +28,30 @@ function Edit({ip, loginInfo}){
                 alert('내용을 입력하세요');
               }
               else{
-                fetch(`http://${ip}/api/send`, {
-                  method: "POST",
-                  headers:{
-                    "content-type" : "application/json"
-                  },
-                  body: JSON.stringify({
-                    category: category,
+                // fetch(`http://${ip}/api/send`, {
+                //   method: "POST",
+                //   headers:{
+                //     "content-type" : "application/json"
+                //   },
+                //   body: JSON.stringify({
+                //     category: category,
+                //     nickname: loginInfo,
+                //     textTitle: textTitle,
+                //     textBody: textBody
+                //   })
+                // })
+                axios.post(`http://${ip}/api/send`,{
+                  body: {
+                    category : category,
                     nickname: loginInfo,
                     textTitle: textTitle,
                     textBody: textBody
-                  })
+                  }
                 })
-                  .then(res=>res.json())
+                  // .then(res=>res.json())
                   .then((res)=>{
-                    
-                    if(parseInt(res.statusCode) === 20000){
+                    console.log(res)
+                    if(parseInt(res.data.statusCode) === 20000){
                        alert('글이 저장되었습니다.');
                        navigate(`/${category}/list`);
                     }
