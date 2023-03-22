@@ -38,27 +38,12 @@ function Edit({loginInfo}){
                 alert('내용을 입력하세요');
               }
               else{
-                // fetch(`http://${ip}/api/send`, {
-                //   method: "POST",
-                //   headers:{
-                //     "content-type" : "application/json"
-                //   },
-                //   body: JSON.stringify({
-                //     category: category,
-                //     nickname: loginInfo,
-                //     textTitle: textTitle,
-                //     textBody: textBody
-                //   })
-                // })
                 axios.post(`http://${ip}/api/send`,{
-                  body: {
                     category : category,
                     nickname: loginInfo,
                     textTitle: textTitle,
                     textBody: textBody
-                  }
                 })
-                  // .then(res=>res.json())
                   .then((res)=>{
                     console.log(res)
                     if(parseInt(res.data.statusCode) === 20000){

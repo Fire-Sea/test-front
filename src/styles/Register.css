@@ -1,47 +1,50 @@
 .register-container{
-    width: 100%;
-    text-align: center;
-  }
-  .register-container h1{
-    margin-bottom: 100px;
-  }
-  .register-container input{
-    height: 30px;
-    padding-left: 5px;
-    box-sizing: border-box;
-  }
-  .register-container p{
-    margin-bottom: 5px;
-  }
-  .register-email, .register-passwd{
-    width: 370px;
-  }
-  .register-id, .register-nickname{
-    width: 300px;
-  }
-  
-  .register-registerBtn{
-    display: block;
-    width: 300px;
-    height: 40px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 50px;
-  }
-  
-  .valid-fail{
-    font-size: 10px;
-    color: red;
-    margin: 0px;
-  }
-  .valid-success{
-    font-size: 10px;
-    color: blue;
-    margin: 0px;
-  }
-  .id-chk, .nickname-chk{
-    width: 70px;
-    height: 29px;
-    border-top-left-radius: 0px;
-    border-bottom-left-radius: 0px;
-  }
+  width: 100%;
+  text-align: center;
+}
+.register-container h1{
+  margin-bottom: 100px;
+}
+.register-container input{
+  height: 30px;
+  padding-left: 5px;
+  box-sizing: border-box;
+}
+input:focus{
+  outline: none;
+}
+.register-container p{
+  margin-bottom: 5px;
+}
+.register-email, .register-passwd{
+  width: 370px;
+}
+.register-id, .register-nickname{
+  width: 300px;
+}
+
+.register-registerBtn{
+  display: block;
+  width: 300px;
+  height: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+}
+
+.valid-fail{
+  font-size: 10px;
+  color: red;
+  margin: 0px;
+}
+.valid-success{
+  font-size: 10px;
+  color: blue;
+  margin: 0px;
+}
+.id-chk, .nickname-chk{
+  width: 70px;
+  height: 29px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}

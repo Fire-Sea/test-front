@@ -5,7 +5,7 @@ import {Edit} from './pages/Edit'
 import {Detail} from './pages/Detail'
 import {Register} from './pages/Register'
 import { useEffect, useState } from 'react';
-import { Axios } from 'axios';
+import axios from 'axios';
 import { useSelector } from 'react-redux';
 import {Banner} from './Banner';
 import './styles/App.css';
@@ -83,10 +83,9 @@ function Login({setLogin, setLoginInfo, setAccessToken, accessToken, setLoginDat
       setFade('')
     }
   }, [])
-  // const axios = require('axios').default;
 
   // function onSilentRefresh(){
-  //   axios.post('/silent-refresh', loginData)
+  //   axios.post('http://${ip}/api/silent-refresh', loginData)
   //     .then(onLoginSuccess)
   //     .catch(err=>{console.log(err)})
   // }
