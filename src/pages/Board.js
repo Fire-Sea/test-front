@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Input } from '../Input';
 import axios from 'axios';
 import {useSelector} from 'react-redux';
+import '../styles/Board.css';
 
 function Board({category, loginInfo}){
   let [textList, setTextList] = useState([]);

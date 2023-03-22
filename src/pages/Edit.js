@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {useSelector} from 'react-redux';
 import { useEffect, useState } from 'react';
+import '../styles/Edit.css';
 
 function Edit({loginInfo}){
     let navigate = useNavigate();

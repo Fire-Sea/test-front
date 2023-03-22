@@ -4,6 +4,7 @@ import { Input } from '../Input';
 import { useParams } from "react-router-dom";
 import axios from 'axios';
 import {useSelector} from 'react-redux';
+import '../styles/Detail.css';
 
 function Detail({category}){
     let ip = useSelector((state) => {return state.ip});

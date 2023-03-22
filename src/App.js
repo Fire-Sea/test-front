@@ -15,7 +15,7 @@ function App() {
   let [loginInfo, setLoginInfo] = useState('');
   let [accessToken , setAccessToken] = useState({});
   let [loginData, setLoginData] = useState('');
-  
+  let [easteregg, setEasteregg] = useState(false);
   return (
     <div className="App">
       {
@@ -23,14 +23,36 @@ function App() {
         loginData={loginData} setLoginData={setLoginData}/>
       }
       <Navbar/>
+      <button onClick={()=>{
+        let t = document.querySelectorAll('.navbar a');
+        if(!easteregg){
+          document.querySelector('body').style = 'animation: bodyanime infinite 3s;'; 
+          
+          t.forEach((a)=>{
+            a.style = 'animation: barrelroll 1s infinite;';
+          }) 
+          setEasteregg(true);
+        }
+        else{
+          document.querySelector('body').style = '';
+          t.forEach((a)=>{
+            a.style = '';
+          }) 
+          setEasteregg(false);
+        }
+      }}>easteregg</button>
+        
       {
         !loginData && <button onClick={()=>{setLogin(true)}}>로그인</button>
       }
       {
         loginData && <button>로그아웃</button>
       }
+      {
+        easteregg && <div className='easteregg'><h1>서버가~~일을~~안해~~~</h1></div>
+      }
       <Banner/>
-      
+
       <Routes>
         <Route path="/" element={<Main/>}/>
         <Route path="/server/list/" element={<Board category={'Server'} loginInfo={loginInfo} />}/>

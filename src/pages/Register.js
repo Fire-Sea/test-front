@@ -2,6 +2,7 @@ import {useNavigate} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import axios from 'axios'
 import { useState, useEffect } from 'react';
+import '../styles/Register.css'
 
 function Register(){
     let ip = useSelector((state) => {return state.ip});

@@ -1,0 +1,93 @@
+.edit-select{
+    width: 50%;
+    height: 30px;
+    min-width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    color: white;
+    background-color: black;
+  }
+  
+  .edit-title{
+    width: 50%;
+    height: 30px;
+    min-width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-bottom: 1px;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 15px;
+  }
+  
+  .edit-body{
+    width: 50%;
+    height: 400px;
+    min-width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    display: block;
+    box-sizing: border-box;
+  }
+  
+  .edit-btn{
+    margin: 10px 0px 0px 25%;
+  }
+  
+  .edit-btn button{
+    width: 100px;
+    height: 40px;
+    margin-right: 10px;
+  }
+  
+  .edit-container{
+    width: 100%;
+    text-align: center;
+  }
+  
+  .edit-title{
+    width: 50%;
+    height: 30px;
+    margin-bottom: 1px;
+    padding: 10px;
+    border: 1px solid lightcoral;
+  }
+  
+  .edit-body{
+    width: 50%;
+    height: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    display: block;
+  }
+  .edit-btn{
+    width: 60%;
+  }
+  
+  .edit-btn button{
+    float: left;
+  }
+  .edit-btn button:hover{
+    color: lightgray;
+    background-color: rgb(167, 56, 56);
+  }
+  
+  textarea{
+    resize: none;
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    border: 1px solid lightcoral;
+    font-size: 15px;
+    color: black;
+    font-family: 'SDSamliphopangche_Outline';
+    font-weight: 500;
+    padding: 5px;
+  }
+  
+  

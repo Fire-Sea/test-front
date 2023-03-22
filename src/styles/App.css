@@ -5,6 +5,8 @@
 }
 body{
   margin: 0;
+  /* animation: bodyanime infinite 5s;
+} */
 }
 div{
   box-sizing: border-box;
@@ -34,9 +36,7 @@ button{
 .navbar a{
   float:left;
   cursor: pointer;
-  animation-name: barrelroll;
-  animation-duration: 1s;
-  animation-iteration-count: infinite;
+  /* animation: barrelroll 1s infinite; */
 }
 .navbar a:hover{
   color: lightgray;
@@ -78,7 +78,6 @@ button{
 
 .img-overlay:hover{
   background-color: rgba(0,0,0,0.5);
-  transition: 0.5s all;
 }
 
 .main-img img{
@@ -142,225 +141,7 @@ button{
   background-color: rgb(167, 56, 56);
 }
 
-.board{
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: left;
-}
 
-.board-category{
-  width: 100%;
-  padding-bottom: 10px;
-  border-bottom: 2px solid rgb(228, 76, 76);
-}
-
-table{
-  width: 100%;
-  text-align: center;
-  border-collapse: separate;
-  border-spacing: 0px;
-  margin-top: -10px;
-}
-
-th{
-  padding-bottom: 10px;
-  border-bottom: solid 1px rgb(228, 76, 76);
-}
-
-td{
-  border-top: solid 1px rgb(223, 162, 162);
-}
-.board-tr:hover{
-  background-color: rgba(0,0,0,0.1);
-}
-
-.board-id{
-  width: 10%;
-  font-size: 12px;
-}
-.board-title{
-  width: 60%;
-  text-align: left;
-  overflow: hidden;
-  cursor: pointer;
-  font-size: 14px;
-}
-.board-nickname{
-  width: 15%;
-  font-size: 12px;
-}
-.board-date{
-  width: 15%;
-  font-size: 12px;
-}
-
-.board-line{
-  border-top: 2px solid rgb(228, 76, 76);
-}
-
-.board-homeBtn{
-  width: 100px;
-  height: 30px;
-  float: left;
-}
-
-.board-newBtn{
-  width: 100px;
-  height: 30px;
-  float: right;
-}
-
-.board-pages{
-  text-align: center;
-}
-.board-pages button{
-  margin: 2px;
-}
-.board-pages button:hover{
-  color: lightgray;
-  background-color: rgb(167, 56, 56);
-}
-
-.board-clicked{
-  color: lightgray;
-  background-color: rgb(167, 56, 56);
-}
-
-.edit-select{
-  width: 60%;
-  height: 30px;
-  min-width: 350px;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-  color: white;
-  background-color: black;
-}
-
-.edit-title{
-  width: 60%;
-  height: 30px;
-  min-width: 350px;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-  margin-bottom: 1px;
-  padding: 10px;
-  box-sizing: border-box;
-  font-size: 15px;
-}
-
-.edit-body{
-  width: 60%;
-  height: 400px;
-  min-width: 350px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 10px;
-  display: block;
-  box-sizing: border-box;
-}
-
-.edit-btn{
-  margin: 10px 0px 0px 20%;
-}
-
-.edit-btn button{
-  width: 100px;
-  height: 40px;
-  margin-right: 10px;
-}
-
-.edit-container{
-  width: 100%;
-  text-align: center;
-}
-
-.edit-title{
-  width: 60%;
-  height: 30px;
-  margin-bottom: 1px;
-  padding: 10px;
-  border: 1px solid lightcoral;
-}
-
-.edit-body{
-  width: 60%;
-  height: 400px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 10px;
-  display: block;
-}
-.edit-btn{
-  width: 60%;
-}
-
-.edit-btn button{
-  float: left;
-}
-.edit-btn button:hover{
-  color: lightgray;
-  background-color: rgb(167, 56, 56);
-}
-
-textarea{
-  resize: none;
-  background-color: white;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  border: 1px solid lightcoral;
-  font-size: 15px;
-  color: black;
-  font-family: 'SDSamliphopangche_Outline';
-  font-weight: 500;
-  padding: 5px;
-}
-
-.detail-container{
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: left;
-}
-
-.detail-category{
-  border-bottom: 3px solid lightcoral;
-  margin: 0px;
-}
-
-.detail-title{
-  width: 100%;
-  height: 40px;
-  padding: 5px;
-  border: 1px solid lightcoral;
-}
-.detail-title h3{
-  margin: 0px;
-  margin-top: 5px;
-  font-size: 16px;
-  float:left;
-}
-.detail-title p{
-  margin: 0px;
-  float:right;
-  width: 60px;
-  font-size: 12px;
-  font-weight: 500;
-}
-.detail-body{
-  width: 100%;
-  height: 400px;
-  margin: 0px;
-}
-.detail-backBtn{
-  float: left;
-  width: 100px;
-  height: 35px;
-  margin-top: 10px;
-}
 
 .login-bg{
   position: absolute;
@@ -434,53 +215,7 @@ textarea{
   color: rgb(228, 76, 76);
 }
 
-.register-container{
-  width: 100%;
-  text-align: center;
-}
-.register-container h1{
-  margin-bottom: 100px;
-}
-.register-container input{
-  height: 30px;
-  padding-left: 5px;
-  box-sizing: border-box;
-}
-.register-container p{
-  margin-bottom: 5px;
-}
-.register-email, .register-passwd{
-  width: 370px;
-}
-.register-id, .register-nickname{
-  width: 300px;
-}
 
-.register-registerBtn{
-  display: block;
-  width: 300px;
-  height: 40px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 50px;
-}
-
-.valid-fail{
-  font-size: 10px;
-  color: red;
-  margin: 0px;
-}
-.valid-success{
-  font-size: 10px;
-  color: blue;
-  margin: 0px;
-}
-.id-chk, .nickname-chk{
-  width: 70px;
-  height: 29px;
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
-}
 
 @keyframes barrelroll{
   0% {
@@ -506,4 +241,49 @@ textarea{
 .end{
   opacity: 1;
   transition: all 0.5s;
+}
+
+@keyframes bodyanime{
+  0% {
+    background-color: rgb(133, 0, 0);
+  }
+  25%{
+    background-color: rgb(146, 146, 0);
+  }
+  50%{
+    background-color: green;
+  }
+  75%{
+    background-color: rgb(0, 0, 138);
+  }
+  100%{
+    background-color: rgb(133, 0, 0);
+  }
+}
+
+.easteregg{
+  position: fixed;
+  top: 300px;
+  left: 200px;
+  font-size: 40px;
+  background-color: black;
+  color: white;
+  border: 4px solid white;
+  z-index: 10;
+  animation: easteregg 2s infinite;
+}
+
+@keyframes easteregg{
+  0% {
+    transform: scaleX(1);
+    transform: scaleY(1);
+  }
+  50%{
+    transform: scaleX(2);
+    transform: scaleY(2);
+  }
+  100%{
+    transform: scaleX(1);
+    transform: scaleY(1);
+  }
 }
