@@ -12,7 +12,8 @@ function Board({category, loginInfo}){
     let [totalPage, setTotalPage] = useState(0);
     let [serverErr, setServerErr] = useState(false);
     let ip = useSelector((state) => {return state.ip})
-    
+    let [fade, setFade] = useState('');
+
     console.log('Board의 loginInfo: ' + loginInfo);
 
     const addPageNum = (pageNum, currentPage)=>{
@@ -49,13 +50,17 @@ function Board({category, loginInfo}){
           console.log(err);
           setServerErr(true);
         })
-    
+      const fadeTimer = setTimeout(()=>{setFade('end')}, 100)
+      return ()=>{
+        clearTimeout(fadeTimer);
+        setFade('')
+      }
     }, [currentPage])
   
     return(
       <>
       <Input/>
-      <div className='board'>
+      <div className={'board start ' + fade}>
         <h1 className='board-category'>{category}</h1>
         <table>
           <thead>

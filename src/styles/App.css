@@ -34,6 +34,9 @@ button{
 .navbar a{
   float:left;
   cursor: pointer;
+  animation-name: barrelroll;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
 }
 .navbar a:hover{
   color: lightgray;
@@ -140,7 +143,7 @@ button{
 }
 
 .board{
-  width: 80%;
+  width: 50%;
   margin-left: auto;
   margin-right: auto;
   text-align: left;
@@ -370,6 +373,7 @@ textarea{
   width: 40%;
   height: 60%;
   min-width: 300px;
+  min-height: 500px;
 }
 .login-logo{
   width: 100%;
@@ -415,7 +419,11 @@ textarea{
   margin-bottom: 0px;
   font-size: 14px;
 }
-
+.login-text{
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+}
 .login-container button:hover{
   color: lightgray;
   background-color: rgb(167, 56, 56);
@@ -472,4 +480,30 @@ textarea{
   height: 29px;
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
+}
+
+@keyframes barrelroll{
+  0% {
+    transform: rotate(0deg);
+  }
+  25%{
+    transform: rotate(90deg);
+  }
+  50%{
+    transform: rotate(180deg);
+  }
+  75%{
+    transform: rotate(270deg);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
+}
+
+.start{
+  opacity: 0;
+}
+.end{
+  opacity: 1;
+  transition: all 0.5s;
 }

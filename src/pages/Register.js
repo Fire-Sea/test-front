@@ -1,15 +1,27 @@
 import {useNavigate} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import axios from 'axios'
+import { useState, useEffect } from 'react';
 
 function Register(){
     let ip = useSelector((state) => {return state.ip});
 
     let navigate = useNavigate();
     let validList = [0,0,0,0];
+
+    let [fade, setFade] = useState('');
+
+    useEffect(()=>{
+      const fadeTimer = setTimeout(()=>{setFade('end')}, 100);
+      return ()=>{
+        clearTimeout(fadeTimer);
+        setFade('')
+      }
+    }, [])
+
     return(
     <>
-    <div className='register-container'>
+    <div className={'register-container start ' + fade}>
       <h1>회원가입</h1>
       <p>이메일</p>
       <input className='register-email' id='registerEmail' type={'email'} placeholder='example@any.com' onChange={(e)=>{

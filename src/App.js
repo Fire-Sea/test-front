@@ -1,20 +1,21 @@
-import './App.css';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, Router } from 'react-router-dom';
 import {Input} from './Input'
 import {Board} from './pages/Board'
 import {Edit} from './pages/Edit'
 import {Detail} from './pages/Detail'
 import {Register} from './pages/Register'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Axios } from 'axios';
 import { useSelector } from 'react-redux';
+import {Banner} from './Banner';
+import './styles/App.css';
 
 function App() {
   let [login, setLogin] = useState(false);
   let [loginInfo, setLoginInfo] = useState('');
   let [accessToken , setAccessToken] = useState({});
   let [loginData, setLoginData] = useState('');
-
+  
   return (
     <div className="App">
       {
@@ -28,6 +29,8 @@ function App() {
       {
         loginData && <button>로그아웃</button>
       }
+      <Banner/>
+      
       <Routes>
         <Route path="/" element={<Main/>}/>
         <Route path="/server/list/" element={<Board category={'Server'} loginInfo={loginInfo} />}/>
@@ -48,8 +51,16 @@ function App() {
 
 function Login({setLogin, setLoginInfo, setAccessToken, accessToken, setLoginData, loginData}){
   let navigate = useNavigate();
+  let [fade, setFade] = useState('');
   let ip = useSelector((state) => {return state.ip});
 
+  useEffect(()=>{
+    const fadeTimer = setTimeout(()=>{setFade('end')}, 100)
+    return ()=>{
+      clearTimeout(fadeTimer);
+      setFade('')
+    }
+  }, [])
   // const axios = require('axios').default;
 
   // function onSilentRefresh(){
@@ -64,7 +75,7 @@ function Login({setLogin, setLoginInfo, setAccessToken, accessToken, setLoginDat
   // }
   return(
     <>
-      <div className='login-bg'>
+      <div className={'login-bg start ' + fade}>
         <div className='login-logo'>
           <h1>Fire Sea</h1>
         </div>
@@ -109,6 +120,7 @@ function Login({setLogin, setLoginInfo, setAccessToken, accessToken, setLoginDat
               })
               .catch(err=>{console.log(err); alert('로그인 실패');});
           }}>로그인</button>
+          <span className='login-text'>회원이 아니신가요?</span>
           <button className='login-registerBtn' onClick={()=>{navigate('/register');setLogin(false) }}>회원가입 하기</button>
           <button className='login-cancelBtn' onClick={()=>{setLogin(false)}}>닫기</button>
         </div>
@@ -135,11 +147,20 @@ function Navbar(){
 
 function Main(){
   let navigate = useNavigate();
+  let [fade, setFade] = useState('');
 
+  useEffect(()=>{
+    const fadeTimer = setTimeout(()=>{setFade('end')}, 100);
+
+    return()=>{
+      clearTimeout(fadeTimer);
+      setFade('');
+    }
+  }, [])
   return(
     <>
       <Input/>
-      <div className='main'>
+      <div className={'main start ' + fade}>
         <div className='main-img'>
           <div className='img-overlay' onClick={()=>{navigate('/front/list')}}>Front</div>
           <img alt='main_img1' src={process.env.PUBLIC_URL + '/main_img1.jpg'}/>

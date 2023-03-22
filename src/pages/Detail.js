@@ -9,6 +9,7 @@ function Detail({category}){
     let ip = useSelector((state) => {return state.ip});
     let {id} = useParams();
     let [textData, setTextData] = useState({});
+    let [fade, setFade] = useState('');
     let navigate = useNavigate();
 
     useEffect(()=>{
@@ -18,14 +19,18 @@ function Detail({category}){
         res.data.createdTime = `${time.getFullYear()}/${time.getMonth()+1}/${time.getDate()} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`
         setTextData(res.data);
       })
-      .catch(err=>console.log(err))
-    
+      .catch(err=>console.log(err));
+    const fadeTimer = setTimeout(()=>{setFade('end')}, 100)
+    return ()=>{
+      clearTimeout(fadeTimer);
+      setFade('')
+    }
     }, [])
 
     return(
       <>
         <Input/>
-        <div className='detail-container'>
+        <div className={'detail-container start ' + fade}>
             <h1 className='detail-category'>{category}</h1>
             <div className='detail-title'>
                 <h3>{textData.textTitle}</h3>

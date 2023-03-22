@@ -3,17 +3,26 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {useSelector} from 'react-redux';
+import { useEffect, useState } from 'react';
 
 function Edit({loginInfo}){
     let navigate = useNavigate();
     let {category} = useParams();
     let ip = useSelector((state) => {return state.ip});
-    
+    let [fade, setFade] = useState('');
+
+    useEffect(()=>{
+      const fadeTimer = setTimeout(()=>{setFade('end')}, 100);
+      return ()=>{
+        clearTimeout(fadeTimer);
+        setFade('')
+      }
+    }, [])
     console.log('지금 로그인된 닉네임 : ' + loginInfo)
     return(
       <>
         <Input/>
-        <div className='edit-container'>
+        <div className={'edit-container start ' + fade}>
           <input className='edit-title' placeholder='제목을 입력하세요'/>
           <textarea className='edit-body' autoComplete='no' placeholder='내용을 작성하세요'/>
           <div className='edit-btn'>
