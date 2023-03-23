@@ -6,7 +6,7 @@ import {useSelector} from 'react-redux';
 import { useEffect, useState } from 'react';
 import '../styles/Edit.css';
 
-function Edit({loginInfo}){
+function Edit(){
     let navigate = useNavigate();
     let {category} = useParams();
     let ip = useSelector((state) => {return state.ip});
@@ -19,7 +19,7 @@ function Edit({loginInfo}){
         setFade('')
       }
     }, [])
-    console.log('지금 로그인된 닉네임 : ' + loginInfo)
+    
     return(
       <>
         <Input/>
@@ -40,7 +40,6 @@ function Edit({loginInfo}){
               else{
                 axios.post(`http://${ip}/api/send`,{
                     category : category,
-                    nickname: loginInfo,
                     textTitle: textTitle,
                     textBody: textBody
                 })

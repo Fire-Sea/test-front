@@ -9,17 +9,20 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import {Banner} from './Banner';
 import './styles/App.css';
+import { changeAccessToken, changeToken } from './store';
 
 function App() {
   let [login, setLogin] = useState(false);
   let [loginInfo, setLoginInfo] = useState('');
-  let [accessToken , setAccessToken] = useState({});
+  
   let [loginData, setLoginData] = useState('');
   let [easteregg, setEasteregg] = useState(false);
+
+  let [t, setT] = useState({});
   return (
     <div className="App">
       {
-        login && <Login setLogin={setLogin} loginInfo={loginInfo} setLoginInfo={setLoginInfo} accessToken={accessToken} setAccessToken={setAccessToken} 
+        login && <Login setLogin={setLogin} loginInfo={loginInfo} setLoginInfo={setLoginInfo} t={t} setT={setT}
         loginData={loginData} setLoginData={setLoginData}/>
       }
       <Navbar/>
@@ -55,15 +58,15 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Main/>}/>
-        <Route path="/server/list/" element={<Board category={'Server'} loginInfo={loginInfo} />}/>
-        <Route path="/front/list/" element={<Board category={'Front'} loginInfo={loginInfo}/>}/>
+        <Route path="/server/list/" element={<Board category={'Server'} t={t}/>}/>
+        <Route path="/front/list/" element={<Board category={'Front'} t={t} />}/>
         <Route path="/detail/:id" element={<Detail/>}/>
         <Route path="/server/detail/:id" element={<Detail category={'server'} />}/>
         <Route path="/front/detail/:id" element={<Detail category={'front'} />}/>
 
         <Route path="/register" element={<Register/>}/>
 
-        <Route path="/:category/edit" element={<Edit loginInfo={loginInfo}/>}/>
+        <Route path="/:category/edit" element={<Edit t={t} />}/>
 
         <Route path="*" element={<Error/>}/>
       </Routes>
@@ -71,10 +74,11 @@ function App() {
   );
 }
 
-function Login({setLogin, setLoginInfo, setAccessToken, accessToken, setLoginData, loginData}){
+function Login({setLogin, setLoginInfo, setLoginData, loginData, t, setT}){
   let navigate = useNavigate();
   let [fade, setFade] = useState('');
   let ip = useSelector((state) => {return state.ip});
+  let token = useSelector((state)=> {return state.token});
 
   useEffect(()=>{
     const fadeTimer = setTimeout(()=>{setFade('end')}, 100)
@@ -85,14 +89,15 @@ function Login({setLogin, setLoginInfo, setAccessToken, accessToken, setLoginDat
   }, [])
 
   // function onSilentRefresh(){
-  //   axios.post('http://${ip}/api/silent-refresh', loginData)
+  //   axios.post('http://${ip}/api/refresh', loginData)
   //     .then(onLoginSuccess)
   //     .catch(err=>{console.log(err)})
   // }
+
   // function onLoginSuccess(response){
   //   const {accessToken} = response.data;
-  //   axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-  //   setTimeout(onSilentRefresh, 60000);
+  //   axios.defaults.headers.common['Authorization'] = `${accessToken}`;
+  //   setTimeout(onSilentRefresh, 600000);
   // }
   return(
     <>
@@ -115,29 +120,14 @@ function Login({setLogin, setLoginInfo, setAccessToken, accessToken, setLoginDat
               username: username,
               password: password
             }
-            fetch(`http://${ip}/api/login`, {
-              method: "POST",
-              headers:{
-                "content-type" : "application/json",
-              },
-              body: JSON.stringify(data)
-            })
-              .then(res=>res.json())
+            axios.post(`http://${ip}/api/login`, data)
               .then(res=>{
-                console.log(res);
-                if(res.statusCode === 40002){
-                  alert('err');
-                }
-                else{
-                  alert('로그인 성공'); 
-                  setLogin(false); 
-                  setLoginInfo(res.data);
-                  console.log(res.data);
-                  navigate('/');
-                  setLoginData(JSON.stringify(data));
-
-                  // onLoginSuccess();
-                }
+                res = res.headers;
+                setT({
+                  access_token: res.access_token,
+                  refresh_token: res.refresh_token
+                });
+                console.log(t);
               })
               .catch(err=>{console.log(err); alert('로그인 실패');});
           }}>로그인</button>

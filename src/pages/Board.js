@@ -5,7 +5,7 @@ import axios from 'axios';
 import {useSelector} from 'react-redux';
 import '../styles/Board.css';
 
-function Board({category, loginInfo}){
+function Board({category, t}){
   let [textList, setTextList] = useState([]);
     let navigate = useNavigate();
     let [currentPage, setCurrentPage] = useState(0);
@@ -14,8 +14,6 @@ function Board({category, loginInfo}){
     let [serverErr, setServerErr] = useState(false);
     let ip = useSelector((state) => {return state.ip})
     let [fade, setFade] = useState('');
-
-    console.log('Board의 loginInfo: ' + loginInfo);
 
     const addPageNum = (pageNum, currentPage)=>{
       const newArr = [];
@@ -101,8 +99,31 @@ function Board({category, loginInfo}){
       
         <button className='board-homeBtn' onClick={()=>{navigate('/')}}>홈으로</button>
         <button className='board-newBtn' onClick={()=>{
-          let cat = category.toLowerCase();;
-          navigate(`/${cat}/edit`);
+          axios.defaults.headers.common['Authorization'] = t.access_token;
+
+          axios.get(`http://${ip}/api/user`)
+            .then(res=>{
+              console.log(res)
+              if(res.data.statusCode === 20011){
+                let cat = category.toLowerCase();
+                navigate(`/${cat}/edit`);
+              }
+              else if(res.data.statusCode === 40006){
+                axios.defaults.headers.common['Authorization'] = t.refresh_token;
+                axios.get(`http://${ip}/api/refresh`)
+                  .then(res=>{
+                    console.log(res);
+                  })
+              }
+              else{
+                alert('로그인하세요');
+              }
+            });
+          
+          console.log(t);
+          
+          // let cat = category.toLowerCase();
+          // navigate(`/${cat}/user/edit`);
         }}>글작성</button>
         
       </div>
