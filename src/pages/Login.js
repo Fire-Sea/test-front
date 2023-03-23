@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { changeLoginStatus, changeBothToken, changeLoginToggle } from '../store';
 import axios from 'axios';
+import '../styles/Login.css';
 
 function Login(){
     let navigate = useNavigate();
