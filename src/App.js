@@ -6,26 +6,45 @@ import {Detail} from './pages/Detail'
 import {Register} from './pages/Register'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {Banner} from './Banner';
 import './styles/App.css';
-import { changeAccessToken, changeToken } from './store';
+import { changeLoginStatus, changeBothToken, changeLoginToggle } from './store';
 
 function App() {
-  let [login, setLogin] = useState(false);
-  let [loginInfo, setLoginInfo] = useState('');
-  
-  let [loginData, setLoginData] = useState('');
-  let [easteregg, setEasteregg] = useState(false);
 
-  let [t, setT] = useState({});
+  let [easteregg, setEasteregg] = useState(false);
+  let token = useSelector((state)=> {return state.token});
+  let dispatch = useDispatch();
   return (
     <div className="App">
       {
-        login && <Login setLogin={setLogin} loginInfo={loginInfo} setLoginInfo={setLoginInfo} t={t} setT={setT}
-        loginData={loginData} setLoginData={setLoginData}/>
+        token.login_toggle && <Login/>
       }
       <Navbar/>
+        
+      {
+        token.login_status ? 
+          <button onClick={()=>{
+            dispatch(changeLoginStatus(false));
+          }}>로그아웃</button> 
+          : 
+          <button onClick={()=>{
+            dispatch(changeLoginToggle(true));
+          }}>로그인</button>
+      }
+
+
+
+      {
+        easteregg && <div className='easteregg'><h1>서버가~~일을~~안해~~~</h1></div>
+      }
+
+      <button onClick={()=>{
+        console.log(`(at/rt/login_status)=> ${token.access_token}/${token.refresh_token}/${token.login_status}`);
+      }}>현재 토큰, 로그인상황 콘솔</button>
+
+
       <button onClick={()=>{
         let t = document.querySelectorAll('.navbar a');
         if(!easteregg){
@@ -44,29 +63,19 @@ function App() {
           setEasteregg(false);
         }
       }}>easteregg</button>
-        
-      {
-        !loginData && <button onClick={()=>{setLogin(true)}}>로그인</button>
-      }
-      {
-        loginData && <button>로그아웃</button>
-      }
-      {
-        easteregg && <div className='easteregg'><h1>서버가~~일을~~안해~~~</h1></div>
-      }
       <Banner/>
 
       <Routes>
         <Route path="/" element={<Main/>}/>
-        <Route path="/server/list/" element={<Board category={'Server'} t={t}/>}/>
-        <Route path="/front/list/" element={<Board category={'Front'} t={t} />}/>
+        <Route path="/server/list/" element={<Board category={'Server'} />}/>
+        <Route path="/front/list/" element={<Board category={'Front'} />}/>
         <Route path="/detail/:id" element={<Detail/>}/>
         <Route path="/server/detail/:id" element={<Detail category={'server'} />}/>
         <Route path="/front/detail/:id" element={<Detail category={'front'} />}/>
 
         <Route path="/register" element={<Register/>}/>
 
-        <Route path="/:category/edit" element={<Edit t={t} />}/>
+        <Route path="/:category/edit" element={<Edit/>}/>
 
         <Route path="*" element={<Error/>}/>
       </Routes>
@@ -74,11 +83,12 @@ function App() {
   );
 }
 
-function Login({setLogin, setLoginInfo, setLoginData, loginData, t, setT}){
+function Login(){
   let navigate = useNavigate();
   let [fade, setFade] = useState('');
   let ip = useSelector((state) => {return state.ip});
   let token = useSelector((state)=> {return state.token});
+  let dispatch = useDispatch();
 
   useEffect(()=>{
     const fadeTimer = setTimeout(()=>{setFade('end')}, 100)
@@ -113,27 +123,55 @@ function Login({setLogin, setLoginInfo, setLoginData, loginData, t, setT}){
           <input className='login-passwd' id='loginPasswd' type={'password'} placeholder='비밀번호'/>
           <div style={{'marginTop':'10px'}}></div>
           <button className='login-loginBtn' onClick={()=>{     
-            let username = document.querySelector('#loginId').value;
-            let password = document.querySelector('#loginPasswd').value;
-            
-            const data = {
-              username: username,
-              password: password
+            let loginId = document.querySelector('#loginId');
+            let loginPasswd = document.querySelector('#loginPasswd');
+            let username = loginId.value;
+            let password = loginPasswd.value;
+
+            if(!username || !password){
+              alert('아이디 또는 비밀번호를 입력하세요.');
+              loginId.style = 'border: 3px solid red';
+              loginPasswd.style = 'border: 3px solid red';
             }
-            axios.post(`http://${ip}/api/login`, data)
-              .then(res=>{
-                res = res.headers;
-                setT({
-                  access_token: res.access_token,
-                  refresh_token: res.refresh_token
+            else{
+              const data = {
+                username: username,
+                password: password
+              }
+  
+              axios.post(`http://${ip}/api/login`, data)
+                .then(res=>{
+                  let statusCode = res.data.statusCode;
+                  if(statusCode === 40002){
+                    alert('아이디 또는 비밀번호가 틀렸습니다.');
+                    loginId.style = 'border: 3px solid red';
+                    loginPasswd.style = 'border: 3px solid red';
+                  }
+                  else{
+                    res = res.headers;
+                    dispatch(changeBothToken({
+                      access_token: 'test1',//res.access_token,
+                      refresh_token: 'test2'//res.refresh_token
+                    }))
+                    console.log('로그인에 성공했고 at, rt 모두 첫 발급받음 => access_token: ' + token.access_token +'/refresh_token: ' + token.refresh_token);
+                    dispatch(changeLoginToggle(false));
+                    dispatch(changeLoginStatus(true))
+                    
+                    alert('어서오세요!');
+                  }
+                })
+                .catch(err=>{
+                  console.log(err); 
+                  alert('아이디 또는 비밀번호가 틀렸습니다.');
+                  loginId.style = 'border: 3px solid red';
+                  loginPasswd.style = 'border: 3px solid red';
                 });
-                console.log(t);
-              })
-              .catch(err=>{console.log(err); alert('로그인 실패');});
+            }
+            
           }}>로그인</button>
           <span className='login-text'>회원이 아니신가요?</span>
-          <button className='login-registerBtn' onClick={()=>{navigate('/register');setLogin(false) }}>회원가입 하기</button>
-          <button className='login-cancelBtn' onClick={()=>{setLogin(false)}}>닫기</button>
+          <button className='login-registerBtn' onClick={()=>{navigate('/register'); dispatch(changeLoginToggle(false));}}>회원가입 하기</button>
+          <button className='login-cancelBtn' onClick={()=>{dispatch(changeLoginToggle(false))}}>닫기</button>
         </div>
       </div>
     </>
@@ -147,7 +185,7 @@ function Navbar(){
     <div className='header'>
       <div className='navbar'>
         <a className='navbar-logo' onClick={()=>{navigate('/')}}>Fire Sea</a>
-        <a className='navbar-item' onClick={()=>{navigate('/server/lisㄴt')}}>Server</a>
+        <a className='navbar-item' onClick={()=>{navigate('/server/list')}}>Server</a>
         <a className='navbar-item' onClick={()=>{navigate('/front/list')}}>Front</a>
       </div>
     </div>

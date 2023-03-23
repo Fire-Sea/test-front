@@ -4,15 +4,19 @@ import { Input } from '../Input';
 import axios from 'axios';
 import {useSelector} from 'react-redux';
 import '../styles/Board.css';
+import { changeAccessToken, changeBothToken } from '../store';
 
-function Board({category, t}){
+function Board({category, setLogin}){
   let [textList, setTextList] = useState([]);
     let navigate = useNavigate();
     let [currentPage, setCurrentPage] = useState(0);
     let [totalNum, setTotalNum] = useState(0);
     let [totalPage, setTotalPage] = useState(0);
     let [serverErr, setServerErr] = useState(false);
+
     let ip = useSelector((state) => {return state.ip})
+    let token = useSelector((state)=> {return state.token});
+
     let [fade, setFade] = useState('');
 
     const addPageNum = (pageNum, currentPage)=>{
@@ -99,31 +103,53 @@ function Board({category, t}){
       
         <button className='board-homeBtn' onClick={()=>{navigate('/')}}>홈으로</button>
         <button className='board-newBtn' onClick={()=>{
-          axios.defaults.headers.common['Authorization'] = t.access_token;
+
+          axios.defaults.headers.common['Authorization'] = token.access_token;
 
           axios.get(`http://${ip}/api/user`)
             .then(res=>{
-              console.log(res)
-              if(res.data.statusCode === 20011){
+              let statusCode = res.data.statusCode;
+              if(statusCode === 20011){
                 let cat = category.toLowerCase();
                 navigate(`/${cat}/edit`);
               }
-              else if(res.data.statusCode === 40006){
-                axios.defaults.headers.common['Authorization'] = t.refresh_token;
+              // 토큰 재발급(만료)
+              else if(statusCode === 40006){
+                axios.defaults.headers.common['Authorization'] = token.refresh_token;
                 axios.get(`http://${ip}/api/refresh`)
                   .then(res=>{
-                    console.log(res);
+                    res = res.headers;
+                    changeAccessToken({
+                      access_token: res.access_token
+                    })
+                    console.log('access_token 만료되어 at 새로 발급받음 => access_token: ' + res.access_token);
+                  })
+              }
+              else if(statusCode === 20009){
+                axios.defaults.headers.common['Authorization'] = token;
+                axios.get(`http://${ip}/api/refresh`)
+                  .then(res=>{
+                    res = res.headers;
+                    changeBothToken({
+                      access_token: res.access_token,
+                      refresh_token: res.refresh_token
+                    })
+                    console.log('refresh_token 만료기간이 5분 미만으로 at, rt 새로 발급받음 => access_token: ' + res.access_token + '/refresh_token: ' + res.refresh_token);
                   })
               }
               else{
-                alert('로그인하세요');
+                alert('오랫동안 대기하여 로그아웃 되었습니다. 새로 로그인하세요.');
+                console.log('refresh_token 만료되어 로그인창으로 리다이렉트');
+                setLogin(true);
               }
-            });
+            })
+            .catch(err=>{
+              console.log(err);
+              alert('로그인 후 사용할 수 있습니다.');
+              console.log('기타 서버 에러 및 로그아웃상태에서 접근시도');
+              setLogin(true);
+            })
           
-          console.log(t);
-          
-          // let cat = category.toLowerCase();
-          // navigate(`/${cat}/user/edit`);
         }}>글작성</button>
         
       </div>
