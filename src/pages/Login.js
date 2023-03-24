@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { changeLoginStatus, changeBothToken, changeLoginToggle } from '../store';
 import axios from 'axios';
 import '../styles/Login.css';
 
 function Login(){
-    let navigate = useNavigate();
-    let [fade, setFade] = useState('');
-    let ip = useSelector((state) => {return state.ip});
-    let token = useSelector((state)=> {return state.token});
-    let dispatch = useDispatch();
+  const [fade, setFade] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const ip = useSelector((state) => {return state.ip});
+  const token = useSelector((state)=> {return state.token});
   
     useEffect(()=>{
       const fadeTimer = setTimeout(()=>{setFade('end')}, 100)
@@ -45,10 +45,10 @@ function Login(){
             <input className='login-passwd' id='loginPasswd' type={'password'} placeholder='비밀번호'/>
             <div style={{'marginTop':'10px'}}></div>
             <button className='login-loginBtn' onClick={()=>{     
-              let loginId = document.querySelector('#loginId');
-              let loginPasswd = document.querySelector('#loginPasswd');
-              let username = loginId.value;
-              let password = loginPasswd.value;
+              const loginId = document.querySelector('#loginId');
+              const loginPasswd = document.querySelector('#loginPasswd');
+              const username = loginId.value;
+              const password = loginPasswd.value;
   
               if(!username || !password){
                 alert('아이디 또는 비밀번호를 입력하세요.');
