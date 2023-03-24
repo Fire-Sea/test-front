@@ -60,7 +60,7 @@ function Login(){
                   username: username,
                   password: password
                 }
-    
+                axios.defaults.withCredentials = true;
                 axios.post(`http://${ip}/api/login`, data)
                   .then(res=>{
                     let statusCode = res.data.statusCode;
@@ -71,9 +71,10 @@ function Login(){
                     }
                     else{
                       res = res.headers;
+                      console.log(res);
                       dispatch(changeBothToken({
-                        access_token: 'test1',//res.access_token,
-                        refresh_token: 'test2'//res.refresh_token
+                        access_token: res.access_token,
+                        refresh_token: res.refresh_token
                       }))
                       console.log('로그인에 성공했고 at, rt 모두 첫 발급받음 => access_token: ' + token.access_token +'/refresh_token: ' + token.refresh_token);
                       dispatch(changeLoginToggle(false));

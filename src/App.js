@@ -62,7 +62,7 @@ function App() {
           setEasteregg(false);
         }
       }}>easteregg</button>
-      <Banner/>
+      {/* <Banner/> */}
 
       <Routes>
         <Route path="/" element={<Main/>}/>
