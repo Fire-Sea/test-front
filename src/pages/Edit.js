@@ -44,6 +44,9 @@ function Edit(){
                 alert('내용을 입력하세요');
               }
               else{
+                axios.defaults.headers.common['Authorization'] = token.access_token;
+                axios.defaults.withCredentials = true;
+
                 axios.post(`http://${ip}/api/user/send`, {
                   category : category,
                   textTitle: textTitle,
@@ -51,35 +54,60 @@ function Edit(){
                 })
                   .then(res=>{
                     let statusCode = res.data.statusCode;
+                    
+                    // 정상적으로 저장
                     if(statusCode === 20000){
                       alert('글이 저장되었습니다.');
                       navigate(`/${category}/list`);
                     }
+                    // access_token 만료됨
                     else{
                       axios.defaults.headers.common['Authorization'] = token.refresh_token;
-
                       axios.get(`http://${ip}/api/refresh`)
                         .then(res=>{
                           let statusCode = res.data.statusCode;
                           res = res.headers;
+                          
+                          // 2-1. refresh_token: 5분이상 유효
+                          //      access_token 만 재발급 성공
                           if(statusCode === 20010){
-                            dispatch(changeAccessToken({
-                              access_token: res.access_token
-                            }))
-                            console.log('access_token 만료되어 at 새로 발급받음 => access_token: ' + res.access_token);
+                            console.log('2-1. refresh_token: 5분이상 유효');
+                            console.log('     access_token 재발급 성공');
+                            dispatch(changeAccessToken({access_token: res.access_token}));
+
+                            axios.post(`http://${ip}/api/user/send`, {
+                                        category : category,
+                                        textTitle: textTitle,
+                                        textBody: textBody
+                                      });
+                            alert('글이 저장되었습니다.');
+                            navigate(`/${category}/list`);
                           }
+                          // 2-2. refresh_token: 5분미만 유효
+                          //      access_token, refresh_token 둘다 재발급 성공
                           else if(statusCode === 20009){
+                            console.log('2-2. refresh_token: 5분미만 유효');
+                            console.log('     access_token, refresh_token 둘다 재발급 성공');
                             dispatch(changeBothToken({
                               access_token: res.access_token,
                               refresh_token: res.refresh_token
-                            }))
-                            console.log('refresh_token 기간이 만료직전이라 at, rt 새로 발급 => ' + res.access_token +' / ' + res.refresh_token);
+                            }));
+                            axios.post(`http://${ip}/api/user/send`, {
+                                        category : category,
+                                        textTitle: textTitle,
+                                        textBody: textBody
+                                      });
+                            alert('글이 저장되었습니다.');
+                            navigate(`/${category}/list`);
                           }
-                          else if(statusCode === 40009){
-                            console.log('refresh_token 만료되어 재로그인 추천');
-                            dispatch(changeLoginStatus(false))
+                          // 2-3. refresh_token: 만료 혹은 기타 문제
+                          //      재로그인 하도록 유도
+                          else{
+                            console.log('2-3. refresh_token: 만료 혹은 기타 문제');
+                            console.log('     재로그인 하도록 유도');
+                            alert('오래 대기하여 로그아웃되었습니다. 다시 로그인하세요.');
+                            dispatch(changeLoginStatus(false));
                             dispatch(changeLoginToggle(true));
-                            alert('로그인 후 사용할 수 있습니다.');
                           }
                         })
                     }

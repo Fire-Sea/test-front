@@ -7,7 +7,7 @@ import '../styles/Board.css';
 import { changeAccessToken, changeBothToken, changeLoginStatus, changeLoginToggle } from '../store';
 
 function Board({category}){
-  let [textList, setTextList] = useState([]);
+    let [textList, setTextList] = useState([]);
     let navigate = useNavigate();
     let [currentPage, setCurrentPage] = useState(0);
     let [totalNum, setTotalNum] = useState(0);
@@ -35,6 +35,50 @@ function Board({category}){
         newArr.push(template);
       }
       return newArr;
+    }
+
+    const silentRefresh =()=>{
+      let cat = 'front';
+      axios.defaults.headers.common['Authorization'] = token.refresh_token;
+      axios.get(`http://${ip}/api/refresh`)
+        .then(res=>{
+          let statusCode = res.data.statusCode;
+          res = res.headers;
+          
+          // 2-1. refresh_token: 5분이상 유효
+          //      access_token 만 재발급 성공
+          if(statusCode === 20010){
+            console.log('2-1. refresh_token: 5분이상 유효');
+            console.log('     access_token 재발급 성공');
+            dispatch(changeAccessToken({access_token: res.access_token}));
+            navigate(`/${cat}/edit`);
+          }
+          // 2-2. refresh_token: 5분미만 유효
+          //      access_token, refresh_token 둘다 재발급 성공
+          else if(statusCode === 20009){
+            console.log('2-2. refresh_token: 5분미만 유효');
+            console.log('     access_token, refresh_token 둘다 재발급 성공');
+            dispatch(changeBothToken({
+              access_token: res.access_token,
+              refresh_token: res.refresh_token
+            }));
+            navigate(`/${cat}/edit`);
+          }
+          // 2-3. refresh_token: 만료 혹은 기타 문제
+          //      재로그인 하도록 유도
+          else{
+            console.log('2-3. refresh_token: 만료 혹은 기타 문제');
+            console.log('     재로그인 하도록 유도');
+            alert('오래 대기하여 로그아웃되었습니다. 다시 로그인하세요.');
+            dispatch(changeLoginStatus(false));
+            dispatch(changeLoginToggle(true));
+          }
+        })
+        // 2-4. 서버와의 연결문제로 statusCode 확인불가
+        .catch(err=>{
+          console.log(err);
+          alert('서버와의 통신이 원할하지 않습니다. 잠시후 시도해주세요');
+        })
     }
 
     useEffect(()=>{
@@ -111,56 +155,35 @@ function Board({category}){
           axios.get(`http://${ip}/api/user`)
             .then(res=>{
               let statusCode = res.data.statusCode;
+              let cat = category.toLowerCase();
+
+              // 1. access_token: 유효 / refresh_token: 5분이상 유효
               if(statusCode === 20011){
-                let cat = category.toLowerCase();
+                console.log('1. access_token: 유효 / refresh_token: 5분이상 유효');
                 navigate(`/${cat}/edit`);
-                console.log('토큰 유효함')
               }
-              // 토큰 재발급(만료)
+              // 2. access_token: 만료
+              //    refresh_token을 보내 access_token을 갱신시도
               else if(statusCode === 40006){
-                axios.defaults.headers.common['Authorization'] = token.refresh_token;
-                axios.get(`http://${ip}/api/refresh`)
-                  .then(res=>{
-                    res = res.headers;
-                    dispatch(changeAccessToken({
-                      access_token: res.access_token
-                    }))
-                    console.log('access_token 만료되어 at 새로 발급받음 => access_token: ' + res.access_token);
-                  })
+                console.log('2. access_token: 만료');
+                console.log('   refresh_token을 보내 access_token을 갱신시도');
+
+                silentRefresh();
               }
-              else if(statusCode === 20009){
-                axios.defaults.headers.common['Authorization'] = token;
-                axios.get(`http://${ip}/api/refresh`)~
-                  .then(res=>{
-                    res = res.headers;
-                    dispatch(changeBothToken({
-                      access_token: res.access_token,
-                      refresh_token: res.refresh_token
-                    }))
-                    console.log('refresh_token 만료기간이 5분 미만으로 at, rt 새로 발급받음 => access_token: ' + res.access_token + '/refresh_token: ' + res.refresh_token);
-                  })
-              }
+              // 3. access_token, refresh_token 없이 접근시도
+              //    로그인 하도록 유도
               else{
-                alert('오랫동안 대기하여 로그아웃 되었습니다. 새로 로그인하세요.');
-                console.log('refresh_token 만료되어 로그인창으로 리다이렉트');
-                dispatch(changeLoginStatus(false));
-                dispatch(changeLoginToggle(true));
+                console.log('3. access_token, refresh_token 없이 접근시도');
+                console.log('   로그인 하도록 유도');
+                alert('로그인이 필요한 서비스입니다.');
               }
             })
-            .catch(err=>{
-              console.log(err);
-              alert('로그인 후 사용할 수 있습니다.');
-              console.log('기타 서버 에러 및 로그아웃상태에서 접근시도');
-              dispatch(changeLoginStatus(false))
-              dispatch(changeLoginToggle(true));
-            })
-          
-        }}>글작성</button>
-        
+          }}>글쓰기</button>
       </div>
       </>
     )
   }
+
 
 
 export {Board};
