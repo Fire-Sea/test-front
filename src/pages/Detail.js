@@ -6,7 +6,6 @@ import axios from 'axios';
 import '../styles/Detail.css';
 
 function Detail({category}){
-  
   const [textData, setTextData] = useState({});
   const [fade, setFade] = useState('');
   const {id} = useParams();
@@ -56,4 +55,4 @@ function Detail({category}){
     )
   }
 
-  export {Detail};
+export {Detail};

@@ -10,27 +10,16 @@ function Login(){
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const ip = useSelector((state) => {return state.ip});
-  const token = useSelector((state)=> {return state.token});
+  //const token = useSelector((state)=> {return state.token});
   
     useEffect(()=>{
-      const fadeTimer = setTimeout(()=>{setFade('end')}, 100)
+      const fadeTimer = setTimeout(()=>setFade('end'), 100)
       return ()=>{
         clearTimeout(fadeTimer);
-        setFade('')
+        setFade('');
       }
     }, [])
   
-    // function onSilentRefresh(){
-    //   axios.post('http://${ip}/api/refresh', loginData)
-    //     .then(onLoginSuccess)
-    //     .catch(err=>{console.log(err)})
-    // }
-  
-    // function onLoginSuccess(response){
-    //   const {accessToken} = response.data;
-    //   axios.defaults.headers.common['Authorization'] = `${accessToken}`;
-    //   setTimeout(onSilentRefresh, 600000);
-    // }
     return(
       <>
         <div className={'login-bg start ' + fade}>
@@ -103,3 +92,16 @@ function Login(){
   }
 
   export {Login};
+
+
+  // function onSilentRefresh(){
+    //   axios.post('http://${ip}/api/refresh', loginData)
+    //     .then(onLoginSuccess)
+    //     .catch(err=>{console.log(err)})
+    // }
+  
+    // function onLoginSuccess(response){
+    //   const {accessToken} = response.data;
+    //   axios.defaults.headers.common['Authorization'] = `${accessToken}`;
+    //   setTimeout(onSilentRefresh, 600000);
+    // }
