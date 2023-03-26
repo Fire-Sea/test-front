@@ -34,7 +34,7 @@
 }
 
 .edit-btn{
-  margin: 10px 0px 0px 25%;
+  margin: 10px 0px 0px 0px;
 }
 
 .edit-btn button{
@@ -44,30 +44,50 @@
 }
 
 .edit-container{
-  width: 100%;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
   text-align: center;
 }
 
 .edit-title{
-  width: 50%;
+  width: 100%;
   height: 30px;
-  margin-bottom: 1px;
   padding: 10px;
+  margin-bottom: 5px;
   border: 1px solid lightcoral;
 }
-
+.edit-menu{
+  width: 100%;
+  border-bottom: 0px;
+  padding-left: 5px;
+  margin: 0px;
+  text-align: left;
+  background-color: rgb(228, 76, 76);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  height: 30px;
+}
+.edit-menu button{
+  height: 30px;
+}
+.edit-menu button:hover{
+  background-color: rgb(255, 83, 83);
+}
 .edit-body{
-  width: 50%;
+  width: 100%;
   height: 400px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 10px;
-  display: block;
+  padding: 20px;
+  text-align: left;
+  font-size: 12px;
+  border: 1px solid lightcoral;
 }
 .edit-btn{
   width: 60%;
 }
-
+.edit-body p{
+  margin: 0px;
+}
 .edit-btn button{
   float: left;
 }
@@ -76,24 +96,10 @@
   background-color: rgb(167, 56, 56);
 }
 
-textarea{
-  resize: none;
-  background-color: white;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  border: 1px solid lightcoral;
-  font-size: 15px;
-  color: black;
-  font-family: 'SDSamliphopangche_Outline';
-  font-weight: 500;
-  padding: 5px;
-  
-}
 input:focus{
   outline: none;
 }
 
-textarea:focus{
+.edit-body:focus{
   outline: none;
 }

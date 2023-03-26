@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import { Input } from '../Input';
-import { changeAccessToken, changeBothToken, changeLoginStatus, changeLoginToggle } from '../store';
+import { changeLoginToggle } from '../store';
 import axios from 'axios';
 import '../styles/Edit.css';
+import {useCookies} from 'react-cookie';
 
 function Edit(){
   const [fade, setFade] = useState('');
@@ -12,11 +13,27 @@ function Edit(){
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const ip = useSelector((state) => {return state.ip});
-  const token = useSelector((state)=> {return state.token});
-  
+  const [cookies, setCookie, removeCookie] = useCookies();
+
+  const editor = document.querySelector('.edit-body');
+
+
+  const setStyle = (style)=>{
+    document.execCommand(style);
+    focusEditor();
+  }
+  const focusEditor = ()=>{
+    editor.focus({preventScroll: true});
+  }
   const getTextData = ()=>{
     const textTitle = document.querySelector('.edit-title').value;
-    const textBody = document.querySelector('.edit-body').value;
+    const pElement = document.createElement('p');
+    const firstLine = editor.firstChild;
+    pElement.appendChild(firstLine);
+    editor.prepend(pElement);
+
+    const textBody = editor.innerHTML;
+    
     
     if(!textTitle){
       alert('제목을 입력하세요');
@@ -35,7 +52,10 @@ function Edit(){
   }
 
   const sendTextData = (textData)=>{
-    axios.defaults.headers.common['Authorization'] = token.access_token;
+    const expires = new Date();
+    expires.setMinutes(expires.getMinutes()+300);
+
+    axios.defaults.headers.common['Authorization'] = cookies.token.access_token;
     axios.post(`http://${ip}/api/user/send`, textData)
       .then(res=>{
         let statusCode = res.data.statusCode;
@@ -44,7 +64,7 @@ function Edit(){
           navigate(`/${category}/list`);
         }
         else{
-          axios.defaults.headers.common['Authorization'] = token.refresh_token;
+          axios.defaults.headers.common['Authorization'] = cookies.token.refresh_token;
           axios.get(`http://${ip}/api/refresh`)
             .then(res=>{
               const statusCode = res.data.statusCode;
@@ -54,9 +74,14 @@ function Edit(){
               if(statusCode === 20010){
                 console.log('2-1. refresh_token: 5분이상 유효');
                 console.log('     access_token 재발급 성공');
-                dispatch(changeAccessToken({
-                  access_token: res.access_token
-                }))
+
+                const token = {
+                  access_token: res.access_token,
+                  refresh_token: cookies.token.refresh_token
+                }
+                setCookie('token', token, {
+                  expires: expires
+                })
                 axios.defaults.headers.common['Authorization'] = res.access_token;
                 axios.post(`http://${ip}/api/user/send`, textData)
                   .then(res=>{
@@ -69,10 +94,14 @@ function Edit(){
               else if(statusCode === 20009){
                 console.log('2-2. refresh_token: 5분미만 유효');
                 console.log('     access_token, refresh_token 둘다 재발급 성공');
-                dispatch(changeBothToken({
+                const token = {
                   access_token: res.access_token,
                   refresh_token: res.refresh_token
-                }))
+                }
+                setCookie('token', token, {
+                  expires: expires
+                })
+
                 axios.defaults.headers.common['Authorization'] = res.access_token;
                 axios.post(`http://${ip}/api/user/send`, textData)
                   .then(res=>{
@@ -86,7 +115,7 @@ function Edit(){
                 console.log('2-3. refresh_token: 만료');
                 console.log('     재로그인 하도록 유도');
                 alert('오래 대기하여 로그아웃되었습니다. 다시 로그인하세요.');
-                dispatch(changeLoginStatus(false));
+                removeCookie('token', {path: '/'});
                 dispatch(changeLoginToggle(true));
               }
               // 2-4. 기타 네트워크 문제
@@ -98,6 +127,9 @@ function Edit(){
         }
       })
   }
+
+  
+  document.execCommand('defaultParagraphSeparator', false, 'p');
   useEffect(()=>{
     const fadeTimer = setTimeout(()=>setFade('end'), 100);
     return ()=>{
@@ -111,7 +143,36 @@ function Edit(){
       <Input/>
       <div className={'edit-container start ' + fade}>
         <input className='edit-title' placeholder='제목을 입력하세요'/>
-        <textarea className='edit-body' autoComplete='no' placeholder='내용을 작성하세요'/>
+        <div className="edit-menu">
+          <button id="btn-bold" onClick={()=>{setStyle('bold');}}>
+            <b>B</b>
+          </button>
+          <button id="btn-italic" onClick={()=>{setStyle('italic');}}>
+            <i>I</i>
+          </button>
+          <button id="btn-underline" onClick={()=>{setStyle('underline');}}>
+            <u>U</u>
+          </button>
+          <button id="btn-strike" onClick={()=>{setStyle('strikeThrough');}}>
+            <s>S</s>
+          </button>
+          <button id="btn-ordered-list" onClick={()=>{setStyle('insertOrderedList');}}>
+            OL
+          </button>
+          <button id="btn-unordered-list" onClick={()=>{setStyle('insertUnorderedList');}}>
+            UL
+          </button>
+          <button id="btn-image">
+            IMG
+          </button>
+        </div>
+        <div className='edit-body' placeholder='내용을 작성하세요' contentEditable='true' onPaste={(e)=>{
+          e.preventDefault();
+          let pastedData = e.clipboardData || window.clipboardData;
+          let text = pastedData.getData('text');
+          window.document.execCommand('insertText', false, text);
+        }}>
+        </div>
         <div className='edit-btn'>
           <button className='edit-cancel' onClick={()=>navigate(-1)}>취소</button>
           <button className='edit-send' onClick={()=>{getTextData();}}

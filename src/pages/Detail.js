@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import { Input } from '../Input';
 import {useSelector} from 'react-redux';
+import { useRef } from 'react';
 import axios from 'axios';
 import '../styles/Detail.css';
 
@@ -11,16 +12,18 @@ function Detail({category}){
   const {id} = useParams();
   const navigate = useNavigate();
   const ip = useSelector((state)=>{return state.ip});
+  const textDetail = useRef(null);
 
+  
   // 글 정보 저장 함수
   const getTextData = ()=>{
     axios.get(`http://${ip}/api/detail/?category=${category}&id=${id}`)
     .then(res=>{
-      const time = new Date(res.data.createdTime);
-      res.data.createdTime = `${time.getFullYear()}/${time.getMonth()+1}
-                              /${time.getDate()} ${time.getHours()}
-                              :${time.getMinutes()}:${time.getSeconds()}`;
+      let time = new Date(res.data.createdTime);
+      time = time.toISOString();
+      res.data.createdTime = `${time.substring(0, 10)} ${time.substring(11, 19)}`;
       setTextData(res.data);
+      textDetail.current.innerHTML = res.data.textBody;
     })
     .catch(err=>{
       console.log(err);
@@ -46,9 +49,7 @@ function Detail({category}){
             <h3>{textData.textTitle}</h3>
             <p>{textData.createdTime}</p>
         </div>
-        <div className='detail-body'>
-            <textarea value={textData.textBody} disabled/>
-        </div>
+        <div className='detail-body' ref={textDetail}></div>
         <button className='detail-backBtn' onClick={()=>navigate(-1)}>뒤로가기</button>
     </div>
     </>

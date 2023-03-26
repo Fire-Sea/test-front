@@ -9,40 +9,24 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {Banner} from './Banner';
 import './styles/App.css';
-import { changeLoginStatus, changeBothToken, changeLoginToggle } from './store';
+import { changeLoginToggle } from './store';
+import { useCookies } from 'react-cookie';
 
 function App() {
 
   let [easteregg, setEasteregg] = useState(false);
   let token = useSelector((state)=> {return state.token});
-  let dispatch = useDispatch();
+  
   return (
     <div className="App">
       {
         token.login_toggle && <Login/>
       }
       <Navbar/>
-        
-      {
-        token.login_status ? 
-          <button onClick={()=>{
-            dispatch(changeLoginStatus(false));
-            dispatch(changeBothToken({}));
-          }}>로그아웃</button> 
-          : 
-          <button onClick={()=>{
-            dispatch(changeLoginToggle(true));
-          }}>로그인</button>
-      }
 
       {
         easteregg && <div className='easteregg'><h1>서버가~~일을~~안해~~~</h1></div>
       }
-
-      <button onClick={()=>{
-        console.log(`(at/rt/login_status)=> ${token.access_token}/${token.refresh_token}/${token.login_status}`);
-      }}>현재 토큰, 로그인상황 콘솔</button>
-
 
       <button onClick={()=>{
         let t = document.querySelectorAll('.navbar a');
@@ -84,12 +68,37 @@ function App() {
 
 function Navbar(){
   let navigate = useNavigate();
+  let dispatch = useDispatch();
+  const [cookies, setCookie, removeCookie] = useCookies();
+  
+  const loginBtn = (is_login)=>{
+    if(is_login){
+      return(
+        <button className='login-toggle' onClick={()=>{
+          removeCookie('is_login', {path: '/'});
+          removeCookie('token', {path: '/'});
+          alert('로그아웃 되었습니다.')
+        }}>로그아웃</button> 
+      )
+    }
+    return(
+      <button className='login-toggle' onClick={()=>{
+        dispatch(changeLoginToggle(true));
+      }}>로그인</button>
+    )
+  }
+
   return(
     <div className='header'>
       <div className='navbar'>
-        <a className='navbar-logo' onClick={()=>{navigate('/')}}>Fire Sea</a>
-        <a className='navbar-item' onClick={()=>{navigate('/server/list')}}>Server</a>
-        <a className='navbar-item' onClick={()=>{navigate('/front/list')}}>Front</a>
+        <div className='navbar-l'>
+          <a className='navbar-logo' onClick={()=>{navigate('/')}}>Fire Sea</a>
+          <a className='navbar-item' onClick={()=>{navigate('/server/list')}}>Server</a>
+          <a className='navbar-item' onClick={()=>{navigate('/front/list')}}>Front</a>
+        </div>
+        <div className='navbar-r'>
+          <a className='navbar-login'>{loginBtn(cookies.is_login)}</a>
+        </div>
       </div>
     </div>
   )

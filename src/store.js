@@ -9,21 +9,9 @@ let ip = createSlice({
 let token = createSlice({
     name: 'token',
     initialState: {
-        login_status: false,
         login_toggle: false,
-        access_token: '',
-        refresh_token: ''
     },
     reducers: {
-        changeAccessToken(state, token){
-            state.access_token = token.payload.access_token;
-        },
-        changeBothToken(state, token){
-            [state.access_token, state.refresh_token] = [token.payload.access_token, token.payload.refresh_token];
-        },
-        changeLoginStatus(state, bool){
-            state.login_status = bool.payload;
-        },
         changeLoginToggle(state, bool){
             state.login_toggle = bool.payload;
         }
@@ -37,4 +25,4 @@ export default configureStore({
     }
 })
 
-export let {changeAccessToken, changeBothToken, changeLoginStatus, changeLoginToggle} = token.actions;
+export let {changeLoginToggle} = token.actions;
