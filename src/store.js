@@ -6,23 +6,26 @@ let ip = createSlice({
     // '172.30.1.31:8080'
     // firesea.o-r.kr:8080
 })
-let token = createSlice({
-    name: 'token',
+let loginInfo = createSlice({
+    name: 'loginInfo',
     initialState: {
-        login_toggle: false,
+        login_status: false,
+        nickname: '',
     },
     reducers: {
-        changeLoginToggle(state, bool){
-            state.login_toggle = bool.payload;
+        changeLoginStatus(state, bool){
+            state.login_status = bool.payload;
+        },
+        changeNickname(state, nickname){
+            state.nickname = nickname.payload;
         }
     }
 })
-
 export default configureStore({
     reducer: { 
         ip : ip.reducer,
-        token : token.reducer
+        loginInfo : loginInfo.reducer,
     }
 })
 
-export let {changeLoginToggle} = token.actions;
+export let {changeLoginStatus, changeNickname} = loginInfo.actions;

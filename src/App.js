@@ -9,18 +9,17 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {Banner} from './Banner';
 import './styles/App.css';
-import { changeLoginToggle } from './store';
+import { changeLoginStatus, changeNickname } from './store';
 import { useCookies } from 'react-cookie';
 
 function App() {
 
   let [easteregg, setEasteregg] = useState(false);
-  let token = useSelector((state)=> {return state.token});
-  
+  const login_status = useSelector((state)=> {return state.loginInfo.login_status});
   return (
     <div className="App">
       {
-        token.login_toggle && <Login/>
+        login_status && <Login/>
       }
       <Navbar/>
 
@@ -46,20 +45,15 @@ function App() {
           setEasteregg(false);
         }
       }}>easteregg</button>
-      {/* <Banner/> */}
+      <Banner/>
 
       <Routes>
         <Route path="/" element={<Main/>}/>
-        <Route path="/server/list/" element={<Board category={'Server'} />}/>
-        <Route path="/front/list/" element={<Board category={'Front'} />}/>
-        <Route path="/detail/:id" element={<Detail/>}/>
-        <Route path="/server/detail/:id" element={<Detail category={'server'} />}/>
-        <Route path="/front/detail/:id" element={<Detail category={'front'} />}/>
+        <Route path="/list/:category/:currentPage" element={<Board/> } />
+        <Route path="/detail/:category/:id" element={<Detail/>}/>
+        <Route path="/edit/:category" element={<Edit/>}/>
 
         <Route path="/register" element={<Register/>}/>
-
-        <Route path="/:category/edit" element={<Edit/>}/>
-
         <Route path="*" element={<Error/>}/>
       </Routes>
     </div>
@@ -70,20 +64,22 @@ function Navbar(){
   let navigate = useNavigate();
   let dispatch = useDispatch();
   const [cookies, setCookie, removeCookie] = useCookies();
-  
+  const nickname = useSelector((state)=> {return state.loginInfo.nickname});
+
   const loginBtn = (is_login)=>{
     if(is_login){
       return(
         <button className='login-toggle' onClick={()=>{
           removeCookie('is_login', {path: '/'});
           removeCookie('token', {path: '/'});
-          alert('로그아웃 되었습니다.')
-        }}>로그아웃</button> 
+          alert('로그아웃 되었습니다.');
+          window.location.replace('/');
+        }}>{nickname}</button> 
       )
     }
     return(
       <button className='login-toggle' onClick={()=>{
-        dispatch(changeLoginToggle(true));
+        dispatch(changeLoginStatus(true));
       }}>로그인</button>
     )
   }
@@ -92,12 +88,16 @@ function Navbar(){
     <div className='header'>
       <div className='navbar'>
         <div className='navbar-l'>
-          <a className='navbar-logo' onClick={()=>{navigate('/')}}>Fire Sea</a>
-          <a className='navbar-item' onClick={()=>{navigate('/server/list')}}>Server</a>
-          <a className='navbar-item' onClick={()=>{navigate('/front/list')}}>Front</a>
+          <p className='navbar-logo' onClick={()=>{navigate('/')}}>Fire Sea</p>
+          <p className='navbar-item' onClick={()=>{
+            navigate('/list/server/0');
+            }}>Server</p>
+          <p className='navbar-item' onClick={()=>{
+            navigate('/list/front/0');
+            }}>Front</p>
         </div>
         <div className='navbar-r'>
-          <a className='navbar-login'>{loginBtn(cookies.is_login)}</a>
+          <p className='navbar-login'>{loginBtn(cookies.is_login)}</p>
         </div>
       </div>
     </div>
@@ -121,11 +121,11 @@ function Main(){
       <Input/>
       <div className={'main start ' + fade}>
         <div className='main-img'>
-          <div className='img-overlay' onClick={()=>{navigate('/front/list')}}>Front</div>
+          <div className='img-overlay' onClick={()=>{navigate('/list/front/0')}}>Front</div>
           <img alt='main_img1' src={process.env.PUBLIC_URL + '/main_img1.jpg'}/>
         </div>
         <div className='main-img'>
-        <div className='img-overlay' onClick={()=>{navigate('/server/list')}}>Server</div>
+        <div className='img-overlay' onClick={()=>{navigate('/list/server/0')}}>Server</div>
           <img alt='main_img2' src={process.env.PUBLIC_URL + '/main_img2.jpg'}/>
         </div>
       </div>
@@ -134,11 +134,9 @@ function Main(){
 }
 
 function Error(){
-
   return(
     <div>err</div>
   )
 }
-
 
 export default App;

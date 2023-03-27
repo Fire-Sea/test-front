@@ -3,7 +3,7 @@
     height: 600px;
     left: 80px;
     top: 150px;
-    position: fixed;
+    position: absolute;
     perspective: 500px;
   }
   .banner-r{
@@ -11,7 +11,7 @@
     height: 600px;
     right: 80px;
     top: 150px;
-    position: fixed;
+    position: absolute;
     perspective: 500px;
   }
   .banner-container p{

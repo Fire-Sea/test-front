@@ -6,7 +6,7 @@ import { useRef } from 'react';
 import axios from 'axios';
 import '../styles/Detail.css';
 
-function Detail({category}){
+function Detail(){
   const [textData, setTextData] = useState({});
   const [fade, setFade] = useState('');
   const {id} = useParams();
@@ -14,6 +14,7 @@ function Detail({category}){
   const ip = useSelector((state)=>{return state.ip});
   const textDetail = useRef(null);
 
+  const {category} = useParams();
   
   // 글 정보 저장 함수
   const getTextData = ()=>{

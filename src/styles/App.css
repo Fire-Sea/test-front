@@ -31,6 +31,8 @@ button{
   background-color: rgb(228, 76, 76);
   color: white;
   border: none;
+  border-radius: 5px;
+  font-weight: bold;
 }
 
 
@@ -39,14 +41,13 @@ button{
   height: 55px;
   background-color: rgb(228, 76, 76);
   color: white;
-  padding-left: 20px;
 }
-.navbar-l a{
+.navbar-l p{
   float:left;
   cursor: pointer;
   /* animation: barrelroll 1s infinite; */
 }
-.navbar a:hover{
+.navbar p:hover{
   color: lightgray;
 }
 
@@ -60,11 +61,11 @@ button{
   margin: 15px 20px 0px 0px;
 }
 
-.navbar-r a{
+.navbar-r p{
   float: right;
 }
 .navbar-login{
-  margin: 15px 100px;
+  margin: 15px 10px;
 }
 
 .login-toggle{
@@ -74,23 +75,30 @@ button{
 
 
 .main{
-  width: 100%;
-  text-align: center;
+  width: 50%;
+  min-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 50px;
 }
 
 .main-img{
   position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  width: 300px;
+  float: left;
+  width: 50%;
 }
 
 .img-overlay{
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
   width: 100%;
   height: 100%;
-  padding: 80px;
   font-size: 50px;
   font-weight: bold;
   color: white;
@@ -102,7 +110,8 @@ button{
 }
 
 .main-img img{
-  width: 300px;
+  width: 100%;
+  margin-bottom: -5px;
 }
 
 .content{
@@ -230,5 +239,62 @@ button{
   100%{
     transform: scaleX(1);
     transform: scaleY(1);
+  }
+}
+
+
+@media screen and (max-width: 1199px) {
+  .banner-l{
+    display: none;
+  }
+  .banner-r{
+    display: none;
+  }
+  .board{
+    width: 95%;
+  }
+  .board-homeBtn{
+    width: 100%;
+    margin-top: 20px;
+  }
+  .board-newBtn{
+    width: 100%;
+    margin-top: 5px;
+  }
+  .detail-container{
+    width: 95%;
+  }
+  .login-bg{
+    width: 80%;
+    left: 10%;
+    right: 10%;
+  }
+  .main{
+    width: 70%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .main-img{
+    width: 90%;
+  }
+  .edit-container{
+    width: 90%;
+  }
+  .edit-btn button{
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  .edit-btn{
+    width: 100%;
+  }
+  .board-pc{
+    display: none;
+  }
+  .board-m{
+    display: block;
+  }
+  .detail-backBtn{
+    width: 100%;
   }
 }

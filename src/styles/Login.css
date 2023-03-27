@@ -1,14 +1,14 @@
 .login-bg{
     position: absolute;
     left: 30%;
-    right: 30%;
+    right: 20%;
     top: 20%;
     background-color: rgb(238, 238, 238);
     border-radius: 5px;
     z-index: 5;
     width: 40%;
     height: 60%;
-    min-width: 300px;
+    min-width: 200px;
     min-height: 500px;
   }
   .login-logo{

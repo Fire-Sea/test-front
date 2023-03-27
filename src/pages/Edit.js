@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import { Input } from '../Input';
-import { changeLoginToggle } from '../store';
+import { changeLoginStatus } from '../store';
 import axios from 'axios';
 import '../styles/Edit.css';
 import {useCookies} from 'react-cookie';
@@ -114,9 +114,10 @@ function Edit(){
               else if(statusCode === 40009){
                 console.log('2-3. refresh_token: 만료');
                 console.log('     재로그인 하도록 유도');
-                alert('오래 대기하여 로그아웃되었습니다. 다시 로그인하세요.');
                 removeCookie('token', {path: '/'});
-                dispatch(changeLoginToggle(true));
+                removeCookie('is_login', {path: '/'});
+                alert('오래 대기하여 로그아웃되었습니다. 다시 로그인하세요.');
+                dispatch(changeLoginStatus(true));
               }
               // 2-4. 기타 네트워크 문제
               else{

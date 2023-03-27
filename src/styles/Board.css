@@ -1,88 +1,112 @@
 .board{
-    width: 50%;
-    min-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: left;
-    background-color: white;
-  }
-  
-  .board-category{
-    width: 100%;
-    padding-bottom: 10px;
-    border-bottom: 2px solid rgb(228, 76, 76);
-  }
-  
-  table{
-    width: 100%;
-    text-align: center;
-    border-collapse: separate;
-    border-spacing: 0px;
-    margin-top: -10px;
-  }
-  
-  th{
-    padding-bottom: 10px;
-    border-bottom: solid 1px rgb(228, 76, 76);
-  }
-  
-  td{
-    border-top: solid 1px rgb(223, 162, 162);
-  }
-  .board-tr:hover{
-    background-color: rgba(0,0,0,0.1);
-  }
-  
-  .board-id{
-    width: 10%;
-    font-size: 12px;
-  }
-  .board-title{
-    width: 60%;
-    text-align: left;
-    overflow: hidden;
-    cursor: pointer;
-    font-size: 14px;
-  }
-  .board-nickname{
-    width: 15%;
-    font-size: 12px;
-  }
-  .board-date{
-    width: 15%;
-    font-size: 12px;
-  }
-  
-  .board-line{
-    border-top: 2px solid rgb(228, 76, 76);
-  }
-  
-  .board-homeBtn{
-    width: 100px;
-    height: 30px;
-    float: left;
-  }
-  
-  .board-newBtn{
-    width: 100px;
-    height: 30px;
-    float: right;
-  }
-  
-  .board-pages{
-    text-align: center;
-  }
-  .board-pages button{
-    margin: 2px;
-  }
-  .board-pages button:hover{
-    color: lightgray;
-    background-color: rgb(167, 56, 56);
-  }
-  
-  .board-clicked{
-    color: lightgray;
-    background-color: rgb(167, 56, 56);
-  }
-  
-  
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  background-color: white;
+}
+.board-category{
+  width: 100%;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgb(228, 76, 76);
+}
+
+.board-pc{
+  width: 100%;
+  text-align: center;
+  border-collapse: separate;
+  border-spacing: 0px;
+  margin-top: -10px;
+}
+
+th{
+  padding-bottom: 10px;
+  border-bottom: solid 1px rgb(228, 76, 76);
+}
+
+.board-tr td{
+  border-top: solid 1px rgb(223, 162, 162);
+}
+.board-tr:hover{
+  background-color: rgba(0,0,0,0.1);
+}
+
+.board-id{
+  width: 10%;
+  font-size: 12px;
+}
+.board-title{
+  width: 60%;
+  text-align: left;
+  overflow: hidden;
+  cursor: pointer;
+  font-size: 14px;
+}
+.board-nickname{
+  width: 15%;
+  font-size: 12px;
+}
+.board-date{
+  width: 15%;
+  font-size: 12px;
+}
+.board-m{
+  width: 100%;
+  border-spacing: 0px;
+  margin-top: -23px;
+  display: none;
+}
+.board-title-m{
+  text-align: left;
+  width: 100vw;
+  cursor: pointer;
+  font-size: 12px;
+  border-top: 1px solid lightcoral;
+  padding: 5px;
+}
+.a-title{
+  display: block;
+  font-size: 13px;
+}
+.a-nickname{
+  font-size: 11px;
+}
+.a-date{
+  float: right;
+  font-size: 11px;
+}
+.board-tr-m:hover {
+  background-color: rgba(0,0,0,0.1);
+}
+
+.board-line{
+  border-top: 2px solid rgb(228, 76, 76);
+}
+
+.board-homeBtn{
+  width: 100px;
+  height: 30px;
+  float: left;
+}
+
+.board-newBtn{
+  width: 100px;
+  height: 30px;
+  float: right;
+}
+
+.board-pages{
+  text-align: center;
+}
+.board-pages button{
+  margin: 2px;
+}
+.board-pages button:hover{
+  color: lightgray;
+  background-color: rgb(167, 56, 56);
+}
+
+.board-clicked{
+  color: lightgray;
+  background-color: rgb(167, 56, 56);
+}

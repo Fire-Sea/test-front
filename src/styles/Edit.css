@@ -1,18 +1,6 @@
-.edit-select{
-  width: 50%;
-  height: 30px;
-  min-width: 350px;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-  color: white;
-  background-color: black;
-}
-
 .edit-title{
   width: 50%;
   height: 30px;
-  min-width: 350px;
   margin-left: auto;
   margin-right: auto;
   display: block;
@@ -25,7 +13,6 @@
 .edit-body{
   width: 50%;
   height: 400px;
-  min-width: 350px;
   margin-left: auto;
   margin-right: auto;
   padding: 10px;
@@ -42,7 +29,9 @@
   height: 40px;
   margin-right: 10px;
 }
-
+.btn-clicked{
+  background-color: rgb(167, 56, 56);
+}
 .edit-container{
   width: 50%;
   margin-left: auto;
@@ -79,7 +68,7 @@
   height: 400px;
   padding: 20px;
   text-align: left;
-  font-size: 12px;
+  font-size: 16px;
   border: 1px solid lightcoral;
 }
 .edit-btn{

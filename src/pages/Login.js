@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeLoginToggle } from '../store';
+import { changeLoginStatus, changeNickname } from '../store';
 import axios from 'axios';
 import '../styles/Login.css';
 import { useCookies } from 'react-cookie';
@@ -51,8 +51,9 @@ function Login(){
         else{
           const expires = new Date();
           expires.setMinutes(expires.getMinutes()+300);
-
+          const nickname = res.data.data;
           res = res.headers;
+          
           const token = {
             access_token: res.access_token,
             refresh_token: res.refresh_token,
@@ -66,8 +67,10 @@ function Login(){
             path: '/',
             expires
           });
-          dispatch(changeLoginToggle(false));
+          dispatch(changeNickname(nickname));
+          dispatch(changeLoginStatus(false));
           alert('어서오세요!');
+          
           console.log('2. 로그인 정보가 일치하여 access_token, refresh_token 발급');
         }
       })
@@ -107,8 +110,8 @@ function Login(){
           <div style={{'marginTop':'10px'}}></div>
           <button className='login-loginBtn' onClick={()=>getInputData()}>로그인</button>
           <span className='login-text'>회원이 아니신가요?</span>
-          <button className='login-registerBtn' onClick={()=>{navigate('/register'); dispatch(changeLoginToggle(false));}}>회원가입 하기</button>
-          <button className='login-cancelBtn' onClick={()=>{dispatch(changeLoginToggle(false))}}>닫기</button>
+          <button className='login-registerBtn' onClick={()=>{navigate('/register'); dispatch(changeLoginStatus(false));}}>회원가입 하기</button>
+          <button className='login-cancelBtn' onClick={()=>{dispatch(changeLoginStatus(false))}}>닫기</button>
         </div>
       </div>
     </>
