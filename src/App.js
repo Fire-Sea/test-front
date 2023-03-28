@@ -129,6 +129,10 @@ function Main(){
           <img alt='main_img2' src={process.env.PUBLIC_URL + '/main_img2.jpg'}/>
         </div>
       </div>
+      <div className='main-game'>
+        <div className='img-overlay'>Game</div>
+        <img alt='main_img3' src={process.env.PUBLIC_URL + '/main_img3.jpg'}/>
+      </div>
     </>
   )
 }
