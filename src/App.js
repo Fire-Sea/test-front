@@ -8,6 +8,7 @@ import {Login} from './pages/Login';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {Banner} from './Banner';
+import { Gacha } from './pages/Gacha';
 import './styles/App.css';
 import { changeLoginStatus, changeNickname } from './store';
 import { useCookies } from 'react-cookie';
@@ -53,6 +54,7 @@ function App() {
         <Route path="/detail/:category/:id" element={<Detail/>}/>
         <Route path="/edit/:category" element={<Edit/>}/>
 
+        <Route path="/gacha" element={<Gacha/>}/>
         <Route path="/register" element={<Register/>}/>
         <Route path="*" element={<Error/>}/>
       </Routes>
@@ -130,7 +132,7 @@ function Main(){
         </div>
       </div>
       <div className='main-game'>
-        <div className='img-overlay'>Game</div>
+        <div className='img-overlay' onClick={()=>{navigate('/gacha')}}>Game</div>
         <img alt='main_img3' src={process.env.PUBLIC_URL + '/main_img3.jpg'}/>
       </div>
     </>
