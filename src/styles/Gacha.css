@@ -4,7 +4,7 @@
   margin-right: auto;
   margin-top: 100px;
   overflow: hidden;
-  width: 50%;
+  width: 45%;
   height: 500px;
 }
 .gacha-video{
@@ -43,8 +43,11 @@
   font-size: 10px;
 }
 .gacha-btns{
-  margin-left: 25%;
+  display: flex;
+  margin-top: 20px;
+  margin-left: 27.5%;
 }
 .gacha-10{
   height: 30px;
+  margin-top: 5px;
 }

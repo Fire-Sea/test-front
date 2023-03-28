@@ -311,17 +311,21 @@ button{
   }
   .gacha-container{
     width: 75%;
+    height: 500px;
   }
-  .gacha-result{
-    height: 100%;
+  .gacha-btns{
+    flex-direction: column;
+    margin: 10px 12.5% 0px 12.5%;
   }
 }
 
 @media screen and (max-width: 544px) {
-  .gacha-result{
-    height: 45%;
+  .gacha-container{
+    width: 80%;
+    height: 250px;
   }
-  .gacha-video{
-    height: 45%;
+  .gacha-btns{
+    flex-direction: column;
+    margin: 10px 10% 0px 10%;
   }
 }

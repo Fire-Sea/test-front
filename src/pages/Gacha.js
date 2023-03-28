@@ -58,7 +58,7 @@ function Gacha(){
         let template = `<div class='hi ${gachaResult[i].rank}'>${gachaResult[i].name}</div>`;
         gachaBoard.insertAdjacentHTML('beforeend', template);
       }
-    }, 100)
+    }, 500)
   }
 
   // 단챠 함수
@@ -125,7 +125,8 @@ function Gacha(){
   return(
     <>
       <div className="gacha-container">
-        <video className="gacha-video" src={process.env.PUBLIC_URL + '/4starwish.mp4'}/>
+        <video className="gacha-video" src={process.env.PUBLIC_URL + '/4starwish.mp4'} 
+        playsInline muted  autoPlay/>
         <div className="gacha-result">
         </div>
       </div>
