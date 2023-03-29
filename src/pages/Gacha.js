@@ -5,7 +5,6 @@ function Gacha(){
   useEffect(()=>{
     setVideo(document.querySelector('.gacha-video'))
   }, [])
-  // let video = document.querySelector('.gacha-video');
   let gachaBoard = document.querySelector('.gacha-result');
   let [video, setVideo] = useState('');
   let gachaResult = [];
@@ -55,7 +54,7 @@ function Gacha(){
     // 연출이 끝나기 전 출력되는걸 방지하기 위해 타이머 설정
     setTimeout(()=>{
       for(let i=0; i<10; i++){
-        let template = `<div class='hi ${gachaResult[i].rank}'>${gachaResult[i].name}</div>`;
+        let template = `<div class='hi ${gachaResult[i].rank}'><p>${gachaResult[i].name}</p></div>`;
         gachaBoard.insertAdjacentHTML('beforeend', template);
       }
     }, 500)

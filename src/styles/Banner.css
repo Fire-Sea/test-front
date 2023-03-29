@@ -1,18 +1,20 @@
 .banner-l{
     width: 200px;
     height: 600px;
-    left: 80px;
-    top: 150px;
+    right: 77%;
+    top: 200px;
     position: absolute;
     perspective: 500px;
+    cursor: pointer;
   }
   .banner-r{
     width: 200px;
     height: 600px;
-    right: 80px;
-    top: 150px;
+    left: 77%;
+    top: 200px;
     position: absolute;
     perspective: 500px;
+    cursor: pointer;
   }
   .banner-container p{
     margin: 0px 0px 10px 0px;

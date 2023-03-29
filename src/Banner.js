@@ -4,7 +4,7 @@ function Banner(){
 
     return(
       <>
-      <div className='banner-l'>
+      <div className='banner-l' onClick={()=>{window.open('https://genshin.hoyoverse.com/ko')}}>
         <div className='banner-container'>
           <div className='banner-face face-front'>
             <h3>원신 삼대장</h3>
@@ -24,7 +24,7 @@ function Banner(){
         </div>
       </div>
 
-      <div className='banner-r'>
+      <div className='banner-r' onClick={()=>{window.open('https://www.pledis.co.kr/html/artist/fromisnine/KOR/profile')}}>
         <div className='banner-container'>
           <div className='banner-face face-front'>
             <h3>프로미스나인</h3>

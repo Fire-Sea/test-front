@@ -19,28 +19,37 @@
   display: flex;
 }
 .rank5{
-  border: 5px solid orange;
+  border: 5px solid rgb(255, 187, 62);
   width: 8%;
   height: 90%;
   background-color: azure;
   margin: 1%;
-  font-size: 10px;
+  text-align: center;
+  overflow: hidden;
+}
+.gacha-result p{
+  margin: 0px auto;
+  text-orientation: upright;
+  writing-mode: vertical-lr;
+  font-size: 30px;
 }
 .rank4{
-  border: 5px solid purple;
+  border: 5px solid rgb(182, 90, 182);
   width: 8%;
   height: 90%;
   background-color: azure;
   margin: 1%;
   font-size: 10px;
+  overflow: hidden;
 }
 .rank3{
   width: 8%;
   height: 90%;
   background-color: azure;
   margin: 1%;
-  border: 5px solid lightskyblue;
+  border: 5px solid rgb(109, 195, 248);
   font-size: 10px;
+  overflow: hidden;
 }
 .gacha-btns{
   display: flex;

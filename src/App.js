@@ -12,6 +12,8 @@ import { Gacha } from './pages/Gacha';
 import './styles/App.css';
 import { changeLoginStatus, changeNickname } from './store';
 import { useCookies } from 'react-cookie';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
 
@@ -23,7 +25,6 @@ function App() {
         login_status && <Login/>
       }
       <Navbar/>
-
       {
         easteregg && <div className='easteregg'><h1>서버가~~일을~~안해~~~</h1></div>
       }
@@ -76,7 +77,7 @@ function Navbar(){
           removeCookie('token', {path: '/'});
           alert('로그아웃 되었습니다.');
           window.location.replace('/');
-        }}>{nickname}</button> 
+        }}>로그아웃</button> 
       )
     }
     return(
@@ -99,7 +100,14 @@ function Navbar(){
             }}>Front</p>
         </div>
         <div className='navbar-r'>
-          <p className='navbar-login'>{loginBtn(cookies.is_login)}</p>
+          
+          <div className='navbar-login'>
+            <p className='login-icon'><FontAwesomeIcon icon={faUser} className='fa-2x'/></p>
+            <div className='login-info'>
+              <p>{nickname ? nickname : `로그인하세요`}</p>
+              {loginBtn(cookies.is_login)}
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -131,7 +139,7 @@ function Main(){
           <img alt='main_img2' src={process.env.PUBLIC_URL + '/main_img2.jpg'}/>
         </div>
       </div>
-      <div className='main-game'>
+      <div className={'main-game start' + fade}>
         <div className='img-overlay' onClick={()=>{navigate('/gacha')}}>Game</div>
         <img alt='main_img3' src={process.env.PUBLIC_URL + '/main_img3.jpg'}/>
       </div>

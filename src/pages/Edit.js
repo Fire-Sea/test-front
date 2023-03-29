@@ -61,7 +61,7 @@ function Edit(){
         let statusCode = res.data.statusCode;
         if(statusCode === 20000){
           alert('글이 저장되었습니다.');
-          navigate(`/${category}/list`);
+          navigate(`/list/${category}/0`);
         }
         else{
           axios.defaults.headers.common['Authorization'] = cookies.token.refresh_token;
@@ -86,7 +86,7 @@ function Edit(){
                 axios.post(`http://${ip}/api/user/send`, textData)
                   .then(res=>{
                     alert('글이 저장되었습니다.');
-                    navigate(`/${category}/list`);
+                    navigate(`/list/${category}/0`);
                   })
               }
               // 2-2. refresh_token: 5분미만 유효
@@ -106,7 +106,7 @@ function Edit(){
                 axios.post(`http://${ip}/api/user/send`, textData)
                   .then(res=>{
                     alert('글이 저장되었습니다.');
-                    navigate(`/${category}/list`);
+                    navigate(`/list/${category}/0`);
                   })
               }
               // 2-3. refresh_token: 만료
