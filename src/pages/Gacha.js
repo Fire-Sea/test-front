@@ -69,7 +69,7 @@ function Gacha(){
     if(gachaData.gachaCnt === 90){
       gachaResult.push({
         rank: 'rank5',
-        name: '5성⭐⭐⭐⭐⭐'
+        name: '⭐⭐⭐⭐⭐'
       });
       gachaData.rank5 = 0.006;
       gachaData.gachaCnt = 0;
@@ -84,7 +84,7 @@ function Gacha(){
       if(gachaData.gachaCnt % 10 === 0){
         gachaResult.push({
           rank: 'rank4',
-          name: '4성⭐⭐⭐⭐'
+          name: '⭐⭐⭐⭐'
         });
         return
       }
@@ -100,7 +100,7 @@ function Gacha(){
     if(result <= gachaData.rank5){
       gachaResult.push({
           rank: 'rank5',
-          name: '5성⭐⭐⭐⭐⭐'
+          name: '⭐⭐⭐⭐⭐'
         });
       gachaData.rank5 = 0.006;
       gachaData.gachaCnt = 0;
@@ -109,14 +109,14 @@ function Gacha(){
     else if(result <= gachaData.rank4){
       gachaResult.push({
           rank: 'rank4',
-          name: '4성⭐⭐⭐⭐'
+          name: '⭐⭐⭐⭐'
         });
     }
     // 3성
     else{
       gachaResult.push({
           rank: 'rank3',
-          name: '3성⭐⭐⭐'
+          name: '⭐⭐⭐'
         });
     }
   }

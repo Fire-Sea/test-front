@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {Banner} from './Banner';
 import { Gacha } from './pages/Gacha';
 import './styles/App.css';
-import { changeLoginStatus, changeNickname } from './store';
+import { changeLoginStatus, changeNickname, changeDarkmode } from './store';
 import { useCookies } from 'react-cookie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
@@ -68,7 +68,9 @@ function Navbar(){
   let dispatch = useDispatch();
   const [cookies, setCookie, removeCookie] = useCookies();
   const nickname = useSelector((state)=> {return state.loginInfo.nickname});
-
+  let t = document.querySelector('body');
+  const darkmode = cookies.darkmode;
+  
   const loginBtn = (is_login)=>{
     if(is_login){
       return(
@@ -86,7 +88,18 @@ function Navbar(){
       }}>로그인</button>
     )
   }
-
+  
+  const a = (dd)=>{
+    if(darkmode == 'true'){
+      t.classList.add('darkmode');
+      t.style.color = 'white';
+    }
+    else{
+      t.classList.remove('darkmode');
+      t.style.color = 'black';
+    }
+  }
+  
   return(
     <div className='header'>
       <div className='navbar'>
@@ -99,6 +112,24 @@ function Navbar(){
             navigate('/list/front/0');
             }}>Front</p>
         </div>
+        {
+          a(darkmode)
+        }
+        {
+          darkmode=='true' 
+          ? <button onClick={()=>{
+            dispatch(changeDarkmode(false)); 
+            setCookie('darkmode', false, {path : '/'});
+
+          }}>원상복귀시키기</button> 
+          :<button onClick={()=>{
+            dispatch(changeDarkmode(true));
+            setCookie('darkmode', true, {path : '/'});
+
+            // t.classList.add('darkmode');
+            // document.querySelector('.navbar').style.backgroundColor = 'rgb(141, 45, 45)'
+          }}>다크모드하기</button> 
+        }
         <div className='navbar-r'>
           
           <div className='navbar-login'>
