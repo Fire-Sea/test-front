@@ -200,7 +200,7 @@ function Board(){
           {
             textList.map((data, i)=>{
               return(
-                <tr className='board-tr' key={i}>
+                <tr className='board-tr' key={data.id}>
                   <td className='board-id'>{totalNum-(currentPage*10)-i}</td>
                   <td className='board-title' onClick={()=>navigate(`/detail/${category}/${data.id}`)}><a>{data.textTitle}</a></td>
                   <td className='board-nickname'>{data.nickname}</td>
@@ -218,15 +218,13 @@ function Board(){
           {
             textList.map((data, i)=>{
               return(
-                <>
-                <tr className='board-tr-m' key={i}>
+                <tr className='board-tr-m' key={data.id}>
                   <td className='board-title-m' colSpan={2} onClick={()=>navigate(`/detail/${category}/${data.id}`)}>
                     <a className='a-title'>{data.textTitle}</a>
                     <a className='a-nickname'>{data.nickname}</a>
                     <a className='a-date'>{data.createdTime}</a>
                   </td>
                 </tr>
-                </>
               )
             })
           }  

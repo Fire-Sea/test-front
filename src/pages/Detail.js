@@ -7,33 +7,40 @@ import axios from 'axios';
 import '../styles/Detail.css';
 
 function Detail(){
-  const [textData, setTextData] = useState({});
+  const [textData, setTextData] = useState({
+    category: '',
+    textTitle: '',
+    textBody: ''
+  });
+
   const [fade, setFade] = useState('');
   const {id} = useParams();
   const navigate = useNavigate();
   const ip = useSelector((state)=>{return state.ip});
   const textDetail = useRef(null);
-
   const {category} = useParams();
-  
+  const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState(null);
+
   // 글 정보 저장 함수
-  const getTextData = ()=>{
-    axios.get(`http://${ip}/api/detail/?category=${category}&id=${id}`)
-    .then(res=>{
-      let time = new Date(res.data.createdTime);
+  const getData = async ()=>{
+    try{
+      setErr(null);
+      setLoading(true);
+      
+      const response = await axios.get(`http://${ip}/api/detail/?category=${category}&id=${id}`);
+      let time = new Date(response.data.createdTime);
       time = time.toISOString();
-      res.data.createdTime = `${time.substring(0, 10)} ${time.substring(11, 19)}`;
-      setTextData(res.data);
-      textDetail.current.innerHTML = res.data.textBody;
-    })
-    .catch(err=>{
-      console.log(err);
-      alert('서버와 연결이 원할하지 않습니다. 잠시후 시도해주세요.');
-    })
-  }
+      response.data.createdTime = `${time.substring(0, 10)} ${time.substring(11, 19)}`;
+      setTextData(response.data);
+    } catch(e){
+      setErr(e);
+    }
+    setLoading(false);
+  };
 
   useEffect(()=>{
-    getTextData();
+    getData();
     const fadeTimer = setTimeout(()=>{setFade('end')}, 100)
     return ()=>{
       clearTimeout(fadeTimer);
@@ -50,7 +57,8 @@ function Detail(){
             <h3>{textData.textTitle}</h3>
             <p>{textData.createdTime}</p>
         </div>
-        <div className='detail-body' ref={textDetail}></div>
+        <div className='detail-body' dangerouslySetInnerHTML={{__html: textData.textBody}}>
+        </div>
         <button className='detail-backBtn' onClick={()=>navigate(-1)}>뒤로가기</button>
     </div>
     </>
