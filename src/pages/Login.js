@@ -18,6 +18,7 @@ function Login(){
   })
   const {username, password} = loginData;
 
+  // 각 input에서 username, password 저장
   const onChange = (e)=>{
     const {name, value} = e.target;
     setLoginData({
@@ -25,6 +26,8 @@ function Login(){
       [name]: value
     })
   }
+
+  // input null값 검사
   const checkValue = ()=>{
     if(!username || !password){
       alert('아이디 또는 비밀번호를 입력하세요.');
@@ -33,6 +36,8 @@ function Login(){
       postData();
     }
   }
+
+  // 로그인 정보를 POST
   const postData = async ()=>{
     try{
       const response = await axios.post(`http://${ip}/api/login`, loginData);

@@ -6,7 +6,6 @@ import { changeLoginStatus } from '../store';
 import axios from 'axios';
 import '../styles/Edit.css';
 import {useCookies} from 'react-cookie';
-import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 
 function Edit(){
   const [fade, setFade] = useState('');
