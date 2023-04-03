@@ -10,9 +10,7 @@ body{
 div{
   box-sizing: border-box;
 }
-.darkmode{
-  background-color: black;
-}
+
 .header{
   width: 100%;
 }
@@ -26,16 +24,13 @@ button{
   font-weight: bold;
 }
 
-
 .navbar{
   width: 100%;
   height: 55px;
-  background-color: rgb(165, 56, 56);
+  background-color: rgb(228, 76, 76);
   color: white;
 }
-.navbar-darkmode{
-  background-color: rgb(139, 48, 48);
-}
+
 .navbar-l p{
   float:left;
   cursor: pointer;
@@ -76,7 +71,6 @@ button{
   background-color: white;
   color: black;
 }
-
 
 .main{
   width: 50%;

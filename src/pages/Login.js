@@ -63,6 +63,10 @@ function Login(){
           path: '/',
           expires
         });
+        setCookie('nickname', nickname,{
+          path: '/',
+          expires
+        })
         dispatch(changeNickname(nickname));
         dispatch(changeLoginStatus(false));
         alert('어서오세요!');

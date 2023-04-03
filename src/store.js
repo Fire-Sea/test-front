@@ -21,22 +21,11 @@ let loginInfo = createSlice({
         }
     }
 })
-let darkmode = createSlice({
-    name: 'darkmode',
-    initialState: false,
-    reducers: {
-        changeDarkmode(state, darkmode){
-            return state = darkmode.payload;
-        }
-    }
-})
 export default configureStore({
     reducer: { 
         ip : ip.reducer,
         loginInfo : loginInfo.reducer,
-        darkmode : darkmode.reducer,
     }
 })
 
 export let {changeLoginStatus, changeNickname} = loginInfo.actions;
-export let {changeDarkmode} = darkmode.actions;
