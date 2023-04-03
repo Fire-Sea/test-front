@@ -48,3 +48,10 @@ input:focus{
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
 }
+
+.warning{
+  border: 3px solid red;
+}
+.verified{
+  border: 1px solid blue;
+}

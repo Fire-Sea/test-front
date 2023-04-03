@@ -1,27 +1,24 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useCookies } from 'react-cookie';
+import axios from 'axios';
 import { Input } from '../Input';
 import { changeLoginStatus } from '../store';
-import axios from 'axios';
 import '../styles/Board.css';
-import { useCookies } from 'react-cookie';
 
 function Board(){
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const {category, currentPage} = useParams();
+  const ip = useSelector((state)=>{return state.ip});
+  const [cookies, setCookie, removeCookie] = useCookies();
   const [textList, setTextList] = useState([]);
-  
   const [totalNum, setTotalNum] = useState(0);
   const [totalPage, setTotalPage] = useState(0);
   const [serverErr, setServerErr] = useState(false);
   const [fade, setFade] = useState('');
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const {category, currentPage} = useParams();
-
-  const ip = useSelector((state)=>{return state.ip});
-  const [cookies, setCookie, removeCookie] = useCookies();
 
   // 게시판 페이지 표시 함수
   const addPageNum = (pageNum, currentPage)=>{
@@ -31,10 +28,10 @@ function Board(){
     for(let i=0; i<pageNum; i++){
       let template = '';
       if(i === currentPage){
-        template = <button className='board-clicked' onClick={()=>{  navigate(`/list/${category}/${i}`)}} key={i}>{i+1}</button>;
+        template = <button className='board-clicked' onClick={()=>navigate(`/list/${category}/${i}`)} key={i}>{i+1}</button>;
       }
       else{
-        template = <button onClick={()=>{  navigate(`/list/${category}/${i}`)}} key={i}>{i+1}</button>;
+        template = <button onClick={()=>navigate(`/list/${category}/${i}`)} key={i}>{i+1}</button>;
       }
       newArr.push(template);
     }
@@ -42,14 +39,14 @@ function Board(){
   }
 
   // 게시판 글 목록 저장 함수
-  const getTextList = ()=>{
-    axios.get(`http://${ip}/api/list?category=${category}&page=${currentPage}`)
-    .then(res=>{
-      const data = res.data;
+  const getData = async ()=>{
+    try{
+      const response = await axios.get(`http://${ip}/api/list?category=${category}&page=${currentPage}`);
+      const data = response.data;
+      const now = new Date();
       setTextList(data.content);
       setTotalNum(data.totalElements);
       setTotalPage(data.totalPages);
-      const now = new Date();
 
       data.content.forEach((a,i)=>{
         const date = new Date(a.createdTime);
@@ -60,102 +57,92 @@ function Board(){
           data.content[i].createdTime = date.toISOString().substring(0, 10)
         }
       })
-    })
-    .catch((err)=>{
+    }
+    catch(e){
       setServerErr(true);
-      console.log(err);
+      console.log(e);
       alert('서버와 연결이 원할하지 않습니다. 잠시후 시도해주세요.');
-    })
+    }
   }
 
   // 토큰 재요청 함수
-  const silentRefresh =()=>{
+  const silentRefresh = async ()=>{
+    axios.defaults.headers.common['Authorization'] = cookies.token.refresh_token;
+    const response = await axios.get(`http://${ip}/api/refresh`);
+    const statusCode = response.data.statusCode;
+
     const expires = new Date();
     expires.setMinutes(expires.getMinutes()+300);
-    axios.defaults.headers.common['Authorization'] = cookies.token.refresh_token;
-    axios.get(`http://${ip}/api/refresh`)
-      .then(res=>{
-        const statusCode = res.data.statusCode;
-        res = res.headers;
-        
-        // 2-1. refresh_token: 5분이상 유효
-        //      access_token 만 재발급 성공
-        if(statusCode === 20010){
 
-          console.log('2-1. refresh_token: 5분이상 유효');
-          console.log('     access_token 재발급 성공');
+    if(statusCode === 20010){
+      console.log('2-1. refresh_token: 5분이상 유효');
+      console.log('     access_token 재발급 성공');
 
-          const token = {
-            access_token: res.access_token,
-            refresh_token: cookies.token.refresh_token
-          }
-          setCookie('token', token, {
-            expires,
-          })
-          navigate(`/edit/${category}`);
-        }
-        // 2-2. refresh_token: 5분미만 유효
-        //      access_token, refresh_token 둘다 재발급 성공
-        else if(statusCode === 20009){
-
-          console.log('2-2. refresh_token: 5분미만 유효');
-          console.log('     access_token, refresh_token 둘다 재발급 성공');
-          const token = {
-            access_token: res.access_token,
-            refresh_token: res.refresh_token,
-          }
-          setCookie('token', token, {
-            path: '/',
-            expires,
-          })
-          navigate(`/edit/${category}`);
-        }
-        // 2-3. refresh_token: 만료
-        //      재로그인 하도록 유도
-        else if(statusCode === 40009){
-          console.log('2-3. refresh_token: 만료');
-          console.log('     재로그인 하도록 유도');
-          alert('오래 대기하여 로그아웃되었습니다. 다시 로그인하세요.');
-          removeCookie('token');
-          dispatch(changeLoginStatus(true));
-        }
-        // 2-4. 기타 네트워크 문제
-        else{
-          console.log('2-4. 기타 네트워크 문제');
-          alert('서버와 통신이 원할하지 않습니다. 잠시후 시도해주세요');
-        }
+      const token = {
+        access_token: response.access_token,
+        refresh_token: cookies.token.refresh_token
+      }
+      setCookie('token', token, {
+        expires: expires
       })
+      navigate(`/edit/${category}`);
+    }
+
+    // 2-2. refresh_token: 5분미만 유효
+    //      access_token, refresh_token 둘다 재발급 성공
+    else if(statusCode === 20009){
+      console.log('2-2. refresh_token: 5분미만 유효');
+      console.log('     access_token, refresh_token 둘다 재발급 성공');
+      const token = {
+        access_token: response.access_token,
+        refresh_token: response.refresh_token,
+      }
+      setCookie('token', token, {
+        expires: expires
+      })
+      navigate(`/edit/${category}`);
+    }
+
+    // 2-3. refresh_token: 만료
+    //      재로그인 하도록 유도
+    else if(statusCode === 40009){
+      console.log('2-3. refresh_token: 만료');
+      console.log('     재로그인 하도록 유도');
+      alert('오래 대기하여 로그아웃되었습니다. 다시 로그인하세요.');
+      removeCookie('token', {path: '/'});
+      dispatch(changeLoginStatus(true));
+    }
+
+    // 2-4. 기타 네트워크 문제
+    else{
+      console.log('2-4. 기타 네트워크 문제');
+      alert('서버와 통신이 원할하지 않습니다. 잠시후 시도해주세요');
+    }
       // 2-4. 서버와의 연결문제로 statusCode 확인불가
-      .catch(err=>{
-        console.log(err);
-        alert('서버와의 통신이 원할하지 않습니다. 잠시후 시도해주세요');
-      })
   }
 
   // access_token 유효성 검사 함수
-  const checkToken = ()=>{
-    if(cookies.is_login){
+  const checkToken = async ()=>{
+    if(cookies.nickname){
       try{
         axios.defaults.headers.common['Authorization'] = cookies.token.access_token;
         axios.defaults.withCredentials = true;
 
-        axios.get(`http://${ip}/api/user`)
-          .then(res=>{
-            const statusCode = res.data.statusCode;
-
-            // 1. access_token: 유효 / refresh_token: 5분이상 유효
-            if(statusCode === 20011){
-              console.log('1. access_token: 유효 / refresh_token: 5분이상 유효');
-              navigate(`/edit/${category}`);
-            }
-            // 2. access_token: 만료
-            //    refresh_token을 보내 access_token을 갱신시도
-            else if(statusCode === 40006){
-              console.log('2. access_token: 만료');
-              console.log('   refresh_token을 보내 access_token을 갱신시도');
-              silentRefresh();
-            }
-          })
+        const response = await axios.get(`http://${ip}/api/user`);
+        const statusCode = response.data.statusCode;
+            
+        // 1. access_token: 유효 / refresh_token: 5분이상 유효
+        if(statusCode === 20011){
+          console.log('1. access_token: 유효 / refresh_token: 5분이상 유효');
+          navigate(`/edit/${category}`);
+        }
+        // 2. access_token: 만료
+        //    refresh_token을 보내 access_token을 갱신시도
+        else if(statusCode === 40006){
+          console.log('2. access_token: 만료');
+          console.log('   refresh_token을 보내 access_token을 갱신시도');
+          silentRefresh();
+        }
       }
       catch{
         alert('로그인이 필요한 서비스입니다.');
@@ -171,7 +158,7 @@ function Board(){
   }
 
   useEffect(()=>{
-    getTextList();
+    getData();
     const fadeTimer = setTimeout(()=>setFade('end'), 100);
     return ()=>{
       clearTimeout(fadeTimer);

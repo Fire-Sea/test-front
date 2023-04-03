@@ -1,42 +1,33 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
-import { Input } from '../Input';
 import {useSelector} from 'react-redux';
-import { useRef } from 'react';
 import axios from 'axios';
+import { Input } from '../Input';
 import '../styles/Detail.css';
 
 function Detail(){
+  const navigate = useNavigate();
+  const ip = useSelector((state)=>{return state.ip});
+  const [fade, setFade] = useState('');
+  const {category, id} = useParams();
   const [textData, setTextData] = useState({
     category: '',
     textTitle: '',
     textBody: ''
   });
-
-  const [fade, setFade] = useState('');
-  const {id} = useParams();
-  const navigate = useNavigate();
-  const ip = useSelector((state)=>{return state.ip});
-  const textDetail = useRef(null);
-  const {category} = useParams();
-  const [loading, setLoading] = useState(false);
-  const [err, setErr] = useState(null);
-
+  
   // 글 정보 저장 함수
   const getData = async ()=>{
     try{
-      setErr(null);
-      setLoading(true);
-      
       const response = await axios.get(`http://${ip}/api/detail/?category=${category}&id=${id}`);
       let time = new Date(response.data.createdTime);
       time = time.toISOString();
       response.data.createdTime = `${time.substring(0, 10)} ${time.substring(11, 19)}`;
       setTextData(response.data);
-    } catch(e){
-      setErr(e);
+    } 
+    catch(e){
+      console.log(e)
     }
-    setLoading(false);
   };
 
   useEffect(()=>{

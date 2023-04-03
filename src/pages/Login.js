@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeLoginStatus, changeNickname } from '../store';
 import axios from 'axios';
-import '../styles/Login.css';
 import { useCookies } from 'react-cookie';
+import '../styles/Login.css';
 
 function Login(){
   const [fade, setFade] = useState('');
@@ -59,10 +59,6 @@ function Login(){
           path: '/',
           expires,
         })
-        setCookie('is_login', true, {
-          path: '/',
-          expires
-        });
         setCookie('nickname', nickname,{
           path: '/',
           expires

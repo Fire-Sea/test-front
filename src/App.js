@@ -70,11 +70,10 @@ function Navbar(){
   const [cookies, setCookie, removeCookie] = useCookies();
   const nickname = cookies.nickname;
 
-  const loginBtn = (is_login)=>{
-    if(is_login){
+  const loginBtn = (nickname)=>{
+    if(nickname){
       return(
         <button className='login-toggle' onClick={()=>{
-          removeCookie('is_login', {path: '/'});
           removeCookie('token', {path: '/'});
           removeCookie('nickname', {path: '/'})
           alert('로그아웃 되었습니다.');
@@ -106,7 +105,7 @@ function Navbar(){
             <p className='login-icon'><FontAwesomeIcon icon={faUser} className='fa-2x'/></p>
             <div className='login-info'>
               <p>{nickname ? nickname : `로그인하세요`}</p>
-              {loginBtn(cookies.is_login)}
+              {loginBtn(cookies.nickname)}
             </div>
           </div>
         </div>

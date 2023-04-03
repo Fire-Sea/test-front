@@ -5,11 +5,28 @@ import axios from 'axios';
 import '../styles/Register.css';
 
 function Register(){
-  const [fade, setFade] = useState('');
   const navigate = useNavigate();
-  const validList = [0,0,0,0];
   const ip = useSelector((state) => {return state.ip});
+  const [fade, setFade] = useState('');
+  const validList = [0,0,0,0];
   
+  const onChangeEmail = (e)=>{
+    const value = e.currentTarget.value;
+    const warning = e.currentTarget.nextSibling;
+    if(!/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/.test(value)){
+      warning.innerHTML = '올바른 이메일 형식이 아닙니다.'
+      e.currentTarget.classList.remove('verified');
+      e.currentTarget.classList.add('warning');
+      validList[0] = 0;
+    }
+    else{
+      warning.innerHTML = ' '
+      e.currentTarget.classList.remove('warning');
+      e.currentTarget.classList.add('verified');
+      validList[0] = 1;
+    }
+  }
+
   useEffect(()=>{
     const fadeTimer = setTimeout(()=>setFade('end'), 100);
     return ()=>{
@@ -23,20 +40,7 @@ function Register(){
   <div className={'register-container start ' + fade}>
     <h1>회원가입</h1>
     <p>이메일</p>
-    <input className='register-email' id='registerEmail' type={'email'} placeholder='example@any.com' onChange={(e)=>{
-      let value = e.currentTarget.value;
-      let warning = document.querySelector('#email-chk');
-      if(!/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/.test(value)){
-        warning.innerHTML = '올바른 이메일 형식이 아닙니다.'
-        e.currentTarget.style.border = '3px solid red';
-        validList[0] = 0;
-      }
-      else{
-        warning.innerHTML = ' '
-        e.currentTarget.style.border = '1px solid blue';
-        validList[0] = 1;
-      }
-    }}/>
+    <input className='register-email' id='registerEmail' type={'email'} placeholder='example@any.com' onChange={onChangeEmail}/>
     <p className='valid-fail' id='email-chk'></p>
     <p>아이디</p>
     <input className='register-id' id='registerId' type={'text'} placeholder='아이디'/>

@@ -4,22 +4,19 @@ import {useDispatch, useSelector} from 'react-redux';
 import { Input } from '../Input';
 import { changeLoginStatus } from '../store';
 import axios from 'axios';
-import '../styles/Edit.css';
 import {useCookies} from 'react-cookie';
+import '../styles/Edit.css';
 
 function Edit(){
-  const [fade, setFade] = useState('');
-  const {category} = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const ip = useSelector((state) => {return state.ip});
   const [cookies, setCookie, removeCookie] = useCookies();
-
+  const {category} = useParams();
+  const editor = document.querySelector('.edit-body');
+  const [fade, setFade] = useState('');
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState(null);
-
-  const editor = document.querySelector('.edit-body');
-  
   const [textData, setTextData] = useState({
     category: category,
     textTitle: '',
@@ -27,10 +24,13 @@ function Edit(){
   })
   const {textTitle, textBody} = textData;
 
+  // 글자 스타일 적용
   const setStyle = (style)=>{
     document.execCommand(style);
     focusEditor();
   }
+  
+  // 스타일 적용후 포커스
   const focusEditor = ()=>{
     editor.focus({preventScroll: true});
   }
@@ -59,7 +59,7 @@ function Edit(){
   // textBody 추출함수
   // 첫줄에 p태그 부착
   const onInput = (e)=>{
-    if(e.target.innerHTML.indexOf('<p>') == -1){
+    if(e.target.innerHTML.indexOf('<p>') === -1){
       const pElement = document.createElement('p');
       const firstLine = e.target.firstChild;
       pElement.appendChild(firstLine);
@@ -139,9 +139,8 @@ function Edit(){
     else if(statusCode === 40009){
       console.log('2-3. refresh_token: 만료');
       console.log('     재로그인 하도록 유도');
-      removeCookie('token', {path: '/'});
-      removeCookie('is_login', {path: '/'});
       alert('오래 대기하여 로그아웃되었습니다. 다시 로그인하세요.');
+      removeCookie('token', {path: '/'});
       dispatch(changeLoginStatus(true));
     }
     else{
