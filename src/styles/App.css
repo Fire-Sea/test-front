@@ -319,6 +319,12 @@ button{
   .detail-backBtn{
     width: 100%;
   }
+  .detail-modifyBtn{
+    width: 100%;
+  }
+  .detail-removeBtn{
+    width: 100%;
+  }
   .gacha-container{
     width: 75%;
     height: 500px;

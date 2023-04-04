@@ -51,6 +51,19 @@
     margin-top: 10px;
   }
 
-  textarea{
-    padding: 10px;
+
+  .detail-removeBtn{
+    float: right;
+    width: 100px;
+    height: 35px;
+    margin-top: 10px;
+    background-color: white;
+    border: 3px solid rgb(228, 76, 76);
+    color: rgb(228, 76, 76);
+  }
+  .detail-modifyBtn{
+    float: right;
+    width: 100px;
+    height: 35px;
+    margin-top: 10px;
   }
