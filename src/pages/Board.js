@@ -44,18 +44,21 @@ function Board(){
       const response = await axios.get(`http://${ip}/api/list?category=${category}&page=${currentPage}`);
       const data = response.data;
       const now = new Date();
+      const today = new Date(`${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`);
+
       setTextList(data.content);
       setTotalNum(data.totalElements);
       setTotalPage(data.totalPages);
 
       data.content.forEach((a,i)=>{
         const date = new Date(a.createdTime);
-        if(date > now){
-          data.content[i].createdTime = date.toISOString().substring(11, 16)
+        if(date > today){
+          a.createdTime = date.toString().substring(16, 21);
         }
         else{
-          data.content[i].createdTime = date.toISOString().substring(0, 10)
+          a.createdTime = date.toISOString().substring(0, 10)
         }
+        
       })
     }
     catch(e){
