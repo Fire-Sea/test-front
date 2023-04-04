@@ -57,7 +57,7 @@ function Detail(){
       const response = await axios.get(`http://${ip}/api/detail/?category=${category}&modify`);
       const statusCode = response.data.statusCode;
       if(statusCode === 20000){
-        navigate(`/detail/${category}/${id}`);
+        navigate(`/modify/${category}/${id}`);
       }
       else{
         alert('알수없는 이유로 실패했습니다.')
@@ -93,7 +93,10 @@ function Detail(){
         <h1 className='detail-category'>{category}</h1>
         <div className='detail-title'>
             <h3>{textData.textTitle}</h3>
-            <p>{textData.createdTime}</p>
+            <div className='detail-info'>
+              <p>{textData.nickname}</p>
+              <p>{textData.createdTime}</p>
+            </div>
         </div>
         <div className='detail-body' dangerouslySetInnerHTML={{__html: textData.textBody}}>
         </div>
