@@ -10,20 +10,34 @@ function Register(){
   const [fade, setFade] = useState('');
   const validList = [0,0,0,0];
   
-  const onChangeEmail = (e)=>{
+  const onChange = (e)=>{
+    const type = e.target.name;
     const value = e.currentTarget.value;
     const warning = e.currentTarget.nextSibling;
-    if(!/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/.test(value)){
-      warning.innerHTML = '올바른 이메일 형식이 아닙니다.'
-      e.currentTarget.classList.remove('verified');
-      e.currentTarget.classList.add('warning');
-      validList[0] = 0;
+    let reg = '';
+    let msg = '';
+    let cnt = 0;
+    if(type === 'email'){
+      reg = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
+      msg = '올바른 이메일 형식이 아닙니다.';
     }
     else{
-      warning.innerHTML = ' '
+      reg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+      msg = '비밀번호는 최소 8자리이며 특수문자를 포함해야 합니다.';
+      cnt = 2;
+    }
+
+    if(!reg.test(value)){
+      warning.innerHTML = msg;
+      e.currentTarget.classList.remove('verified');
+      e.currentTarget.classList.add('warning');
+      validList[cnt] = 0;
+    }
+    else{
+      warning.innerHTML = ' ';
       e.currentTarget.classList.remove('warning');
       e.currentTarget.classList.add('verified');
-      validList[0] = 1;
+      validList[cnt] = 1;
     }
   }
 
@@ -40,7 +54,7 @@ function Register(){
   <div className={'register-container start ' + fade}>
     <h1>회원가입</h1>
     <p>이메일</p>
-    <input className='register-email' id='registerEmail' type={'email'} placeholder='example@any.com' onChange={onChangeEmail}/>
+    <input className='register-email' id='registerEmail' type={'email'} placeholder='example@any.com' onChange={onChange} name='email'/>
     <p className='valid-fail' id='email-chk'></p>
     <p>아이디</p>
     <input className='register-id' id='registerId' type={'text'} placeholder='아이디'/>
@@ -70,20 +84,7 @@ function Register(){
     }}>중복체크</button>
     <p className='valid-fail' id='id-chk'></p>
     <p>비밀번호</p>
-    <input className='register-passwd' id='registerPasswd' type={'password'} placeholder='비밀번호' onChange={(e)=>{
-      let value = e.currentTarget.value;
-      let warning = document.querySelector('#passwd-chk');
-      if(!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(value)){
-        warning.innerHTML = '비밀번호는 최소 8자리이며 특수문자를 포함해야 합니다.';
-        e.currentTarget.style.border = '3px solid red';
-        validList[2] = 0;
-      }
-      else{
-        warning.innerHTML = ' ';
-        e.currentTarget.style.border = '1px solid blue';
-        validList[2] = 1;
-      }
-    }}/>
+    <input className='register-passwd' id='registerPasswd' type={'password'} placeholder='비밀번호' onChange={onChange} name='passwd'/>
     <p className='valid-fail' id='passwd-chk'></p>
     <p>닉네임</p>
     <input className='register-id' id='registerNickname' type={'text'} placeholder='닉네임'/>

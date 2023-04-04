@@ -166,7 +166,6 @@ function Edit(){
   }
   return(
     <>
-      <Input/>
       <div className={'edit-container start ' + fade}>
         <input className='edit-title' placeholder='제목을 입력하세요' name='textTitle' value={textTitle}
         onChange={onChange}/>

@@ -72,7 +72,7 @@ function Detail(){
   const showAdminBtn = ()=>{
     return(
       <>
-      <button className='detail-modifyBtn'>글 수정하기</button>
+      <button className='detail-modifyBtn' onClick={()=>{navigate(`/modify/${category}/${id}`)}}>글 수정하기</button>
       <button className='detail-removeBtn'>글 삭제하기</button>
       </>
     )
