@@ -59,7 +59,7 @@ function Edit(){
   // textBody 추출함수
   // 첫줄에 p태그 부착
   const onInput = (e)=>{
-    if(e.target.innerHTML.indexOf('<p>') === -1){
+    if(e.target.innerHTML.indexOf('<p>') === -1 && e.target.innerHTML != ''){
       const pElement = document.createElement('p');
       const firstLine = e.target.firstChild;
       pElement.appendChild(firstLine);
