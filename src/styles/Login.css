@@ -11,6 +11,12 @@
     min-width: 200px;
     min-height: 500px;
   }
+  .dark{
+    background-color: rgb(238, 238, 238);
+  }
+  .light{
+    background-color: black;
+  }
   .login-logo{
     width: 100%;
     height: 50px;

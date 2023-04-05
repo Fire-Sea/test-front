@@ -14,14 +14,20 @@ import { changeLoginStatus } from './store';
 import { useCookies } from 'react-cookie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import styled, { ThemeProvider } from 'styled-components';
+import {dark, light} from './theme/theme';
+import { useTheme } from './theme/useTheme';
 
 function App() {
+  const [themeMode, toggleTheme] = useTheme();
+  const theme = themeMode === 'light' ? light : dark;
 
   let [easteregg, setEasteregg] = useState(false);
   const login_status = useSelector((state)=> {return state.loginInfo.login_status});
-
   return (
-    <div className={"App"}>
+    <ThemeProvider theme={theme}>
+      <S.Main>
+    <div className="App">
       {
         login_status && <Login/>
       }
@@ -29,7 +35,7 @@ function App() {
       {
         easteregg && <div className='easteregg'><h1>서버가~~일을~~안해~~~</h1></div>
       }
-
+      <button onClick={toggleTheme}>헤헤</button>
       <button onClick={()=>{
         let t = document.querySelectorAll('.navbar a');
         if(!easteregg){
@@ -62,6 +68,8 @@ function App() {
         <Route path="*" element={<Error/>}/>
       </Routes>
     </div>
+    </S.Main>
+    </ThemeProvider>
   );
 }
 
@@ -70,7 +78,8 @@ function Navbar(){
   let dispatch = useDispatch();
   const [cookies, setCookie, removeCookie] = useCookies();
   const nickname = cookies.nickname;
-
+  const localSettingTheme = localStorage.getItem('theme');
+  
   const loginBtn = (nickname)=>{
     if(nickname){
       return(
@@ -91,7 +100,7 @@ function Navbar(){
   
   return(
     <div className='header'>
-      <div className='navbar'>
+      <div className={'navbar navbar-' + localSettingTheme}>
         <div className='navbar-l'>
           <p className='navbar-logo' onClick={()=>{navigate('/')}}>Fire Sea</p>
           <p className='navbar-item' onClick={()=>{
@@ -155,3 +164,11 @@ function Error(){
 }
 
 export default App;
+
+const S = {};
+S.Main = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: ${props => props.theme.colors.bgColor};
+  color: ${props => props.theme.colors.titleColor}
+`;

@@ -71,6 +71,7 @@
     background-color: white;
     border: 3px solid rgb(228, 76, 76);
     color: rgb(228, 76, 76);
+    margin: 10px 0 0 5px;
   }
   .detail-modifyBtn{
     float: right;

@@ -16,6 +16,7 @@ function Login(){
     username: '',
     password: ''
   })
+  const localSettingTheme = localStorage.getItem('theme');
   const {username, password} = loginData;
 
   // 각 input에서 username, password 저장
@@ -75,7 +76,8 @@ function Login(){
   }
 
   useEffect(()=>{
-    const fadeTimer = setTimeout(()=>setFade('end'), 100)
+    const fadeTimer = setTimeout(()=>setFade('end'), 100);
+    
     return ()=>{
       clearTimeout(fadeTimer);
       setFade('');
@@ -84,7 +86,7 @@ function Login(){
 
   return(
     <>
-      <div className={'login-bg start ' + fade}>
+      <div className={'login-bg start ' + fade + ' '+localSettingTheme}>
         <div className='login-logo'>
           <h1>Fire Sea</h1>
         </div>

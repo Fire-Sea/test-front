@@ -102,7 +102,7 @@ function Detail(){
         </div>
         <button className='detail-backBtn' onClick={()=>navigate(-1)}>뒤로가기</button>
         {
-          nickname == textData.nickname && showAdminBtn()
+          nickname === textData.nickname && showAdminBtn()
         }
     </div>
     </>
