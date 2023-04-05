@@ -93,10 +93,10 @@ function Detail(){
         <h1 className='detail-category'>{category}</h1>
         <div className='detail-title'>
             <h3>{textData.textTitle}</h3>
-            <div className='detail-info'>
-              <p>{textData.nickname}</p>
-              <p>{textData.createdTime}</p>
-            </div>
+        </div>
+        <div className='detail-info'>
+          <p className='detail-nickname'>닉네임이 들어갈 자리</p>
+          <p>{textData.createdTime}</p>
         </div>
         <div className='detail-body' dangerouslySetInnerHTML={{__html: textData.textBody}}>
         </div>

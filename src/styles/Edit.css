@@ -92,3 +92,8 @@ input:focus{
 .edit-body:focus{
   outline: none;
 }
+.modify-title{
+  margin: 50px auto 20px auto;
+  width: 50%;
+  border-bottom: 2px solid lightcoral;
+}
