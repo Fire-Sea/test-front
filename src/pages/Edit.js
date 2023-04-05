@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import { Input } from '../Input';
 import { changeLoginStatus } from '../store';
 import axios from 'axios';
 import {useCookies} from 'react-cookie';
@@ -55,7 +54,7 @@ function Edit(){
       textTitle: e.target.value
     });
   };
-
+ // api/user/update?id=${}
   // textBody 추출함수
   // 첫줄에 p태그 부착
   const onInput = (e)=>{
@@ -69,6 +68,7 @@ function Edit(){
       ...textData,
       textBody: e.target.innerHTML
     });
+    console.log(textBody)
   };
 
   // textData POST전송
@@ -76,18 +76,28 @@ function Edit(){
     try{
       setErr(null);
       setLoading(true);
-      
+      let response = {};
+
       if(cookies.token === undefined){
         console.log('0. 쿠키에 저장된 토큰이 없음');
         console.log('   로그인 하도록 유도');
         alert('로그인하세요.');
         return dispatch(changeLoginStatus(true));
       }
-      const response = await axios.post(`http://${ip}/api/user/send`, textData);
+      if(id){
+        response = await axios.patch(`http://${ip}/api/user/update?id=${id}`, textData);
+      }
+      else{
+        response = await axios.post(`http://${ip}/api/user/send`, textData);
+      }
       const statusCode = response.data.statusCode;
       
       if(statusCode === 20000){
         alert('글이 저장되었습니다.');
+        navigate(`/list/${category}/0`);
+      }
+      else if(statusCode === 20015){
+        alert('정상적으로 수정되었습니다.');
         navigate(`/list/${category}/0`);
       }
       else{
@@ -95,10 +105,51 @@ function Edit(){
       }
     } catch(e){
       setErr(e);
+      console.log('서버와의 소통에 실패했습니다.')
     }
     setLoading(false);
   };
 
+  // modify 버전 수정할 글 GET
+  const getData = async ()=>{
+    try{
+      const response = await axios.get(`http://${ip}/api/detail/?category=${category}&id=${id}`);
+  
+      if(!response.data){
+        alert('서버와의 소통에 실패했습니다.');
+        navigate(-1);
+      }
+      else{
+        setTextData(response.data);
+
+      }
+    }
+    catch(e){
+      setErr(e);
+    }
+  }
+  
+  // modify 버전 삭제한 글 DELETE
+  const deleteData = async ()=>{
+    try{
+      if(cookies.token === undefined){
+        console.log('0. 쿠키에 저장된 토큰이 없음');
+        console.log('   로그인 하도록 유도');
+        alert('로그인하세요.');
+        return dispatch(changeLoginStatus(true));
+      }
+      const response = await axios.delete(`http://${ip}/api/user/delete?id=${id}`);
+      const statusCode= response.data.statusCode;
+
+      if(statusCode === 20016){
+        alert('성공적으로 삭제되었습니다.');
+        navigate(-1);
+      }
+    }
+    catch(e){
+      console.log(e);
+    }
+  }
   // access_token 만료시 재인증
   const silentRefresh = async ()=>{
     axios.defaults.headers.common['Authorization'] = cookies.token.refresh_token;
@@ -149,15 +200,20 @@ function Edit(){
     }
   }
   
+  const modifyBtn = ()=>{
+    return(
+      <>
+      <button className='detail-removeBtn' onClick={deleteData}>글 삭제하기</button>
+      <button className='edit-send' onClick={postData}>수정 완료하기</button>
+      </>
+    )
+  }
   document.execCommand('defaultParagraphSeparator', false, 'p');
   
   useEffect(()=>{
     const fadeTimer = setTimeout(()=>setFade('end'), 100);
     if(id){
-      console.log('수정모드')
-    }
-    else{
-      console.log('작성모드')
+      getData();
     }
     return ()=>{
       clearTimeout(fadeTimer);
@@ -203,7 +259,7 @@ function Edit(){
             IMG
           </button>
         </div>
-        <div className='edit-body' placeholder='내용을 작성하세요' contentEditable='true'
+        <div className='edit-body' placeholder='내용을 작성하세요' contentEditable='true' dangerouslySetInnerHTML={{__html: textBody}}
         onPaste={(e)=>{
           e.preventDefault();
           let pastedData = e.clipboardData || window.clipboardData;
@@ -213,12 +269,12 @@ function Edit(){
         onInput={onInput}>
         </div>
         <div className='edit-btn'>
-          <button className='edit-cancel' onClick={()=>navigate(-1)}>취소</button>
           {
             id
-            ? <button className='edit-send'>수정 완료하기</button>
+            ? modifyBtn()
             : <button className='edit-send' onClick={checkValue}>글 저장하기</button>
           }
+          <button className='edit-cancel' onClick={()=>navigate(-1)}>취소</button>
         </div>
       </div>
     </>
