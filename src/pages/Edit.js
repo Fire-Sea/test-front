@@ -12,7 +12,7 @@ function Edit(){
   const navigate = useNavigate();
   const ip = useSelector((state) => {return state.ip});
   const [cookies, setCookie, removeCookie] = useCookies();
-  const {category} = useParams();
+  const {category, id} = useParams();
   const editor = document.querySelector('.edit-body');
   const [fade, setFade] = useState('');
   const [loading, setLoading] = useState(false);
@@ -23,7 +23,7 @@ function Edit(){
     textBody: ''
   })
   const {textTitle, textBody} = textData;
-
+  
   // 글자 스타일 적용
   const setStyle = (style)=>{
     document.execCommand(style);
@@ -153,6 +153,12 @@ function Edit(){
   
   useEffect(()=>{
     const fadeTimer = setTimeout(()=>setFade('end'), 100);
+    if(id){
+      console.log('수정모드')
+    }
+    else{
+      console.log('작성모드')
+    }
     return ()=>{
       clearTimeout(fadeTimer);
       setFade('');
@@ -166,6 +172,11 @@ function Edit(){
   }
   return(
     <>
+    {
+      id
+      ? <h1 className='edit-type'>글수정</h1>
+      : <h1 className='edit-type'>글작성</h1>
+    }
       <div className={'edit-container start ' + fade}>
         <input className='edit-title' placeholder='제목을 입력하세요' name='textTitle' value={textTitle}
         onChange={onChange}/>
@@ -203,7 +214,11 @@ function Edit(){
         </div>
         <div className='edit-btn'>
           <button className='edit-cancel' onClick={()=>navigate(-1)}>취소</button>
-          <button className='edit-send' onClick={checkValue}>글 저장하기</button>
+          {
+            id
+            ? <button className='edit-send'>수정 완료하기</button>
+            : <button className='edit-send' onClick={checkValue}>글 저장하기</button>
+          }
         </div>
       </div>
     </>

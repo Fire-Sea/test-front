@@ -9,7 +9,6 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {Banner} from './Banner';
 import { Gacha } from './pages/Gacha';
-import {Modify} from './pages/Modify';
 import './styles/App.css';
 import { changeLoginStatus } from './store';
 import { useCookies } from 'react-cookie';
@@ -55,9 +54,9 @@ function App() {
         <Route path="/" element={<Main/>}/>
         <Route path="/list/:category/:currentPage" element={<Board/> } />
         <Route path="/detail/:category/:id" element={<Detail/>}/>
-        <Route path="/modify/:category/:id" element={<Modify/>}/>
+        <Route path="/modify/:category/:id" element={<Edit/>}/>
         <Route path="/edit/:category" element={<Edit/>}/>
-  
+      
         <Route path="/gacha" element={<Gacha/>}/>
         <Route path="/register" element={<Register/>}/>
         <Route path="*" element={<Error/>}/>

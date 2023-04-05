@@ -92,7 +92,7 @@ input:focus{
 .edit-body:focus{
   outline: none;
 }
-.modify-title{
+.edit-type{
   margin: 50px auto 20px auto;
   width: 50%;
   border-bottom: 2px solid lightcoral;
