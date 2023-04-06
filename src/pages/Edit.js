@@ -129,27 +129,6 @@ function Edit(){
     }
   }
   
-  // modify 버전 삭제한 글 DELETE
-  const deleteData = async ()=>{
-    try{
-      if(cookies.token === undefined){
-        console.log('0. 쿠키에 저장된 토큰이 없음');
-        console.log('   로그인 하도록 유도');
-        alert('로그인하세요.');
-        return dispatch(changeLoginStatus(true));
-      }
-      const response = await axios.delete(`http://${ip}/api/user/delete?id=${id}`);
-      const statusCode= response.data.statusCode;
-
-      if(statusCode === 20016){
-        alert('성공적으로 삭제되었습니다.');
-        navigate(-1);
-      }
-    }
-    catch(e){
-      console.log(e);
-    }
-  }
   // access_token 만료시 재인증
   const silentRefresh = async ()=>{
     axios.defaults.headers.common['Authorization'] = cookies.token.refresh_token;
@@ -199,7 +178,26 @@ function Edit(){
       alert('서버와 통신이 원할하지 않습니다. 잠시후 시도해주세요');
     }
   }
-  
+
+  // 글 삭제 요청 함수
+  const deleteData = async ()=>{
+    try{
+      const response = await axios.delete(`http://${ip}/api/user/delete?id=${id}`);
+      const statusCode = response.data.statusCode;
+      if(statusCode === 20016){
+        alert('정상적으로 삭제되었습니다.');
+        navigate(`/list/${category}/0`);
+      }
+      else{
+        alert('알수없는 이유로 실패했습니다.');
+      }
+    }
+    catch(e){
+      console.log(e);
+    }
+  }
+
+  // 글 수정 요청함수
   const modifyBtn = ()=>{
     return(
       <>
