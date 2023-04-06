@@ -22,8 +22,6 @@ import {Mypage} from './pages/Mypage';
 function App() {
   const [themeMode, toggleTheme] = useTheme();
   const theme = themeMode === 'light' ? light : dark;
-
-  let [easteregg, setEasteregg] = useState(false);
   const login_status = useSelector((state)=> {return state.loginInfo.login_status});
   return (
     <ThemeProvider theme={theme}>
@@ -33,28 +31,7 @@ function App() {
         login_status && <Login/>
       }
       <Navbar/>
-      {
-        easteregg && <div className='easteregg'><h1>서버가~~일을~~안해~~~</h1></div>
-      }
       <button onClick={toggleTheme}>헤헤</button>
-      <button onClick={()=>{
-        let t = document.querySelectorAll('.navbar a');
-        if(!easteregg){
-          document.querySelector('body').style = 'animation: bodyanime infinite 3s;'; 
-          
-          t.forEach((a)=>{
-            a.style = 'animation: barrelroll 1s infinite;';
-          }) 
-          setEasteregg(true);
-        }
-        else{
-          document.querySelector('body').style = '';
-          t.forEach((a)=>{
-            a.style = '';
-          }) 
-          setEasteregg(false);
-        }
-      }}>easteregg</button>
       <Banner/>
 
       <Routes>

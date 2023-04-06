@@ -5,6 +5,7 @@ import { changeLoginStatus } from '../store';
 import axios from 'axios';
 import {useCookies} from 'react-cookie';
 import '../styles/Edit.css';
+import useAuth from '../hooks/useAuth';
 
 function Edit(){
   const dispatch = useDispatch();
@@ -22,7 +23,8 @@ function Edit(){
     textBody: ''
   })
   const {textTitle, textBody} = textData;
-  
+  const {silentRefresh} = useAuth();
+
   // 글자 스타일 적용
   const setStyle = (style)=>{
     document.execCommand(style);
@@ -68,7 +70,7 @@ function Edit(){
       ...textData,
       textBody: e.target.innerHTML
     });
-    console.log(textBody)
+    console.log(e.target.innerHTML)
   };
 
   // textData POST전송
@@ -101,7 +103,10 @@ function Edit(){
         navigate(`/list/${category}/0`);
       }
       else{
-        silentRefresh();
+        const code = silentRefresh();
+        if(code){
+          postData();
+        }
       }
     } catch(e){
       setErr(e);
@@ -129,55 +134,6 @@ function Edit(){
     }
   }
   
-  // access_token 만료시 재인증
-  const silentRefresh = async ()=>{
-    axios.defaults.headers.common['Authorization'] = cookies.token.refresh_token;
-    const response = await axios.get(`http://${ip}/api/refresh`);
-    const statusCode = response.data.statusCode;
-
-    const expires = new Date();
-    expires.setMinutes(expires.getMinutes()+300);
-
-    if(statusCode === 20010){
-      console.log('2-1. refresh_token: 5분이상 유효');
-      console.log('     access_token 재발급 성공');
-
-      const token = {
-        access_token: response.headers.access_token,
-        refresh_token: cookies.token.refresh_token
-      }
-      setCookie('token', token, {
-        expires: expires
-      })
-      axios.defaults.headers.common['Authorization'] = response.headers.access_token;
-      postData();
-    }
-    else if(statusCode === 20009){
-      console.log('2-2. refresh_token: 5분미만 유효');
-      console.log('     access_token, refresh_token 둘다 재발급 성공');
-
-      const token = {
-        access_token: response.headers.access_token,
-        refresh_token: response.headers.refresh_token
-      }
-      setCookie('token', token, {
-        expires: expires
-      })
-      axios.defaults.headers.common['Authorization'] = response.headers.access_token;
-      postData();
-    }
-    else if(statusCode === 40009){
-      console.log('2-3. refresh_token: 만료');
-      console.log('     재로그인 하도록 유도');
-      alert('오래 대기하여 로그아웃되었습니다. 다시 로그인하세요.');
-      removeCookie('token', {path: '/'});
-      dispatch(changeLoginStatus(true));
-    }
-    else{
-      console.log('2-4. 기타 네트워크 문제');
-      alert('서버와 통신이 원할하지 않습니다. 잠시후 시도해주세요');
-    }
-  }
 
   // 글 삭제 요청 함수
   const deleteData = async ()=>{
@@ -257,7 +213,7 @@ function Edit(){
             IMG
           </button>
         </div>
-        <div className='edit-body' placeholder='내용을 작성하세요' contentEditable='true' dangerouslySetInnerHTML={{__html: textBody}}
+        <div className='edit-body' placeholder='내용을 작성하세요' contentEditable='true' //dangerouslySetInnerHTML={{__html: textBody}}
         onPaste={(e)=>{
           e.preventDefault();
           let pastedData = e.clipboardData || window.clipboardData;

@@ -3,17 +3,28 @@ import {useNavigate} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import axios from 'axios';
 import '../styles/Register.css';
+import useAuth from '../hooks/useAuth';
 
 function Register(){
   const navigate = useNavigate();
   const ip = useSelector((state) => {return state.ip});
   const [fade, setFade] = useState('');
-  const validList = [0,0,0,0];
-  
+  const [validList, setValidList] = useState([0,0,0,0])
+  const [registerData, setResgisterData] = useState({
+    email: '',
+    username: '',
+    password: '',
+    nickname: ''
+  });
+
+  // 가입 정보 POST하는 hook
+  const {sendRegisterData} = useAuth(registerData);
+
   const onChange = (e)=>{
     const type = e.target.name;
     const value = e.currentTarget.value;
     const warning = e.currentTarget.nextSibling;
+    console.log(registerData)
     let reg = '';
     let msg = '';
     let cnt = 0;
@@ -31,13 +42,24 @@ function Register(){
       warning.innerHTML = msg;
       e.currentTarget.classList.remove('verified');
       e.currentTarget.classList.add('warning');
-      validList[cnt] = 0;
+
+      let copy = [...validList]
+      copy[cnt] = 0;
+      setValidList(copy)
     }
     else{
       warning.innerHTML = ' ';
       e.currentTarget.classList.remove('warning');
       e.currentTarget.classList.add('verified');
-      validList[cnt] = 1;
+
+      let copy = [...validList]
+      copy[cnt] = 1;
+      setValidList(copy)
+
+      setResgisterData({
+        ...registerData,
+        [type]: value
+      })
     }
   }
 
@@ -62,6 +84,7 @@ function Register(){
       let usernameBox = document.querySelector('#registerId');
       let username = usernameBox.value;
       let warning = document.querySelector('#id-chk');
+      let type = 'username'
       axios.get(`http://${ip}/api/idCheck?username=${username}`)
         .then(res=>{
           res = res.data;
@@ -69,13 +92,22 @@ function Register(){
             warning.classList.add('valid-success');
             warning.innerHTML = '사용 가능한 아이디입니다.';
             usernameBox.style.border = '1px solid blue';
-            validList[1] = 1;
+            let copy = [...validList]
+            copy[1] = 1;
+            setValidList(copy)
+
+            setResgisterData({
+              ...registerData,
+              [type]: username
+            })
           }
           else if(res.statusCode === 40003){
             warning.classList.remove('valid-success');
             warning.innerHTML = '해당 아이디는 이미 사용중입니다.';
             usernameBox.style.border = '3px solid red';
-            validList[1] = 0;
+            let copy = [...validList]
+            copy[1] = 0;
+            setValidList(copy)
           }
           else{
             alert('서버가 일을 안해요');
@@ -84,7 +116,7 @@ function Register(){
     }}>중복체크</button>
     <p className='valid-fail' id='id-chk'></p>
     <p>비밀번호</p>
-    <input className='register-passwd' id='registerPasswd' type={'password'} placeholder='비밀번호' onChange={onChange} name='passwd'/>
+    <input className='register-passwd' id='registerPasswd' type={'password'} placeholder='비밀번호' onChange={onChange} name='password'/>
     <p className='valid-fail' id='passwd-chk'></p>
     <p>닉네임</p>
     <input className='register-id' id='registerNickname' type={'text'} placeholder='닉네임'/>
@@ -92,6 +124,7 @@ function Register(){
       let nicknameBox = document.querySelector('#registerNickname');
       let nickname = nicknameBox.value;
       let warning = document.querySelector('#nickname-chk');
+      let type='nickname'
       axios.get(`http://${ip}/api/nicknameCheck?nickname=${nickname}`)
         .then(res=>{
           res = res.data;
@@ -99,13 +132,21 @@ function Register(){
             warning.classList.add('valid-success');
             warning.innerHTML = '사용 가능한 닉네임입니다.';
             nicknameBox.style.border = '1px solid blue';
-            validList[3] = 1;
+            let copy = [...validList]
+            copy[3] = 1;
+            setValidList(copy)
+            setResgisterData({
+              ...registerData,
+              [type]: nickname
+            })
           }
           else if(res.statusCode === 40004){
             warning.classList.remove('valid-success');
             warning.innerHTML = '해당 닉네임은 이미 사용중입니다.';
             nicknameBox.style.border = '3px solid red';
-            validList[3] = 0;
+            let copy = [...validList]
+            copy[3] = 0;
+            setValidList(copy)
           }
           else{
             alert('서버가 일을 안해요');
@@ -132,33 +173,15 @@ function Register(){
         alert('닉네임 중복을 확인하세요.');
       }
       else{
-        fetch(`http://${ip}/api/register`, {
-        method: "POST",
-        headers:{
-          "content-type" : "application/json",
-        },
-        body: JSON.stringify({
+        setResgisterData({
           email: email,
           username: username,
           password: password,
           nickname: nickname
-        })
-      })
-        .then(res=>res.json())
-        .then(data=>{
-          if(data.statusCode === 40001){
-            alert(data.responseMessage);
-          }
-          else{
-            alert('성공적으로 회원가입 되었습니다.');
-            navigate('/');
-          }
-        })
-        .catch(err=>console.log(err));
-        console.log(`id: ${username} / email: ${email} / passwd: ${password} / nickname: ${nickname}`);
+        });
+
+        sendRegisterData();
       }
-      
-      
     }}>회원가입 하기</button>
 
     

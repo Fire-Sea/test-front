@@ -5,6 +5,7 @@ import axios from 'axios';
 import {useCookies} from 'react-cookie';
 import { Input } from '../Input';
 import '../styles/Detail.css';
+import useAxios from '../hooks/useAxios';
 
 function Detail(){
   const navigate = useNavigate();
@@ -19,6 +20,8 @@ function Detail(){
     nickname: ''
   });
   const nickname = cookies.nickname;
+  const [axiosGet] = useAxios(`http://${ip}/api/detail/?category=${category}&id=${id}`);
+
 
   // 글 정보 저장 함수
   const getData = async ()=>{
@@ -73,6 +76,7 @@ function Detail(){
     <>
     <Input/>
     <div className={'detail-container start ' + fade}>
+      <button onClick={()=>{axiosGet()}}>헤헤</button>
         <h1 className='detail-category'>{category}</h1>
         <div className='detail-title'>
             <h3>{textData.textTitle}</h3>

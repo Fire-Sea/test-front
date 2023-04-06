@@ -6,6 +6,7 @@ import axios from 'axios';
 import { Input } from '../Input';
 import { changeLoginStatus } from '../store';
 import '../styles/Board.css';
+import useAuth from '../hooks/useAuth';
 
 function Board(){
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ function Board(){
   const [totalPage, setTotalPage] = useState(0);
   const [serverErr, setServerErr] = useState(false);
   const [fade, setFade] = useState('');
-
+  const {silentRefresh} = useAuth();
 
   // 게시판 페이지 표시 함수
   const addPageNum = (pageNum, currentPage)=>{
@@ -49,7 +50,6 @@ function Board(){
       setTextList(data.content);
       setTotalNum(data.totalElements);
       setTotalPage(data.totalPages);
-
       data.content.forEach((a,i)=>{
         const date = new Date(a.createdTime);
         if(date > today){
@@ -68,61 +68,7 @@ function Board(){
     }
   }
 
-  // 토큰 재요청 함수
-  const silentRefresh = async ()=>{
-    axios.defaults.headers.common['Authorization'] = cookies.token.refresh_token;
-    const response = await axios.get(`http://${ip}/api/refresh`);
-    const statusCode = response.data.statusCode;
-
-    const expires = new Date();
-    expires.setMinutes(expires.getMinutes()+300);
-
-    if(statusCode === 20010){
-      console.log('2-1. refresh_token: 5분이상 유효');
-      console.log('     access_token 재발급 성공');
-
-      const token = {
-        access_token: response.access_token,
-        refresh_token: cookies.token.refresh_token
-      }
-      setCookie('token', token, {
-        expires: expires
-      })
-      navigate(`/edit/${category}`);
-    }
-
-    // 2-2. refresh_token: 5분미만 유효
-    //      access_token, refresh_token 둘다 재발급 성공
-    else if(statusCode === 20009){
-      console.log('2-2. refresh_token: 5분미만 유효');
-      console.log('     access_token, refresh_token 둘다 재발급 성공');
-      const token = {
-        access_token: response.access_token,
-        refresh_token: response.refresh_token,
-      }
-      setCookie('token', token, {
-        expires: expires
-      })
-      navigate(`/edit/${category}`);
-    }
-
-    // 2-3. refresh_token: 만료
-    //      재로그인 하도록 유도
-    else if(statusCode === 40009){
-      console.log('2-3. refresh_token: 만료');
-      console.log('     재로그인 하도록 유도');
-      alert('오래 대기하여 로그아웃되었습니다. 다시 로그인하세요.');
-      removeCookie('token', {path: '/'});
-      dispatch(changeLoginStatus(true));
-    }
-
-    // 2-4. 기타 네트워크 문제
-    else{
-      console.log('2-4. 기타 네트워크 문제');
-      alert('서버와 통신이 원할하지 않습니다. 잠시후 시도해주세요');
-    }
-      // 2-4. 서버와의 연결문제로 statusCode 확인불가
-  }
+  
 
   // access_token 유효성 검사 함수
   const checkToken = async ()=>{
@@ -144,7 +90,10 @@ function Board(){
         else if(statusCode === 40006){
           console.log('2. access_token: 만료');
           console.log('   refresh_token을 보내 access_token을 갱신시도');
-          silentRefresh();
+          const code = silentRefresh();
+          if(code){
+            navigate(`/edit/${category}`);
+          }
         }
       }
       catch{

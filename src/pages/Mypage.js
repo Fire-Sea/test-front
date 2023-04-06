@@ -11,6 +11,8 @@ function Mypage(){
     const [newNickname, setNewNickname] = useState('');
     const nickname = cookies.nickname;
     const [textList, setTextList] = useState([]);
+    const [totalPage, setTotalPage] = useState(0);
+    const [totalNum, setTotalNum] = useState(0);
     const ip = useSelector((state)=>{return state.ip});
     const navigate = useNavigate();
 
@@ -50,9 +52,10 @@ function Mypage(){
       axios.defaults.headers.common['Authorization'] = cookies.token.access_token;
       const response = await axios.get(`http://${ip}/api/user/list`);
       const data = response.data;
-      console.log(data.content)
-      setTextList([...data.content]);
-      console.log(textList);
+      setTextList(data.content);
+      setTotalPage(data.totalPages);
+      setTotalNum(data.totalElements)
+      console.log(data.totalElements)
     }
     catch(e){
       console.log(e);
@@ -63,14 +66,14 @@ function Mypage(){
     const addPageNum = (pageNum, currentPage)=>{
       const newArr = [];
       currentPage = parseInt(currentPage);
-
+      
       for(let i=0; i<pageNum; i++){
         let template = '';
         if(i === currentPage){
-          template = <button className='board-clicked' onClick={()=>navigate(`/mypage/${nickname}/${i}`)} key={i}>{i+1}</button>
+          template = <button className='mypage-clicked' onClick={()=>navigate(`/mypage/${nickname}/${i}`)} key={i}>{i+1}</button>
         }
         else{
-          template = <button onClick={()=>navigate(`/mypage/${nickname}/${i}`)} key={i}>{i+1}</button>
+          template = <button className='mypage-pageNum' onClick={()=>navigate(`/mypage/${nickname}/${i}`)} key={i}>{i+1}</button>
         }
         newArr.push(template);
       }
@@ -80,7 +83,7 @@ function Mypage(){
 
   useEffect(()=>{
     getTextList();
-  }, [])
+  }, [currentPage])
 
 
   return(
@@ -93,7 +96,7 @@ function Mypage(){
         </div>
         <div className='mypage-board'>
           <h4>작성한 글 개수</h4>
-          <p></p>
+          <p className='mypage-textCnt'>{totalNum}개</p>
           <table className='board-pc'>
             <thead>
               <tr>
@@ -107,17 +110,20 @@ function Mypage(){
               {
                 textList.map((data, i)=>{
                   return(
-                    <tr className='board-tr' key={i}>
-                      <td className='board-id'>{data.id}</td>
+                    <tr className='mypage-tr' key={i}>
+                      <td className='mypage-id'>{data.id}</td>
                       <td >{data.category}</td>
-                      <td className='board-title'>{data.textTitle}</td>
-                      <td className='board-date'>{data.createdTime}</td>
+                      <td className='mypage-title'>{data.textTitle}</td>
+                      <td className='mypage-date'>{data.createdTime}</td>
                     </tr>
                   )
                 })
               }
             </tbody>
           </table>
+            {
+              addPageNum(totalPage, currentPage)
+            }
         </div>
       </div>
     )

@@ -5,6 +5,7 @@ import { changeLoginStatus, changeNickname } from '../store';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import '../styles/Login.css';
+import useAuth from '../hooks/useAuth';
 
 function Login(){
   const [fade, setFade] = useState('');
@@ -19,6 +20,11 @@ function Login(){
   const localSettingTheme = localStorage.getItem('theme');
   const {username, password} = loginData;
 
+
+  // 로그인 정보 POST하는 hook
+  const {sendLoginData} = useAuth(loginData)
+  
+  
   // 각 input에서 username, password 저장
   const onChange = (e)=>{
     const {name, value} = e.target;
@@ -34,50 +40,12 @@ function Login(){
       alert('아이디 또는 비밀번호를 입력하세요.');
     }
     else{
-      postData();
-    }
-  }
-
-  // 로그인 정보를 POST
-  const postData = async ()=>{
-    try{
-      const response = await axios.post(`http://${ip}/api/login`, loginData);
-      const statusCode = response.data.statusCode;
-      
-      if(statusCode === 40002){
-        alert('로그인 정보가 일치하지 않습니다.');
-      }
-      else{
-        const expires = new Date();
-        expires.setMinutes(expires.getMinutes()+300);
-        const nickname = response.data.data;
-
-        const token = {
-          access_token: response.headers.access_token,
-          refresh_token: response.headers.refresh_token
-        };
-        setCookie('token', token, {
-          path: '/',
-          expires,
-        })
-        setCookie('nickname', nickname,{
-          path: '/',
-          expires
-        })
-        dispatch(changeNickname(nickname));
-        dispatch(changeLoginStatus(false));
-        alert('어서오세요!');
-        
-        console.log('2. 로그인 정보가 일치하여 access_token, refresh_token 발급');
-      }
-    } catch(e){
-      console.log('서버와의 통신이 원할하지 않습니다. 잠시후 재시도해주세요.');
+      sendLoginData();
     }
   }
 
   useEffect(()=>{
     const fadeTimer = setTimeout(()=>setFade('end'), 100);
-    
     return ()=>{
       clearTimeout(fadeTimer);
       setFade('');

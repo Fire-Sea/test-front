@@ -22,3 +22,14 @@
 .mypage-board{
     margin-top: 50px;
 }
+.mypage-textCnt{
+    margin-bottom: 50px;
+}
+.mypage-pageNum{
+    width: 5px;
+    height: 5px;
+}
+.mypage-clicked{
+ width: 5px;
+    height: 5px;
+}
