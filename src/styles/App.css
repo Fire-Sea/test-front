@@ -338,6 +338,11 @@ button{
   .gacha-result p{
     font-size: 20px;
   }
+  .mypage-bg{
+    width: 100%;
+    margin: 0px;
+    border: 10px solid red;
+  }
 }
 
 @media screen and (max-width: 544px) {

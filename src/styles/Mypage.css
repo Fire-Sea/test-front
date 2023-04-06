@@ -1,35 +1,46 @@
 .mypage-bg{
-    width: 50%;
-    margin: 100px auto;
-    padding: 50px;
-    border: 1px solid black;
+  width: 50%;
+  margin: 100px auto;
+  padding: 50px;
+  border: 1px solid black;
 }
 .mypage-bg h1{
-    text-align: center;
-    margin-top: -10px;
+  text-align: center;
+  margin-top: -10px;
 }
 .mypage-bg h4{
-    margin: 0px;
+  margin: 0px;
 }
 .mypage-bg input{
-    width: 200px;
-    height: 30px;
+  width: 200px;
+  height: 30px;
 }
-.mypage-bg button{
-    width: 100px;
-    height: 38px;
+.mypage-bg .mypage-change{
+  width: 100px;
+  height: 38px;
 }
 .mypage-board{
-    margin-top: 50px;
+  margin-top: 50px;
 }
 .mypage-textCnt{
-    margin-bottom: 50px;
+  margin-bottom: 50px;
+}
+.mypage-btns{
+  text-align: center;
 }
 .mypage-pageNum{
-    width: 5px;
-    height: 5px;
+  width: 20px;
+  height: 20px;
 }
 .mypage-clicked{
- width: 5px;
-    height: 5px;
+  width: 20px;
+  height: 20px;
+  background-color: rgb(165, 55, 55)
+}
+
+.mypage-tr{
+  cursor: pointer;
+}
+.mypage-tr:hover{
+  background-color: rgba(0,0,0,0.5);
 }

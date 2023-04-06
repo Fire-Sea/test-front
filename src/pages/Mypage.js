@@ -92,7 +92,7 @@ function Mypage(){
         <div className='mypage-loginfo'>
           <h4>닉네임</h4>
           <input onChange={onChange}></input>
-          <button onClick={changeNickname}>변경하기</button>
+          <button className='mypage-change' onClick={changeNickname}>변경하기</button>
         </div>
         <div className='mypage-board'>
           <h4>작성한 글 개수</h4>
@@ -121,9 +121,11 @@ function Mypage(){
               }
             </tbody>
           </table>
+          <div className='mypage-btns'>
             {
               addPageNum(totalPage, currentPage)
             }
+          </div>
         </div>
       </div>
     )
