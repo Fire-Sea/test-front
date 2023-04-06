@@ -17,6 +17,7 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import styled, { ThemeProvider } from 'styled-components';
 import {dark, light} from './theme/theme';
 import { useTheme } from './theme/useTheme';
+import {Mypage} from './pages/Mypage';
 
 function App() {
   const [themeMode, toggleTheme] = useTheme();
@@ -63,6 +64,7 @@ function App() {
         <Route path="/modify/:category/:id" element={<Edit/>}/>
         <Route path="/edit/:category" element={<Edit/>}/>
       
+        <Route path="/mypage/:nickname/:currentPage" element={<Mypage/>}/>
         <Route path="/gacha" element={<Gacha/>}/>
         <Route path="/register" element={<Register/>}/>
         <Route path="*" element={<Error/>}/>
@@ -97,7 +99,14 @@ function Navbar(){
       }}>로그인</button>
     )
   }
-  
+  const goMypage = async ()=>{
+    if(!nickname){
+      alert('로그인을 먼저 해주세요');
+    }
+    else{
+      navigate(`/mypage/${nickname}/0`)
+    }
+  }
   return(
     <div className='header'>
       <div className={'navbar navbar-' + localSettingTheme}>
@@ -112,7 +121,7 @@ function Navbar(){
         </div>
         <div className='navbar-r'>
           <div className='navbar-login'>
-            <p className='login-icon'><FontAwesomeIcon icon={faUser} className='fa-2x'/></p>
+            <p className='login-icon'><FontAwesomeIcon icon={faUser} className='fa-2x' onClick={goMypage}/></p>
             <div className='login-info'>
               <p>{nickname ? nickname : `로그인하세요`}</p>
               {loginBtn(cookies.nickname)}

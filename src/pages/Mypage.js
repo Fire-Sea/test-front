@@ -1,0 +1,126 @@
+import '../styles/Mypage.css';
+import { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
+
+function Mypage(){
+    const [cookies, setCookie] = useCookies();
+    const {currentPage} = useParams();
+    const [newNickname, setNewNickname] = useState('');
+    const nickname = cookies.nickname;
+    const [textList, setTextList] = useState([]);
+    const ip = useSelector((state)=>{return state.ip});
+    const navigate = useNavigate();
+
+    // 닉네임 변경 요청
+    const changeNickname = async ()=>{
+        if(newNickname){
+            axios.defaults.headers.common['Authorization'] = cookies.token.access_token;
+            const response = await axios.get(`http://${ip}/api/user/changeNickname?newNickname=${newNickname}`);
+            const statusCode = response.data.statusCode;
+            if(statusCode === 20017){
+              alert('성공적으로 변경되었습니다.');
+              setCookie('nickname', newNickname, {
+                path : '/',
+              });
+              navigate(-1);
+            }
+            else if(statusCode === 40017){
+              alert('중복된 닉네임입니다.');
+            }
+            else{
+              alert('서버와의 연결에 실패했습니다.')
+            }
+        }
+        else{
+          alert('변경할 닉네임을 입력해주세요');
+        }
+    }
+
+    // input값 저장 함수
+    const onChange = (e)=>{
+      setNewNickname(e.target.value);
+    }
+
+    // 작성 글 목록 GET
+    const getTextList = async ()=>{
+      try{
+      axios.defaults.headers.common['Authorization'] = cookies.token.access_token;
+      const response = await axios.get(`http://${ip}/api/user/list`);
+      const data = response.data;
+      console.log(data.content)
+      setTextList([...data.content]);
+      console.log(textList);
+    }
+    catch(e){
+      console.log(e);
+    }
+    }
+
+    // 작성 글 페이지 표시 함수
+    const addPageNum = (pageNum, currentPage)=>{
+      const newArr = [];
+      currentPage = parseInt(currentPage);
+
+      for(let i=0; i<pageNum; i++){
+        let template = '';
+        if(i === currentPage){
+          template = <button className='board-clicked' onClick={()=>navigate(`/mypage/${nickname}/${i}`)} key={i}>{i+1}</button>
+        }
+        else{
+          template = <button onClick={()=>navigate(`/mypage/${nickname}/${i}`)} key={i}>{i+1}</button>
+        }
+        newArr.push(template);
+      }
+      return newArr;
+    }
+
+
+  useEffect(()=>{
+    getTextList();
+  }, [])
+
+
+  return(
+      <div className="mypage-bg">
+        <h1>회원 정보</h1>
+        <div className='mypage-loginfo'>
+          <h4>닉네임</h4>
+          <input onChange={onChange}></input>
+          <button onClick={changeNickname}>변경하기</button>
+        </div>
+        <div className='mypage-board'>
+          <h4>작성한 글 개수</h4>
+          <p></p>
+          <table className='board-pc'>
+            <thead>
+              <tr>
+                <th>번호</th>
+                <th>카테고리</th>
+                <th>제목</th>
+                <th>작성일</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                textList.map((data, i)=>{
+                  return(
+                    <tr className='board-tr' key={i}>
+                      <td className='board-id'>{data.id}</td>
+                      <td >{data.category}</td>
+                      <td className='board-title'>{data.textTitle}</td>
+                      <td className='board-date'>{data.createdTime}</td>
+                    </tr>
+                  )
+                })
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    )
+}
+
+export {Mypage}

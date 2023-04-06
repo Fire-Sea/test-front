@@ -27,6 +27,7 @@ function Gacha(){
   
   // 10연챠 함수
   const gacha10 = ()=>{
+    alert((gachaData.gachaCnt+10) +'번째 가챠입니다.')
     gachaResult = [];
     let url = '';
     for(let i=0; i<10; i++){

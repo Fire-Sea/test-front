@@ -1,0 +1,24 @@
+.mypage-bg{
+    width: 50%;
+    margin: 100px auto;
+    padding: 50px;
+    border: 1px solid black;
+}
+.mypage-bg h1{
+    text-align: center;
+    margin-top: -10px;
+}
+.mypage-bg h4{
+    margin: 0px;
+}
+.mypage-bg input{
+    width: 200px;
+    height: 30px;
+}
+.mypage-bg button{
+    width: 100px;
+    height: 38px;
+}
+.mypage-board{
+    margin-top: 50px;
+}
