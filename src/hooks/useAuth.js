@@ -100,10 +100,12 @@ function useAuth(data){
         alert('오래 대기하여 로그아웃되었습니다. 다시 로그인하세요.');
         removeCookie('token', {path: '/'});
         dispatch(changeLoginStatus(true));
+        return 0;
       }
       // 2-4. 기타 네트워크 문제
       else{
         alert('서버와 연결이 원할하지 않습니다.');
+        return 0;
       }
     }
     catch(e){

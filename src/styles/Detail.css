@@ -21,7 +21,6 @@
   .detail-title h3{
     margin: 0px;
     font-size: 16px;
-    float: left;
   }
   .detail-info{
     border-bottom: 1px solid lightcoral;
@@ -46,7 +45,6 @@
     width: 100%;
     height: 400px;
     margin: 0px;
-    border-bottom: 1px solid lightcoral;
     padding: 30px 10px;
   }
   .detail-body{
@@ -78,4 +76,22 @@
     width: 100px;
     height: 35px;
     margin: 10px 0 0 5px;
+  }
+
+  .detail-btns{
+    text-align: center;
+    border-bottom: 1px solid lightcoral;
+  }
+
+  .detail-like, .detail-dislike{
+    width: 80px;
+    height: 50px;
+    margin: 5px 10px;
+  }
+  .detail-cnt{
+    float: right;
+    padding-top: 2px;
+  }
+  .detail-clicked{
+    background-color: black;
   }

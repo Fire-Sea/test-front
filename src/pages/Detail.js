@@ -28,8 +28,7 @@ function Detail(){
     try{
       const response = await axios.get(`http://${ip}/api/detail/?category=${category}&id=${id}`);
       let time = new Date(response.data.createdTime);
-      time = time.toISOString();
-      response.data.createdTime = `${time.substring(0, 10)} ${time.substring(11, 19)}`;
+      response.data.createdTime = `${time.getFullYear()}-${time.getMonth()+1}-${time.getDay()} ${time.getHours()}:${time.getSeconds()}`;
       setTextData(response.data);
     } 
     catch(e){
@@ -76,7 +75,6 @@ function Detail(){
     <>
     <Input/>
     <div className={'detail-container start ' + fade}>
-      <button onClick={()=>{axiosGet()}}>헤헤</button>
         <h1 className='detail-category'>{category}</h1>
         <div className='detail-title'>
             <h3>{textData.textTitle}</h3>
@@ -84,8 +82,14 @@ function Detail(){
         <div className='detail-info'>
           <p className='detail-nickname'>{textData.nickname}</p>
           <p>{textData.createdTime}</p>
+          <p className='detail-cnt'>조회수: 123회</p>
         </div>
         <div className='detail-body' dangerouslySetInnerHTML={{__html: textData.textBody}}>
+        </div>
+        
+        <div className='detail-btns'>
+          <button className='detail-like detail-clicked'>좋아요</button>
+          <button className='detail-dislike'>싫어요</button>
         </div>
         <button className='detail-backBtn' onClick={()=>navigate(-1)}>뒤로가기</button>
         {
