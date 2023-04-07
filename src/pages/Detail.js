@@ -19,7 +19,9 @@ function Detail(){
     textTitle: '',
     textBody: '',
     nickname: '',
-    views: 0
+    views: 0,
+    likes: 0,
+    dislikes: 0
   });
   const nickname = cookies.nickname;
   const {axiosGetDetail} = useGet();
@@ -50,6 +52,48 @@ function Detail(){
       <button className='detail-removeBtn' onClick={axiosDeleteDetail}>글 삭제하기</button>
       </>
     )
+  }
+
+  // 좋아요, 싫어요
+  const plusLikes = async ()=>{
+    try{
+      const res = await axios.get(`http://${ip}/api/likeTm?id=${id}`);
+      console.log(res);
+      if(res.data.statusCode === 40018){
+        alert('이미 추천하셨습니다.')
+      }
+      else{
+        const r = await axios.get(`http://${ip}/api/countTmLikes?id=${id}`);
+        setTextData({
+          ...textData,
+          likes: r.data.data
+        })
+      }
+    }
+    catch(e){
+      console.log(e);
+    }
+  }
+  const plusDislikes = async ()=>{
+    try{
+      const res = await axios.get(`http://${ip}/api/dislikeTm?id=${id}`);
+      console.log(res);
+      if(res.data.statusCode === 40018){
+        alert('이미 비추천하셨습니다.')
+      }
+      else{
+        const r = await axios.get(`http://${ip}/api/countTmDislikes?id=${id}`);
+        console.log(r.data)
+
+        setTextData({
+          ...textData,
+          dislikes: r.data.data
+        })
+      }
+    }
+    catch(e){
+      console.log(e);
+    }
   }
   useEffect(()=>{
     // 글 정보 GET
@@ -82,8 +126,8 @@ function Detail(){
         </div>
         
         <div className='detail-btns'>
-          <button className='detail-like detail-clicked'>좋아요</button>
-          <button className='detail-dislike'>싫어요</button>
+          <button className='detail-like' onClick={plusLikes}><h3>{textData.likes}</h3><p>좋아요</p></button>
+          <button className='detail-dislike' onClick={plusDislikes}><h3>{textData.dislikes}</h3><p>싫어요</p></button>
         </div>
 
         <button className='detail-backBtn' onClick={()=>navigate(-1)}>뒤로가기</button>

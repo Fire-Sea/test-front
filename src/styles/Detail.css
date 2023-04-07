@@ -95,3 +95,7 @@
   .detail-clicked{
     background-color: black;
   }
+
+  .detail-btns h3, .detail-btns p{
+    margin: 0px;
+  }
