@@ -5,7 +5,8 @@ import axios from 'axios';
 import {useCookies} from 'react-cookie';
 import { Input } from '../Input';
 import '../styles/Detail.css';
-import useAxios from '../hooks/useAxios';
+import useGet from '../hooks/useGet';
+import useDelete from '../hooks/useDelete';
 
 function Detail(){
   const navigate = useNavigate();
@@ -21,22 +22,8 @@ function Detail(){
     views: 0
   });
   const nickname = cookies.nickname;
-  const [axiosGet] = useAxios(`http://${ip}/api/detail/?category=${category}&id=${id}`);
-
-
-  // 글 정보 저장 함수
-  const getData = async ()=>{
-    try{
-      const response = await axios.get(`http://${ip}/api/detail/?category=${category}&id=${id}`);
-      let time = new Date(response.data.createdTime);
-      response.data.createdTime = `${time.getFullYear()}-${time.getMonth()+1}-${time.getDay()} ${time.getHours()}:${time.getSeconds()}`;
-      setTextData(response.data);
-      console.log(response)
-    } 
-    catch(e){
-      console.log(e)
-    }
-  };
+  const {axiosGetDetail} = useGet();
+  const {axiosDeleteDetail} = useDelete();
 
   // 글 삭제 요청 함수
   const deleteData = async ()=>{
@@ -60,12 +47,17 @@ function Detail(){
     return(
       <>
       <button className='detail-modifyBtn' onClick={()=>{navigate(`/modify/${category}/${id}`)}}>글 수정하기</button>
-      <button className='detail-removeBtn' onClick={deleteData}>글 삭제하기</button>
+      <button className='detail-removeBtn' onClick={axiosDeleteDetail}>글 삭제하기</button>
       </>
     )
   }
   useEffect(()=>{
-    getData();
+    // 글 정보 GET
+    (async ()=>{
+      const data = await axiosGetDetail();
+      setTextData(data);
+    })();
+    
     const fadeTimer = setTimeout(()=>{setFade('end')}, 100)
     return ()=>{
       clearTimeout(fadeTimer);

@@ -156,5 +156,6 @@ S.Main = styled.div`
   width: 100%;
   height: 100%;
   background-color: ${props => props.theme.colors.bgColor};
-  color: ${props => props.theme.colors.titleColor}
+  color: ${props => props.theme.colors.titleColor};
+  transition: 1s all;
 `;

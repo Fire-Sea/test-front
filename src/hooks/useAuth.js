@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux';
 import { changeLoginStatus, changeNickname } from '../store';
 import { useCookies } from "react-cookie";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function useAuth(data){
   const [response, setResponse] = useState({});
@@ -13,6 +13,7 @@ function useAuth(data){
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const ip = useSelector((state) => {return state.ip});
+  const {category} = useParams();
 
   const sendLoginData = async ()=>{
     try{
@@ -99,6 +100,7 @@ function useAuth(data){
       else if(statusCode === 40009){
         alert('오래 대기하여 로그아웃되었습니다. 다시 로그인하세요.');
         removeCookie('token', {path: '/'});
+        removeCookie('nickname', {path: '/'});
         dispatch(changeLoginStatus(true));
         return 0;
       }
@@ -112,7 +114,48 @@ function useAuth(data){
       alert('서버와 연결이 원할하지 않습니다.');
     }
   }
-  return {response, sendLoginData, sendRegisterData, silentRefresh}
+
+  // 글쓰기 버튼 눌렀을 때 토큰검사
+  const checkToken = async ()=>{
+    if(cookies.nickname){
+      try{
+        axios.defaults.headers.common['Authorization'] = cookies.token.access_token;
+        axios.defaults.withCredentials = true;
+
+        const res = await axios.get(`http://${ip}/api/user`);
+        const statusCode = res.data.statusCode;
+            
+        // 1. access_token: 유효 / refresh_token: 5분이상 유효
+        if(statusCode === 20011){
+          console.log('1. access_token: 유효 / refresh_token: 5분이상 유효');
+          navigate(`/edit/${category}`);
+        }
+        // 2. access_token: 만료
+        //    refresh_token을 보내 access_token을 갱신시도
+        else if(statusCode === 40006){
+          console.log('2. access_token: 만료');
+          console.log('   refresh_token을 보내 access_token을 갱신시도');
+          const code = await silentRefresh();
+          console.log(code)
+          if(code != 0){
+            navigate(`/edit/${category}`);
+          }
+        }
+      }
+      catch(e){
+        console.log(e);
+        alert('로그인이 필요한 서비스입니다.');
+        dispatch(changeLoginStatus(true));
+      }
+    }
+    else{
+      console.log('3. access_token, refresh_token 없이 접근시도');
+      console.log('   로그인 하도록 유도');
+      alert('로그인이 필요한 서비스입니다.');
+      dispatch(changeLoginStatus(true));
+    }
+  }
+  return {response, sendLoginData, sendRegisterData, silentRefresh, checkToken}
 }
 
 export default useAuth;

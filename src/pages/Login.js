@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { changeLoginStatus, changeNickname } from '../store';
-import axios from 'axios';
-import { useCookies } from 'react-cookie';
+import { useDispatch } from 'react-redux';
+import { changeLoginStatus } from '../store';
 import '../styles/Login.css';
 import useAuth from '../hooks/useAuth';
 
@@ -11,8 +9,6 @@ function Login(){
   const [fade, setFade] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const ip = useSelector((state) => {return state.ip});
-  const [cookies, setCookie] = useCookies();
   const [loginData, setLoginData] = useState({
     username: '',
     password: ''

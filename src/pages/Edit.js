@@ -104,7 +104,7 @@ function Edit(){
       }
       else{
         const code = silentRefresh();
-        if(code){
+        if(code != 0){
           postData();
         }
       }
