@@ -55,7 +55,7 @@ function Mypage(){
       setTextList(data.content);
       setTotalPage(data.totalPages);
       setTotalNum(data.totalElements)
-      console.log(data.totalElements)
+      console.log(response)
     }
     catch(e){
       console.log(e);
@@ -104,17 +104,19 @@ function Mypage(){
                 <th>카테고리</th>
                 <th>제목</th>
                 <th>작성일</th>
+                <th>조회수</th>
               </tr>
             </thead>
             <tbody>
               {
                 textList.map((data, i)=>{
                   return(
-                    <tr className='mypage-tr' key={i}>
+                    <tr className='mypage-tr' onClick={()=>{navigate(`/detail/${data.category}/${data.id}`)}} key={i}>
                       <td className='mypage-id'>{data.id}</td>
                       <td >{data.category}</td>
                       <td className='mypage-title'>{data.textTitle}</td>
                       <td className='mypage-date'>{data.createdTime}</td>
+                      <td className='mypage-views'>{data.views}</td>
                     </tr>
                   )
                 })

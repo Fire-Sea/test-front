@@ -17,7 +17,8 @@ function Detail(){
     category: '',
     textTitle: '',
     textBody: '',
-    nickname: ''
+    nickname: '',
+    views: 0
   });
   const nickname = cookies.nickname;
   const [axiosGet] = useAxios(`http://${ip}/api/detail/?category=${category}&id=${id}`);
@@ -30,6 +31,7 @@ function Detail(){
       let time = new Date(response.data.createdTime);
       response.data.createdTime = `${time.getFullYear()}-${time.getMonth()+1}-${time.getDay()} ${time.getHours()}:${time.getSeconds()}`;
       setTextData(response.data);
+      console.log(response)
     } 
     catch(e){
       console.log(e)
@@ -82,7 +84,7 @@ function Detail(){
         <div className='detail-info'>
           <p className='detail-nickname'>{textData.nickname}</p>
           <p>{textData.createdTime}</p>
-          <p className='detail-cnt'>조회수: 123회</p>
+          <p className='detail-cnt'>조회수: {textData.views}</p>
         </div>
         <div className='detail-body' dangerouslySetInnerHTML={{__html: textData.textBody}}>
         </div>
@@ -91,6 +93,7 @@ function Detail(){
           <button className='detail-like detail-clicked'>좋아요</button>
           <button className='detail-dislike'>싫어요</button>
         </div>
+
         <button className='detail-backBtn' onClick={()=>navigate(-1)}>뒤로가기</button>
         {
           nickname === textData.nickname && showAdminBtn()

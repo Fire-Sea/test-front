@@ -32,14 +32,15 @@ th{
 }
 
 .board-id{
-  width: 10%;
+  width: 5%;
   font-size: 12px;
 }
 .board-title{
-  width: 60%;
+  width: 55%;
   text-align: left;
   overflow: hidden;
   cursor: pointer;
+  padding-left: 10px;
   font-size: 14px;
 }
 .board-nickname{
@@ -48,6 +49,10 @@ th{
 }
 .board-date{
   width: 15%;
+  font-size: 12px;
+}
+.board-views{
+  width: 10%;
   font-size: 12px;
 }
 .board-m{
@@ -74,6 +79,13 @@ th{
 .a-date{
   float: right;
   font-size: 11px;
+  border-right: 1px solid lightgray;
+  padding: 0 5px;
+}
+.a-views{
+  float: right;
+  font-size: 11px;
+  padding: 0 5px;
 }
 .board-tr-m:hover {
   background-color: rgba(0,0,0,0.1);

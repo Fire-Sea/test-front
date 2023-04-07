@@ -60,6 +60,7 @@ function Board(){
         }
         
       })
+      console.log(data)
     }
     catch(e){
       setServerErr(true);
@@ -126,10 +127,11 @@ function Board(){
       <table className='board-pc'>
         <thead>
           <tr>
-            <th>번호</th>
+            <th>No</th>
             <th>제목</th>
             <th>작성자</th>
             <th>작성일</th>
+            <th>조회수</th>
           </tr>
         </thead>
         <tbody>
@@ -140,15 +142,16 @@ function Board(){
             textList.map((data, i)=>{
               return(
                 <tr className='board-tr' key={data.id}>
-                  <td className='board-id'>{totalNum-(currentPage*10)-i}</td>
+                  <td className='board-id'>{totalNum-(currentPage*20)-i}</td>
                   <td className='board-title' onClick={()=>navigate(`/detail/${category}/${data.id}`)}><a>{data.textTitle}</a></td>
                   <td className='board-nickname'>{data.nickname}</td>
                   <td className='board-date'>{data.createdTime}</td>
+                  <td className='board-views'>{data.views}</td>
                 </tr>
               )
             })
           }  
-          <tr><td className='board-line' colSpan={4}></td></tr>
+          <tr><td className='board-line' colSpan={5}></td></tr>
         </tbody>
       </table>
 
@@ -161,13 +164,14 @@ function Board(){
                   <td className='board-title-m' colSpan={2} onClick={()=>navigate(`/detail/${category}/${data.id}`)}>
                     <a className='a-title'>{data.textTitle}</a>
                     <a className='a-nickname'>{data.nickname}</a>
+                    <a className='a-views'>조회수 {data.views}</a>
                     <a className='a-date'>{data.createdTime}</a>
                   </td>
                 </tr>
               )
             })
           }  
-          <tr><td className='board-line' colSpan={4}></td></tr>
+          <tr><td className='board-line' colSpan={5}></td></tr>
         </tbody>
       </table>
       <div className='board-pages'>
