@@ -3,9 +3,9 @@ import axios from 'axios'
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import useAuth from "./useAuth";
+import useSilentRefresh from "./useSilentRefresh";
 
-function useDelete(data){
+function useDeleteDetail(data){
   const [response, setResponse] = useState({});
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -14,9 +14,9 @@ function useDelete(data){
   const [textData, setTextData] = useState({});
   const navigate = useNavigate();
   const [cookies] = useCookies();
-  const {silentRefresh} = useAuth();
+  const {silentRefresh} = useSilentRefresh();
 
-  const axiosDeleteDetail = async ()=>{
+  const deleteDetail = async ()=>{
     try{
       axios.defaults.headers.common['Authorization'] = cookies.token.access_token;
       const res = await axios.delete(`http://${ip}/api/user/delete?id=${id}`);
@@ -33,7 +33,7 @@ function useDelete(data){
       console.log(e);
     }
   }
-  return {axiosDeleteDetail}
+  return {deleteDetail};
 }
 
-export default useDelete;
+export default useDeleteDetail;

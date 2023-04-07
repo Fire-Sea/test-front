@@ -18,6 +18,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import {dark, light} from './theme/theme';
 import { useTheme } from './theme/useTheme';
 import {Mypage} from './pages/Mypage';
+import useCheckToken from './hooks/useCheckToken';
 
 function App() {
   const [themeMode, toggleTheme] = useTheme();
@@ -58,7 +59,8 @@ function Navbar(){
   const [cookies, setCookie, removeCookie] = useCookies();
   const nickname = cookies.nickname;
   const localSettingTheme = localStorage.getItem('theme');
-  
+  const {checkToken} = useCheckToken();
+
   const loginBtn = (nickname)=>{
     if(nickname){
       return(
@@ -81,7 +83,7 @@ function Navbar(){
       alert('로그인을 먼저 해주세요');
     }
     else{
-      navigate(`/mypage/${nickname}/0`)
+      checkToken('mypage');
     }
   }
   return(

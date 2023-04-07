@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { changeLoginStatus } from '../store';
 import '../styles/Login.css';
-import useAuth from '../hooks/useAuth';
+import useSendUserInfo from '../hooks/useSendUserInfo';
 
 function Login(){
   const [fade, setFade] = useState('');
@@ -18,7 +18,7 @@ function Login(){
 
 
   // 로그인 정보 POST하는 hook
-  const {sendLoginData} = useAuth(loginData)
+  const {sendUserInfo} = useSendUserInfo(loginData);
   
   
   // 각 input에서 username, password 저장
@@ -36,7 +36,7 @@ function Login(){
       alert('아이디 또는 비밀번호를 입력하세요.');
     }
     else{
-      sendLoginData();
+      sendUserInfo('login');
     }
   }
 

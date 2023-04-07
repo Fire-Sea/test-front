@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
-import {useNavigate} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import axios from 'axios';
 import '../styles/Register.css';
-import useAuth from '../hooks/useAuth';
+import useSendUserInfo from '../hooks/useSendUserInfo';
 
 function Register(){
-  const navigate = useNavigate();
   const ip = useSelector((state) => {return state.ip});
   const [fade, setFade] = useState('');
   const [validList, setValidList] = useState([0,0,0,0])
@@ -18,7 +16,7 @@ function Register(){
   });
 
   // 가입 정보 POST하는 hook
-  const {sendRegisterData} = useAuth(registerData);
+  const {sendUserInfo} = useSendUserInfo(registerData);
 
   const onChange = (e)=>{
     const type = e.target.name;
@@ -180,7 +178,7 @@ function Register(){
           nickname: nickname
         });
 
-        sendRegisterData();
+        sendUserInfo('register');
       }
     }}>회원가입 하기</button>
 

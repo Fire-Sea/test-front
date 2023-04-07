@@ -4,6 +4,7 @@ import { useCookies } from 'react-cookie';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import useGetTextData from '../hooks/useGetTextData';
 
 function Mypage(){
     const [cookies, setCookie] = useCookies();
@@ -15,6 +16,7 @@ function Mypage(){
     const [totalNum, setTotalNum] = useState(0);
     const ip = useSelector((state)=>{return state.ip});
     const navigate = useNavigate();
+    const {getTextData} = useGetTextData();
 
     // 닉네임 변경 요청
     const changeNickname = async ()=>{
@@ -46,22 +48,6 @@ function Mypage(){
       setNewNickname(e.target.value);
     }
 
-    // 작성 글 목록 GET
-    const getTextList = async ()=>{
-      try{
-      axios.defaults.headers.common['Authorization'] = cookies.token.access_token;
-      const response = await axios.get(`http://${ip}/api/user/list`);
-      const data = response.data;
-      setTextList(data.content);
-      setTotalPage(data.totalPages);
-      setTotalNum(data.totalElements)
-      console.log(response)
-    }
-    catch(e){
-      console.log(e);
-    }
-    }
-
     // 작성 글 페이지 표시 함수
     const addPageNum = (pageNum, currentPage)=>{
       const newArr = [];
@@ -82,7 +68,12 @@ function Mypage(){
 
 
   useEffect(()=>{
-    getTextList();
+    (async ()=>{
+      const data = await getTextData({parent: 'list', child: 'mypage'});
+      setTextList(data.content);
+      setTotalNum(data.totalElements);
+      setTotalPage(data.totalPages);
+    })()
   }, [currentPage])
 
 
@@ -112,7 +103,7 @@ function Mypage(){
                 textList.map((data, i)=>{
                   return(
                     <tr className='mypage-tr' onClick={()=>{navigate(`/detail/${data.category}/${data.id}`)}} key={i}>
-                      <td className='mypage-id'>{data.id}</td>
+                      <td className='mypage-id'>{totalNum-(currentPage*20)-i}</td>
                       <td >{data.category}</td>
                       <td className='mypage-title'>{data.textTitle}</td>
                       <td className='mypage-date'>{data.createdTime}</td>

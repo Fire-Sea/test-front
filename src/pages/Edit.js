@@ -1,17 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
-import { changeLoginStatus } from '../store';
-import axios from 'axios';
-import {useCookies} from 'react-cookie';
+import { useSelector} from 'react-redux';
 import '../styles/Edit.css';
-import useAuth from '../hooks/useAuth';
+import useDelete from '../hooks/useDeleteDetail';
+import useGetTextData from '../hooks/useGetTextData';
+import usePostDetail from '../hooks/usePostDetail';
 
 function Edit(){
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const ip = useSelector((state) => {return state.ip});
-  const [cookies, setCookie, removeCookie] = useCookies();
   const {category, id} = useParams();
   const editor = document.querySelector('.edit-body');
   const [fade, setFade] = useState('');
@@ -23,8 +20,9 @@ function Edit(){
     textBody: ''
   })
   const {textTitle, textBody} = textData;
-  const {silentRefresh} = useAuth();
-
+  const {deleteDetail} = useDelete();
+  const {getTextData} = useGetTextData();
+  const {postDetail} = usePostDetail(textData);
   // 글자 스타일 적용
   const setStyle = (style)=>{
     document.execCommand(style);
@@ -45,7 +43,7 @@ function Edit(){
       alert('내용을 입력하세요');
     }
     else{
-      postData();
+      postDetail();
     }
   };
 
@@ -73,92 +71,12 @@ function Edit(){
     console.log(e.target.innerHTML)
   };
 
-  // textData POST전송
-  const postData = async ()=>{
-    try{
-      setErr(null);
-      setLoading(true);
-      let response = {};
-
-      if(cookies.token === undefined){
-        console.log('0. 쿠키에 저장된 토큰이 없음');
-        console.log('   로그인 하도록 유도');
-        alert('로그인하세요.');
-        return dispatch(changeLoginStatus(true));
-      }
-      if(id){
-        response = await axios.patch(`http://${ip}/api/user/update?id=${id}`, textData);
-      }
-      else{
-        response = await axios.post(`http://${ip}/api/user/send`, textData);
-      }
-      const statusCode = response.data.statusCode;
-      
-      if(statusCode === 20000){
-        alert('글이 저장되었습니다.');
-        navigate(`/list/${category}/0`);
-      }
-      else if(statusCode === 20015){
-        alert('정상적으로 수정되었습니다.');
-        navigate(`/list/${category}/0`);
-      }
-      else{
-        const code = silentRefresh();
-        if(code != 0){
-          postData();
-        }
-      }
-    } catch(e){
-      setErr(e);
-      console.log('서버와의 소통에 실패했습니다.')
-    }
-    setLoading(false);
-  };
-
-  // modify 버전 수정할 글 GET
-  const getData = async ()=>{
-    try{
-      const response = await axios.get(`http://${ip}/api/detail/?category=${category}&id=${id}`);
-  
-      if(!response.data){
-        alert('서버와의 소통에 실패했습니다.');
-        navigate(-1);
-      }
-      else{
-        setTextData(response.data);
-
-      }
-    }
-    catch(e){
-      setErr(e);
-    }
-  }
-  
-
-  // 글 삭제 요청 함수
-  const deleteData = async ()=>{
-    try{
-      const response = await axios.delete(`http://${ip}/api/user/delete?id=${id}`);
-      const statusCode = response.data.statusCode;
-      if(statusCode === 20016){
-        alert('정상적으로 삭제되었습니다.');
-        navigate(`/list/${category}/0`);
-      }
-      else{
-        alert('알수없는 이유로 실패했습니다.');
-      }
-    }
-    catch(e){
-      console.log(e);
-    }
-  }
-
   // 글 수정 요청함수
   const modifyBtn = ()=>{
     return(
       <>
-      <button className='detail-removeBtn' onClick={deleteData}>글 삭제하기</button>
-      <button className='edit-send' onClick={postData}>수정 완료하기</button>
+      <button className='detail-removeBtn' onClick={deleteDetail}>글 삭제하기</button>
+      <button className='edit-send' onClick={postDetail}>수정 완료하기</button>
       </>
     )
   }
@@ -167,7 +85,11 @@ function Edit(){
   useEffect(()=>{
     const fadeTimer = setTimeout(()=>setFade('end'), 100);
     if(id){
-      getData();
+      (async ()=>{
+        const data = await getTextData({parent: 'detail'});
+        setTextData(data)
+      })()
+      
     }
     return ()=>{
       clearTimeout(fadeTimer);

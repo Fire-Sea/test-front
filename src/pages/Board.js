@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Input } from '../Input';
 import '../styles/Board.css';
-import useAuth from '../hooks/useAuth';
-import useGet from '../hooks/useGet';
+import useGetTextData from '../hooks/useGetTextData';
+import useCheckToken from '../hooks/useCheckToken';
 
 function Board(){
   const navigate = useNavigate();
@@ -12,8 +12,8 @@ function Board(){
   const [totalNum, setTotalNum] = useState(0);
   const [totalPage, setTotalPage] = useState(0);
   const [fade, setFade] = useState('');
-  const {checkToken} = useAuth();
-  const {axiosGetTextList} = useGet();
+  const {checkToken} = useCheckToken();
+  const {getTextData} = useGetTextData();
 
   // 게시판 페이지 표시 함수
   const addPageNum = (pageNum, currentPage)=>{
@@ -36,7 +36,7 @@ function Board(){
   useEffect(()=>{
     // 글 목록 GET
     (async ()=>{
-      const data = await axiosGetTextList();
+      const data = await getTextData({parent: 'list', child:'board'});
       setTextList(data.content);
       setTotalNum(data.totalElements);
       setTotalPage(data.totalPages);
@@ -61,6 +61,7 @@ function Board(){
             <th>작성자</th>
             <th>작성일</th>
             <th>조회수</th>
+            <th>좋아요</th>
           </tr>
         </thead>
         <tbody>
@@ -73,11 +74,12 @@ function Board(){
                   <td className='board-nickname'>{data.nickname}</td>
                   <td className='board-date'>{data.createdTime}</td>
                   <td className='board-views'>{data.views}</td>
+                  <td className='board-likes'>{data.likes}</td>
                 </tr>
               )
             })
           }  
-          <tr><td className='board-line' colSpan={5}></td></tr>
+          <tr><td className='board-line' colSpan={6}></td></tr>
         </tbody>
       </table>
 
@@ -97,7 +99,7 @@ function Board(){
               )
             })
           }  
-          <tr><td className='board-line' colSpan={5}></td></tr>
+          <tr><td className='board-line' colSpan={6}></td></tr>
         </tbody>
       </table>
       <div className='board-pages'>

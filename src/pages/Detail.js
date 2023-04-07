@@ -5,13 +5,13 @@ import axios from 'axios';
 import {useCookies} from 'react-cookie';
 import { Input } from '../Input';
 import '../styles/Detail.css';
-import useGet from '../hooks/useGet';
-import useDelete from '../hooks/useDelete';
+import useGetTextData from '../hooks/useGetTextData';
+import useDelete from '../hooks/useDeleteDetail';
+import useControlLikes from '../hooks/useControlLikes';
 
 function Detail(){
   const navigate = useNavigate();
   const [cookies] = useCookies();
-  const ip = useSelector((state)=>{return state.ip});
   const [fade, setFade] = useState('');
   const {category, id} = useParams();
   const [textData, setTextData] = useState({
@@ -24,81 +24,36 @@ function Detail(){
     dislikes: 0
   });
   const nickname = cookies.nickname;
-  const {axiosGetDetail} = useGet();
-  const {axiosDeleteDetail} = useDelete();
+  const {getTextData} = useGetTextData();
+  const {deleteDetail} = useDelete();
+  const ip = useSelector(state=>state.ip);
+  const {controlLikes} = useControlLikes();
 
-  // 글 삭제 요청 함수
-  const deleteData = async ()=>{
-    try{
-      const response = await axios.delete(`http://${ip}/api/user/delete?id=${id}`);
-      const statusCode = response.data.statusCode;
-      if(statusCode === 20016){
-        alert('정상적으로 삭제되었습니다.')
-        navigate(-1);
-      }
-      else{
-        alert('알수없는 이유로 실패했습니다.');
-      }
-    }
-    catch(e){
-      console.log(e);
-    }
-  }
   // 글 수정, 삭제 버튼 출력
   const showAdminBtn = ()=>{
     return(
       <>
       <button className='detail-modifyBtn' onClick={()=>{navigate(`/modify/${category}/${id}`)}}>글 수정하기</button>
-      <button className='detail-removeBtn' onClick={axiosDeleteDetail}>글 삭제하기</button>
+      <button className='detail-removeBtn' onClick={deleteDetail}>글 삭제하기</button>
       </>
     )
   }
 
-  // 좋아요, 싫어요
-  const plusLikes = async ()=>{
-    try{
-      const res = await axios.get(`http://${ip}/api/likeTm?id=${id}`);
-      console.log(res);
-      if(res.data.statusCode === 40018){
-        alert('이미 추천하셨습니다.')
-      }
-      else{
-        const r = await axios.get(`http://${ip}/api/countTmLikes?id=${id}`);
-        setTextData({
-          ...textData,
-          likes: r.data.data
-        })
-      }
-    }
-    catch(e){
-      console.log(e);
+  // 좋아요 추가 및 상태변경
+  const chagngeLikes = async (type)=>{
+    let test = await controlLikes(type);
+    if(test){
+      setTextData({
+        ...textData,
+        [type]: test
+      })
     }
   }
-  const plusDislikes = async ()=>{
-    try{
-      const res = await axios.get(`http://${ip}/api/dislikeTm?id=${id}`);
-      console.log(res);
-      if(res.data.statusCode === 40018){
-        alert('이미 비추천하셨습니다.')
-      }
-      else{
-        const r = await axios.get(`http://${ip}/api/countTmDislikes?id=${id}`);
-        console.log(r.data)
 
-        setTextData({
-          ...textData,
-          dislikes: r.data.data
-        })
-      }
-    }
-    catch(e){
-      console.log(e);
-    }
-  }
   useEffect(()=>{
     // 글 정보 GET
     (async ()=>{
-      const data = await axiosGetDetail();
+      const data = await getTextData({parent: 'detail'});
       setTextData(data);
     })();
     
@@ -126,14 +81,13 @@ function Detail(){
         </div>
         
         <div className='detail-btns'>
-          <button className='detail-like' onClick={plusLikes}><h3>{textData.likes}</h3><p>좋아요</p></button>
-          <button className='detail-dislike' onClick={plusDislikes}><h3>{textData.dislikes}</h3><p>싫어요</p></button>
+          <button className='detail-like' onClick={()=>{chagngeLikes('likes')}}><h3>{textData.likes}</h3><p>좋아요</p></button>
+          <button className='detail-dislike' onClick={()=>{chagngeLikes('dislikes')}}><h3>{textData.dislikes}</h3><p>싫어요</p></button>
         </div>
-
-        <button className='detail-backBtn' onClick={()=>navigate(-1)}>뒤로가기</button>
         {
           nickname === textData.nickname && showAdminBtn()
         }
+        <button className='detail-backBtn' onClick={()=>navigate(-1)}>뒤로가기</button>
     </div>
     </>
     )
