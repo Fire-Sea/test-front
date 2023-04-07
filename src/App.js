@@ -115,7 +115,8 @@ function Navbar(){
 function Main(){
   let navigate = useNavigate();
   let [fade, setFade] = useState('');
-
+  const localSettingTheme = localStorage.getItem('theme');
+  
   useEffect(()=>{
     const fadeTimer = setTimeout(()=>{setFade('end')}, 100);
 
@@ -129,17 +130,17 @@ function Main(){
       <Input/>
       <div className={'main start ' + fade}>
         <div className='main-img'>
-          <div className='img-overlay' onClick={()=>{navigate('/list/front/0')}}>Front</div>
+          <div className={'img-overlay main-' + localSettingTheme} onClick={()=>{navigate('/list/front/0')}}>Front</div>
           <img alt='main_img1' src={process.env.PUBLIC_URL + '/main_img1.jpg'}/>
         </div>
         <div className='main-img'>
-        <div className='img-overlay' onClick={()=>{navigate('/list/server/0')}}>Server</div>
+        <div className={'img-overlay main-' + localSettingTheme} onClick={()=>{navigate('/list/server/0')}}>Server</div>
           <img alt='main_img2' src={process.env.PUBLIC_URL + '/main_img2.jpg'}/>
         </div>
-      </div>
-      <div className={'main-game start' + fade}>
-        <div className='img-overlay' onClick={()=>{navigate('/gacha')}}>Game</div>
-        <img alt='main_img3' src={process.env.PUBLIC_URL + '/main_img3.jpg'}/>
+        <div className='main-game'>
+          <div className={'img-overlay main-' + localSettingTheme} onClick={()=>{navigate('/gacha')}}>Game</div>
+          <img alt='main_img3' src={process.env.PUBLIC_URL + '/main_img3.jpg'}/>
+        </div>
       </div>
     </>
   )
@@ -160,4 +161,5 @@ S.Main = styled.div`
   background-color: ${props => props.theme.colors.bgColor};
   color: ${props => props.theme.colors.titleColor};
   transition: 1s all;
+  overflow: hidden;
 `;
