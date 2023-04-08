@@ -36,7 +36,7 @@ th{
   font-size: 12px;
 }
 .board-title{
-  width: 55%;
+  width: 45%;
   text-align: left;
   overflow: hidden;
   cursor: pointer;
@@ -52,6 +52,10 @@ th{
   font-size: 12px;
 }
 .board-views{
+  width: 10%;
+  font-size: 12px;
+}
+.board-likes{
   width: 10%;
   font-size: 12px;
 }

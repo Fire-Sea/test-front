@@ -61,7 +61,7 @@ function Board(){
             <th>작성자</th>
             <th>작성일</th>
             <th>조회수</th>
-            <th>좋아요</th>
+            <th>추천</th>
           </tr>
         </thead>
         <tbody>
@@ -74,7 +74,7 @@ function Board(){
                   <td className='board-nickname'>{data.nickname}</td>
                   <td className='board-date'>{data.createdTime}</td>
                   <td className='board-views'>{data.views}</td>
-                  <td className='board-likes'>{data.likes}</td>
+                  <td className='board-likes'>{data.likes - data.dislikes}</td>
                 </tr>
               )
             })

@@ -1,9 +1,9 @@
 import { useState } from "react";
 import axios from 'axios'
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
-
+import {changeLoginStatus} from "../store"
 function useGetTextData(data){
   const [response, setResponse] = useState({});
   const [error, setError] = useState('');
@@ -12,12 +12,13 @@ function useGetTextData(data){
   const {category, id, currentPage} = useParams();
   const [textData, setTextData] = useState({});
   const [cookies] = useCookies();
-
+  const dispatch = useDispatch();
   const getTextData = async (type)=>{
     switch(type.parent){
       case 'list':
         let url = ''
         if(type.child === 'mypage'){
+          axios.defaults.headers.common['Authorization'] = cookies.token.access_token;
           url = `http://${ip}/api/user/list`;
         }
         else if(type.child === 'board'){
@@ -42,7 +43,10 @@ function useGetTextData(data){
         }
         catch(e){
           console.log(e);
-          alert('서버와 연결이 원할하지 않습니다. 잠시후 시도해주세요.');
+          alert('서버와 연결이 원할하지 않습니다. 다시 로그인해주세요');
+          dispatch(changeLoginStatus(true));;
+          window.location.replace('/');
+
         }
         break;
       case 'detail':
