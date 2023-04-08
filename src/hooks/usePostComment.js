@@ -10,7 +10,6 @@ function usePostComment(comment){
   const {silentRefresh} = useSilentRefresh();
   const ip = useSelector(state=>state.ip);
 
-
   const postComment = async ()=>{
     if(cookies.nickname){
       axios.defaults.headers.common['Authorization'] = cookies.token.access_token;

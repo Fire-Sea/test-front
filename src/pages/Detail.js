@@ -28,6 +28,7 @@ function Detail(){
     commentBody: '',
     id: 0
   })
+
   const [commentList, setCommentList] = useState({
     nickname: '',
     commentBody: ''
@@ -41,6 +42,7 @@ function Detail(){
   const {postComment} = usePostComment(comment);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalCnt, setTotalCnt] = useState(null);
+
   // 글 수정, 삭제 버튼 출력
   const showAdminBtn = ()=>{
     return(
@@ -61,7 +63,6 @@ function Detail(){
       })
     }
   }
-
   const changeComment = (e)=>{
     const comment = e.currentTarget.value;
     setComment({
@@ -69,10 +70,10 @@ function Detail(){
       id: id
     })
   }
-  const chkComment = (e)=>{
+  const chkComment = async (e)=>{
     if(comment.commentBody !== ''){
-      console.log(comment)
-      postComment();
+      await postComment();
+      await getList();
     }
     else{
       alert('댓글 내용을 입력해주세요.');
@@ -80,11 +81,9 @@ function Detail(){
   }
   const getList = async ()=>{
     const res = await axios.get(`http://${ip}/api/comment/list?id=${id}&page=${currentPage}`);
-    console.log(res.data.data.content)
+    console.log(res)
     setCommentList(res.data.data.content);
-    console.log(res.data.data.content)
-    setTotalCnt(res.data.data.totalElements)
-    console.log(commentList)
+    setTotalCnt(res.data.data.totalElements);
   }
   useEffect(()=>{
     // 글 정보 GET
@@ -125,23 +124,22 @@ function Detail(){
           <button className='detail-savecomment' onClick={chkComment}>댓글 저장하기</button>
         </div>
 
-        {
-          nickname === textData.nickname && showAdminBtn()
-        }
         <div className='comment-container'>
           {
-            totalCnt != 0
+            totalCnt != null
             ?
             commentList.map((data, i)=>{
               return(
-                <li><h4>{data.nickname}</h4><p>{data.commentBody}</p></li>
+                <li key={i}><h4>{data.nickname}</h4><p>{data.commentBody}</p></li>
               )
             })
             : null
           }
         </div>
         <button className='detail-backBtn' onClick={()=>navigate(-1)}>뒤로가기</button>
-        
+        {
+          nickname === textData.nickname && showAdminBtn()
+        }
     </div>
     </>
     )

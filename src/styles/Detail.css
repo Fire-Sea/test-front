@@ -112,6 +112,7 @@
     height: 100%;
     vertical-align: top;
     box-sizing: border-box;
+    border: none;
   }
   .detail-savecomment{
     position: absolute;

@@ -36,6 +36,7 @@ function useSilentRefresh(){
       //      access_token, refresh_token 둘다 재발급 성공
       else if(statusCode === 20009){
         console.log('2. refresh_token 5분미만 access_token와 함께 둘다 재발급')
+        removeCookie('token', {path: '/'})
         const token = {
           access_token: res.headers.access_token,
           refresh_token: res.headers.refresh_token,

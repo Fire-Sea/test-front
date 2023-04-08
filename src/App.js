@@ -32,7 +32,7 @@ function App() {
         login_status && <Login/>
       }
       <Navbar/>
-      <button onClick={toggleTheme}>헤헤</button>
+      <button style={{'marginTop':'100px'}} onClick={toggleTheme}>헤헤</button>
       <Banner/>
 
       <Routes>
