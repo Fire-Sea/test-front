@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Input } from '../Input';
+import { Input } from '../components/Input';
 import '../styles/Board.css';
 import useGetTextData from '../hooks/useGetTextData';
 import useCheckToken from '../hooks/useCheckToken';

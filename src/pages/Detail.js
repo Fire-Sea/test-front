@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import {useDispatch, useSelector} from 'react-redux';
 import axios from 'axios';
 import {useCookies} from 'react-cookie';
-import { Input } from '../Input';
+import { Input } from '../components/Input';
 import '../styles/Detail.css';
 import useGetTextData from '../hooks/useGetTextData';
 import useDelete from '../hooks/useDeleteDetail';
