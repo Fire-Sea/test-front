@@ -62,7 +62,8 @@ function useSilentRefresh(){
       }
     }
     catch(e){
-      alert('서버와 연결이 원할하지 않습니다.');
+      alert('로그인이 필요합니다.');
+      dispatch(changeLoginStatus(true));
     }
   }
   return {silentRefresh};

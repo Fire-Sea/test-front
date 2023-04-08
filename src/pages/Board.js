@@ -70,7 +70,7 @@ function Board(){
               return(
                 <tr className='board-tr' key={data.id}>
                   <td className='board-id'>{totalNum-(currentPage*20)-i}</td>
-                  <td className='board-title' onClick={()=>navigate(`/detail/${category}/${data.id}`)}><a>{data.textTitle}</a></td>
+                  <td className='board-title' onClick={()=>navigate(`/detail/${category}/${data.id}/0`)}><a>{data.textTitle}</a></td>
                   <td className='board-nickname'>{data.nickname}</td>
                   <td className='board-date'>{data.createdTime}</td>
                   <td className='board-views'>{data.views}</td>
@@ -89,7 +89,7 @@ function Board(){
             textList.map((data, i)=>{
               return(
                 <tr className='board-tr-m' key={data.id}>
-                  <td className='board-title-m' colSpan={2} onClick={()=>navigate(`/detail/${category}/${data.id}`)}>
+                  <td className='board-title-m' colSpan={2} onClick={()=>navigate(`/detail/${category}/${data.id}/0`)}>
                     <a className='a-title'>{data.textTitle}</a>
                     <a className='a-nickname'>{data.nickname}</a>
                     <a className='a-views'>조회수 {data.views}</a>

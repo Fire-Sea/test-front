@@ -38,7 +38,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Main/>}/>
         <Route path="/list/:category/:currentPage" element={<Board/> } />
-        <Route path="/detail/:category/:id" element={<Detail/>}/>
+        <Route path="/detail/:category/:id/:currentPage" element={<Detail/>}/>
         <Route path="/modify/:category/:id" element={<Edit/>}/>
         <Route path="/edit/:category" element={<Edit/>}/>
       
