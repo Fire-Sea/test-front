@@ -19,6 +19,18 @@ function App() {
   const [themeMode, toggleTheme] = useTheme();
   const theme = themeMode === 'light' ? light : dark;
   const login_status = useSelector((state)=> {return state.loginInfo.login_status});
+  const isDark = localStorage.getItem('theme');
+  
+  const toggleDarkmode = (e)=>{
+    toggleTheme();
+    e.currentTarget.classList.toggle('dark');
+    if(isDark == 'dark'){
+      e.currentTarget.children[0].innerHTML = 'dark';
+    }
+    else{
+      e.currentTarget.children[0].innerHTML = 'light';
+    }
+  }
   return (
     <ThemeProvider theme={theme}>
       <S.Main>
@@ -27,8 +39,13 @@ function App() {
             login_status && <Login/>
           }
           <Navbar/>
-          <div className='main'>
-          <button onClick={toggleTheme}>헤헤</button>
+          <div className='main' style={{'textAlign': 'center'}}>
+            
+          <label htmlFor="toggle" className={"toggle-switch "+isDark} onClick={toggleDarkmode}>
+            <h4>{isDark}</h4>
+            <span className="toggle-btn"></span>
+          </label>
+
           <Banner/>
 
           <Routes>

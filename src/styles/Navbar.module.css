@@ -68,7 +68,10 @@
   margin-right: 10%;
 }
 .login-box{
-  margin: 10px 20px;
+  margin: 5px 20px;
+}
+.navbar-icon{
+  margin-top: 15px;
 }
 .login-nickname{
   margin: 0;
@@ -134,5 +137,28 @@
   }
   100%{
     transform: translateX(0px)
+  }
+}
+
+/* 모바일 대응 스타일 */
+@media screen and (max-width: 1199px) {
+  .navbar-menu{
+    margin: 15px 10px;
+  }
+  .navbar-logo{
+    padding-left: 0;
+  }
+}
+
+@media screen and (max-width: 544px) {
+  .navbar-logo{
+    margin: -13px 10px 0 0;
+    padding-left: 0;
+  }
+  .navbar-right, .login-box{
+    margin-right: 0;
+  }
+  .login-nickname, .login-btn{
+    display: none;
   }
 }

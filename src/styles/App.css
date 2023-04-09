@@ -167,12 +167,6 @@ button:hover{
 
 
 @media screen and (max-width: 1199px) {
-  .navbar-logo{
-    margin:5px 20px 0px 5px;
-  }
-  .navbar-item{
-    margin: 15px 10px 0px 0px;
-  }
   .banner-l{
     display: none;
   }
@@ -252,6 +246,10 @@ button:hover{
     margin: 0px;
     border: 10px solid red;
   }
+  
+  .toggle-switch{
+    margin-left: 120px;
+  }
 }
 
 @media screen and (max-width: 544px) {
@@ -266,10 +264,8 @@ button:hover{
   .gacha-result p{
     font-size: 12px;
   }
-  .navbar-r{
-    font-size: 12px;
-    margin-right: 0px;
-    width: 125px;
+  .toggle-switch{
+    margin-left: 120px;
     margin-top: 5px;
   }
 }
@@ -287,4 +283,53 @@ button:hover{
 }
 .main-light:hover{
   background-color: rgba(0,0,0,0.7);
+}
+
+.toggle-switch {
+  width: 80px;
+  top: 2%;
+  left: 20%;
+  height: 25px;
+  display: block;
+  position: fixed;
+  border-radius: 30px;
+  background-color: black;
+  z-index: 6;
+  box-shadow: 0 0 16px 3px rgba(0 0 0 / 15%);
+  cursor: pointer;
+}
+
+.toggle-switch .toggle-btn {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 50%;
+  left: 4px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background: #f03d3d;
+  left: calc(100% - 25px);
+}
+
+.toggle-switch.dark {
+  background-color: white;
+}
+
+.toggle-switch.dark .toggle-btn {
+  left: 5px;
+}
+
+.toggle-switch, .toggle-btn {
+  transition: all 0.2s ease-in;
+}
+
+.toggle-switch h4{
+  margin-top: 2px;
+  transform: translateX(-12px);
+  color: white;
+}
+
+.toggle-switch.dark h4{
+  transform: translateX(12px);
+  color: black;
 }
