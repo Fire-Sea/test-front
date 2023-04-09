@@ -21,11 +21,22 @@ let loginInfo = createSlice({
         }
     }
 })
+let menuStatus = createSlice({
+    name: 'menuStatus',
+    initialState: false,
+    reducers: {
+        changeMenuStatus(state, value){
+            return state = value.payload;
+        }
+    }
+})
 export default configureStore({
     reducer: { 
         ip : ip.reducer,
         loginInfo : loginInfo.reducer,
+        menuStatus : menuStatus.reducer,
     }
 })
 
 export let {changeLoginStatus, changeNickname} = loginInfo.actions;
+export let {changeMenuStatus} = menuStatus.actions;
