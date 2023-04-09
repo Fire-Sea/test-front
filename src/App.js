@@ -22,28 +22,30 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <S.Main>
-    <div className="App">
-      {
-        login_status && <Login/>
-      }
-      <Navbar/>
-      <button style={{'marginTop':'100px'}} onClick={toggleTheme}>헤헤</button>
-      <Banner/>
+        <div className="App">
+          {
+            login_status && <Login/>
+          }
+          <Navbar/>
+          <div className='main'>
+          <button onClick={toggleTheme}>헤헤</button>
+          <Banner/>
 
-      <Routes>
-        <Route path="/" element={<Main/>}/>
-        <Route path="/list/:category/:currentPage" element={<Board/> } />
-        <Route path="/detail/:category/:id/:currentPage" element={<Detail/>}/>
-        <Route path="/modify/:category/:id" element={<Edit/>}/>
-        <Route path="/edit/:category" element={<Edit/>}/>
-      
-        <Route path="/mypage/:nickname/:currentPage" element={<Mypage/>}/>
-        <Route path="/gacha" element={<Gacha/>}/>
-        <Route path="/register" element={<Register/>}/>
-        <Route path="*" element={<Error/>}/>
-      </Routes>
-    </div>
-    </S.Main>
+          <Routes>
+            <Route path="/" element={<Main/>}/>
+            <Route path="/list/:category/:currentPage" element={<Board/> } />
+            <Route path="/detail/:category/:id/:currentPage" element={<Detail/>}/>
+            <Route path="/modify/:category/:id" element={<Edit/>}/>
+            <Route path="/edit/:category" element={<Edit/>}/>
+          
+            <Route path="/mypage/:nickname/:currentPage" element={<Mypage/>}/>
+            <Route path="/gacha" element={<Gacha/>}/>
+            <Route path="/register" element={<Register/>}/>
+            <Route path="*" element={<Error/>}/>
+          </Routes>
+          </div>
+        </div>
+      </S.Main>
     </ThemeProvider>
   );
 }
