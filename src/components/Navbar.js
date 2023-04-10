@@ -13,7 +13,7 @@ function Navbar(){
   let dispatch = useDispatch();
   const [cookies, setCookie, removeCookie] = useCookies();
   const nickname = cookies.nickname;
-  const localSettingTheme = localStorage.getItem('theme');
+  const isDark = localStorage.getItem('theme');
   const {checkToken} = useCheckToken();
   const [iconState, setIconState] = useState({t:false, m:false, b:false});
   const menuStatus = useSelector(state=>{return state.menuStatus});
@@ -59,7 +59,7 @@ function Navbar(){
   }
   return(
     <div className={styles['header']}>
-      <div className={`${styles['navbar']} ${styles['navbar-'+localSettingTheme]}`}>
+      <div className={`${styles['navbar']} ${styles['navbar-'+isDark]}`}>
         <div className={styles['navbar-left']}>
           <ul className={styles['navbar-menu']} onClick={toggleSidebar}>
             <div className={`${styles['menu-t']} ${styles[iconState.t]}`}></div>
@@ -76,7 +76,7 @@ function Navbar(){
           </div>
         </div>
       </div>
-      <div className={`${styles['sidebar']} ${styles[menuStatus]} ${styles['sidebar-'+localSettingTheme]}` }>
+      <div className={`${styles['sidebar']} ${styles[menuStatus]} ${styles['sidebar-'+isDark]}` }>
         <div className={styles['sidebar-box']}>
           <ul className={styles['sidebar-title']}>
             <h3>게시판</h3>

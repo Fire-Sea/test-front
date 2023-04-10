@@ -1,0 +1,9 @@
+.footer-box{
+  width: 100%;
+  height: 100px;
+  background-color: rgb(221, 117, 117);
+  position: relative;
+  clear: both;
+  color: lightgray;
+  text-align: center;
+}
