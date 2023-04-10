@@ -88,7 +88,10 @@ function Mypage(){
         <div className='mypage-board'>
           <h4>작성한 글 개수</h4>
           <p className='mypage-textCnt'>{totalNum}개</p>
-          <table className='board-pc'>
+          {
+            totalNum == 0
+            ? <h1>작성된 글이 없습니다.</h1>
+            :<><table className='board-pc'>
             <thead>
               <tr>
                 <th>번호</th>
@@ -102,9 +105,9 @@ function Mypage(){
               {
                 textList.map((data, i)=>{
                   return(
-                    <tr className='mypage-tr' onClick={()=>{navigate(`/detail/${data.category}/${data.id}`)}} key={i}>
+                    <tr className='mypage-tr' onClick={()=>{navigate(`/detail/${data.category}/${data.id}/0`)}} key={i}>
                       <td className='mypage-id'>{totalNum-(currentPage*20)-i}</td>
-                      <td >{data.category}</td>
+                      <td className='mypage-category'>{data.category}</td>
                       <td className='mypage-title'>{data.textTitle}</td>
                       <td className='mypage-date'>{data.createdTime}</td>
                       <td className='mypage-views'>{data.views}</td>
@@ -118,7 +121,9 @@ function Mypage(){
             {
               addPageNum(totalPage, currentPage)
             }
-          </div>
+          </div></>
+          }
+          
         </div>
       </div>
     )

@@ -5,4 +5,9 @@
   clear: both;
   color: lightgray;
   text-align: center;
+  padding: 10px;
+  margin-top: 50px;
+}
+.footer-box p{
+  margin: 0px;
 }

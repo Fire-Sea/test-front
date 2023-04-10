@@ -25,17 +25,12 @@ function App() {
   const toggleDarkmode = (e)=>{
     toggleTheme();
     e.currentTarget.classList.toggle('dark');
-    if(isDark == 'dark'){
-      e.currentTarget.children[0].innerHTML = 'dark';
-    }
-    else{
-      e.currentTarget.children[0].innerHTML = 'light';
-    }
   }
   return (
     <ThemeProvider theme={theme}>
       <S.Main>
-        <div className="App" id='pageTop'>
+        <div className="App">
+          <div id='pageTop'></div>
           {
             login_status && <Login/>
           }

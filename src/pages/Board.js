@@ -51,7 +51,7 @@ function Board(){
   return(
     <>
     <Input/>
-    <div className={`${styles['board-container']} ${styles['start']} ` + fade}>
+    <div className={`${styles['board-container']} start ` + fade}>
       <h1 className={styles['board-category']} onClick={()=>navigate(`/list/${category}/0`)}>{category}</h1>
       <table className={styles['board-pc']}>
         <thead>

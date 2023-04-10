@@ -68,10 +68,15 @@
   margin-right: 10%;
 }
 .login-box{
-  margin: 5px 20px;
+  margin: 8px 20px;
 }
 .navbar-icon{
   margin-top: 15px;
+  cursor: pointer;
+  transition: 0.5s all;
+}
+.navbar-icon:hover{
+  color: black;
 }
 .login-nickname{
   margin: 0;
@@ -79,6 +84,9 @@
 .login-btn{
   background-color: white;
   color: black;
+}
+.login-btn:hover{
+  background-color: lightgray;
 }
 
 /* 사이드바 스타일 */

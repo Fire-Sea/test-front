@@ -2,7 +2,6 @@
   width: 50%;
   margin: 100px auto;
   padding: 50px;
-  border: 1px solid black;
 }
 .mypage-bg h1{
   text-align: center;
@@ -37,10 +36,41 @@
   height: 20px;
   background-color: rgb(165, 55, 55)
 }
-
+table{
+  width: 100%;
+  border-spacing: 0;
+}
 .mypage-tr{
   cursor: pointer;
 }
 .mypage-tr:hover{
   background-color: rgba(0,0,0,0.5);
+}
+.mypage-board td{
+  border-bottom: 1px solid lightgray;
+}
+.mypage-id{
+  width: 10%;
+}
+.mypage-title{
+  width: 45%;
+  text-align: left;
+}
+.mypage-category{
+  width: 15%;
+}
+.mypage-date{
+  width: 15%;
+}
+.mypage-views{
+  width: 15%;
+}
+
+@media screen and (max-width: 1199px) {
+  .mypage-bg{
+    width: 100%;
+  }
+  .mypage-date{
+    font-size: 12px;
+  }
 }

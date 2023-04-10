@@ -22,6 +22,7 @@ button{
   border: none;
   border-radius: 5px;
   font-weight: bold;
+  transition: 0.5s all;
 }
 button:hover{
   background-color: rgb(167, 56, 56);;
@@ -41,9 +42,8 @@ button:hover{
 
 .search{
   width: 100%;
-  height: 120px;
   text-align: center;
-  padding-top: 100px;
+  margin-top: 50px;
 }
 
 .search-container{
@@ -125,78 +125,6 @@ button:hover{
   transition: all 0.5s;
 }
 
-
-@media screen and (max-width: 1199px) {
-  .banner-l{
-    display: none;
-  }
-  .banner-r{
-    display: none;
-  }
-  .detail-container{
-    width: 95%;
-  }
-  .login-bg{
-    width: 80%;
-    left: 10%;
-    right: 10%;
-  }
-  .edit-container{
-    width: 90%;
-  }
-  .edit-btn button{
-    width: 100%;
-    margin-bottom: 5px;
-  }
-  .edit-btn{
-    width: 100%;
-  }
-  .detail-backBtn{
-    width: 100%;
-  }
-  .detail-modifyBtn{
-    width: 100%;
-  }
-  .detail-removeBtn{
-    width: 100%;
-  }
-  .gacha-container{
-    width: 75%;
-    height: 500px;
-  }
-  .gacha-btns{
-    flex-direction: column;
-    margin: 10px 12.5% 0px 12.5%;
-  }
-  .gacha-result p{
-    font-size: 20px;
-  }
-  
-  .toggle-switch{
-    margin-left: 120px;
-  }
-}
-
-@media screen and (max-width: 544px) {
-  .gacha-container{
-    width: 80%;
-    height: 250px;
-  }
-  .gacha-btns{
-    flex-direction: column;
-    margin: 10px 10% 0px 10%;
-  }
-  .gacha-result p{
-    font-size: 12px;
-  }
-  .toggle-switch{
-    margin-left: 120px;
-    margin-top: 5px;
-  }
-}
-
-
-
 .toggle-switch {
   width: 80px;
   right: 35px;
@@ -254,7 +182,6 @@ button:hover{
   bottom: 50px;
   border-radius: 50px;
   background-color: rgb(167, 56, 56);
-  border: black 1px solid;
   text-decoration: none;
   z-index: 5;
 }
@@ -273,5 +200,78 @@ button:hover{
   }
   75%{
     transform: translateY(-10px);
+  }
+}
+@media screen and (max-width: 1199px) {
+  .banner-l{
+    display: none;
+  }
+  .banner-r{
+    display: none;
+  }
+  .detail-container{
+    width: 95%;
+  }
+  .login-bg{
+    width: 80%;
+    left: 10%;
+    right: 10%;
+  }
+  .edit-container{
+    width: 90%;
+  }
+  .edit-btn button{
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  .edit-btn{
+    width: 100%;
+  }
+  .detail-backBtn{
+    width: 100%;
+  }
+  .detail-modifyBtn{
+    width: 100%;
+  }
+  .detail-removeBtn{
+    width: 100%;
+  }
+  .gacha-container{
+    width: 75%;
+    height: 500px;
+  }
+  .gacha-btns{
+    flex-direction: column;
+    margin: 10px 12.5% 0px 12.5%;
+  }
+  .gacha-result p{
+    font-size: 20px;
+  }
+  
+  .toggle-switch{
+    margin-left: 120px;
+  }
+
+}
+
+@media screen and (max-width: 544px) {
+  .gacha-container{
+    width: 80%;
+    height: 250px;
+  }
+  .gacha-btns{
+    flex-direction: column;
+    margin: 10px 10% 0px 10%;
+  }
+  .gacha-result p{
+    font-size: 12px;
+  }
+  .toggle-switch{
+    margin-left: 120px;
+    margin-top: 5px;
+  }
+  .top-btn{
+    right: 10px;
+    bottom: 10px;
   }
 }

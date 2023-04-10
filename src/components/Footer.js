@@ -4,8 +4,8 @@ function Footer(){
   return(
     <>
       <div className={styles['footer-box']}>
-        <p>all rights reserved by apple</p>
-        <p>all rights reserved by apple</p>
+        <p>This site is protected by Honseok and Sehyun and Terms of Service apply.</p>
+        <p>This site is protected by CND and its Privacy Policy and Terms of Service apply.</p>
       </div>
     </>
   )
