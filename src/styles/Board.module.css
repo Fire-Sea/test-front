@@ -1,17 +1,39 @@
-.board{
+/* 게시판 wrapper */
+.board-container{
   width: 50%;
   margin-left: auto;
   margin-right: auto;
   text-align: left;
   margin-bottom: 260px;
-  /* background-color: white; */
-}
-.board-category{
-  width: 100%;
-  padding-bottom: 10px;
-  border-bottom: 2px solid rgb(228, 76, 76);
 }
 
+/* 게시판 스타일 */
+.board-category{
+  width: 100%;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid rgb(228, 76, 76);
+  background-color: rgb(228, 76, 76);
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  color: white;
+  padding-left: 20px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+th{
+  padding-bottom: 10px;
+  border-bottom: solid 1px rgb(228, 76, 76);
+}
+.board-tr td{
+  border-top: solid 1px rgb(223, 162, 162);
+}
+.board-tr:hover{
+  background-color: rgba(0,0,0,0.1);
+  transition: all 0.5s;
+}
+
+/* PC버전 게시판 스타일 */
 .board-pc{
   width: 100%;
   text-align: center;
@@ -19,19 +41,6 @@
   border-spacing: 0px;
   margin-top: -10px;
 }
-
-th{
-  padding-bottom: 10px;
-  border-bottom: solid 1px rgb(228, 76, 76);
-}
-
-.board-tr td{
-  border-top: solid 1px rgb(223, 162, 162);
-}
-.board-tr:hover{
-  background-color: rgba(0,0,0,0.1);
-}
-
 .board-id{
   width: 5%;
   font-size: 12px;
@@ -44,26 +53,19 @@ th{
   padding-left: 10px;
   font-size: 14px;
 }
-.board-nickname{
+.board-nickname, .board-date{
   width: 15%;
   font-size: 12px;
 }
-.board-date{
-  width: 15%;
-  font-size: 12px;
-}
-.board-views{
+.board-views, .board-likes{
   width: 10%;
   font-size: 12px;
 }
-.board-likes{
-  width: 10%;
-  font-size: 12px;
-}
+
+/* 모바일버전 게시판 스타일 */
 .board-m{
   width: 100%;
   border-spacing: 0px;
-  margin-top: -23px;
   display: none;
 }
 .board-title-m{
@@ -71,23 +73,26 @@ th{
   width: 100vw;
   cursor: pointer;
   font-size: 12px;
-  border-top: 1px solid lightcoral;
+  border-bottom: 1px solid lightcoral;
   padding: 5px;
 }
-.a-title{
-  display: block;
+.board-title-m p{
+  margin: 0;
+}
+.p-title{
   font-size: 13px;
 }
-.a-nickname{
+.p-nickname{
   font-size: 11px;
+  float: left;
 }
-.a-date{
+.p-date, .p-views{
   float: right;
   font-size: 11px;
   border-right: 1px solid lightgray;
   padding: 0 5px;
 }
-.a-views{
+.p-likes{
   float: right;
   font-size: 11px;
   padding: 0 5px;
@@ -95,23 +100,21 @@ th{
 .board-tr-m:hover {
   background-color: rgba(0,0,0,0.1);
 }
-
 .board-line{
   border-top: 2px solid rgb(228, 76, 76);
 }
 
-.board-homeBtn{
+/* 홈, 글쓰기, 페이지 버튼 */
+.board-home{
   width: 100px;
   height: 30px;
   float: left;
 }
-
-.board-newBtn{
+.board-new{
   width: 100px;
   height: 30px;
   float: right;
 }
-
 .board-pages{
   text-align: center;
 }
@@ -122,8 +125,31 @@ th{
   color: lightgray;
   background-color: rgb(167, 56, 56);
 }
-
 .board-clicked{
   color: lightgray;
   background-color: rgb(167, 56, 56);
+}
+
+@media screen and (max-width: 1199px) {
+  .board-container{
+    width: 90%;
+    margin-bottom: 0;
+  }
+  .board-pc{
+    display: none;
+  }
+  .board-m{
+    display: block;
+  }
+  .board-category{
+    margin-bottom: 0;
+  }
+  .board-home{
+    width: 100%;
+    margin-top: 20px;
+  }
+  .board-new{
+    width: 100%;
+    margin-top: 5px;
+  }
 }

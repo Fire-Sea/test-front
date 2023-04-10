@@ -52,6 +52,7 @@ function Navbar(){
   const goMypage = async ()=>{
     if(!nickname){
       alert('로그인을 먼저 해주세요');
+      dispatch(changeLoginStatus(true));
     }
     else{
       checkToken('mypage');

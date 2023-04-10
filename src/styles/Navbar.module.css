@@ -148,9 +148,6 @@
   .navbar-logo{
     padding-left: 0;
   }
-}
-
-@media screen and (max-width: 544px) {
   .navbar-logo{
     margin: -13px 10px 0 0;
     padding-left: 0;
