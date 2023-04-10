@@ -41,7 +41,7 @@ function App() {
           }
           <Navbar/>
           <Banner/>
-          <div className='wrapper' style={{'textAlign': 'center'}}>
+          <div id='wrapper' style={{'textAlign': 'center'}}>
             
             <label htmlFor="toggle" className={"toggle-switch "+isDark} onClick={toggleDarkmode}>
               <h4>{isDark}</h4>
@@ -59,8 +59,10 @@ function App() {
               <Route path="*" element={<Error/>}/>
             </Routes>
             <a href='#pageTop' className='top-btn'><p>Top</p></a>
+
+            <Footer/>
           </div>
-          <Footer/>
+          
         </div>
       </S.Main>
     </ThemeProvider>
