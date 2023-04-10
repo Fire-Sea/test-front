@@ -42,7 +42,7 @@ function Detail(){
   const {postComment} = usePostComment(comment);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalCnt, setTotalCnt] = useState(null);
-
+  const isDark = localStorage.getItem('theme')
   // 글 수정, 삭제 버튼 출력
   const showAdminBtn = ()=>{
     return(
@@ -120,7 +120,7 @@ function Detail(){
           <button className='detail-dislike' onClick={()=>{chagngeLikes('dislikes')}}><h3>{textData.dislikes}</h3><p>싫어요</p></button>
         </div>
         <div className='detail-comment'>
-          <input className='detail-input' onInput={changeComment}></input>
+          <textarea className={'detail-input detail-' + isDark} onInput={changeComment} placeholder='댓글을 입력하세요.'></textarea>
           <button className='detail-savecomment' onClick={chkComment}>댓글 저장하기</button>
         </div>
 
@@ -136,7 +136,7 @@ function Detail(){
             : null
           }
         </div>
-        <button className='detail-backBtn' onClick={()=>navigate(-1)}>뒤로가기</button>
+        <button className={'detail-backBtn'} onClick={()=>navigate(-1)}>뒤로가기</button>
         {
           nickname === textData.nickname && showAdminBtn()
         }

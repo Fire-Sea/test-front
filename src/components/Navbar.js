@@ -5,7 +5,7 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import useCheckToken from '../hooks/useCheckToken';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import styles from '../styles/Navbar.module.css'
+import '../styles/Navbar.css'
 import { useState } from 'react';
 
 function Navbar(){
@@ -35,7 +35,7 @@ function Navbar(){
   const toggleLogin = (nickname)=>{
     if(nickname){
       return(
-        <button className={styles['login-btn']} onClick={()=>{
+        <button className='login-btn' onClick={()=>{
           removeCookie('token', {path: '/'});
           removeCookie('nickname', {path: '/'})
           alert('로그아웃 되었습니다.');
@@ -44,7 +44,7 @@ function Navbar(){
       )
     }
     return(
-      <button className={styles['login-btn']} onClick={()=>{
+      <button className='login-btn' onClick={()=>{
         dispatch(changeLoginStatus(true));
       }}>로그인</button>
     )
@@ -59,32 +59,32 @@ function Navbar(){
     }
   }
   return(
-    <div className={styles['header']}>
-      <div className={`${styles['navbar']} ${styles['navbar-'+isDark]}`}>
-        <div className={styles['navbar-left']}>
-          <ul className={styles['navbar-menu']} onClick={toggleSidebar}>
-            <div className={`${styles['menu-t']} ${styles[iconState.t]}`}></div>
-            <div className={`${styles['menu-m']} ${styles[iconState.m]}`}></div>
-            <div className={`${styles['menu-b']} ${styles[iconState.b]}`}></div>
+    <div className='header'>
+      <div className={'navbar navbar-'+isDark}>
+        <div className='navbar-left'>
+          <ul className='navbar-menu' onClick={toggleSidebar}>
+            <div className={'menu-t ' +iconState.t}></div>
+            <div className={'menu-m ' +iconState.m}></div>
+            <div className={'menu-b ' +iconState.b}></div>
           </ul>
-          <ul className={styles['navbar-logo']} onClick={()=>navigate('/')}><h1>Fire Sea</h1></ul>
+          <ul className='navbar-logo' onClick={()=>navigate('/')}><h1>Fire Sea</h1></ul>
         </div>
-        <div className={styles['navbar-right']}>
-          <p className={styles['navbar-icon']}><FontAwesomeIcon icon={faUser} className='fa-2x' onClick={goMypage}/></p>
-          <div className={styles['login-box']}>
-            <p className={styles['login-nickname']}>{nickname ? nickname : `로그인하세요`}</p>
+        <div className='navbar-right'>
+          <p className='navbar-icon'><FontAwesomeIcon icon={faUser} className='fa-2x' onClick={goMypage}/></p>
+          <div className='login-box'>
+            <p className='login-nickname'>{nickname ? nickname : `로그인하세요`}</p>
             {toggleLogin(cookies.nickname)}
           </div>
         </div>
       </div>
-      <div className={`${styles['sidebar']} ${styles[menuStatus]} ${styles['sidebar-'+isDark]}` }>
-        <div className={styles['sidebar-box']}>
-          <ul className={styles['sidebar-title']}>
+      <div className={'sidebar ' + menuStatus + ' sidebar-'+isDark}>
+        <div className='sidebar-box'>
+          <ul className='sidebar-title'>
             <h3>게시판</h3>
             <ul onClick={()=>navigate('/list/front/0')}><p>Front 게시판</p></ul>
             <ul onClick={()=>navigate('/list/server/0')}><p>Server 게시판</p></ul>
           </ul>
-          <ul className={styles['sidebar-title']}>
+          <ul className='sidebar-title'>
             <h3>게임하기</h3>
             <ul><p>게임1</p></ul>
             <ul><p>게임2</p></ul>
