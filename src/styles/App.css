@@ -8,11 +8,11 @@ div{
 }
 body{
   height: 100%;
+  overflow-y: hidden;
 }
 .App{
   height: 100vh;
   overflow: scroll;
-  overflow-x: hidden;
   transition: 0.5s all;
 }
 button{

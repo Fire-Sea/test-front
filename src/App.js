@@ -35,7 +35,7 @@ function App() {
             login_status && <Login/>
           }
           <Navbar/>
-          <Banner/>
+          {/* <Banner/> */}
           <div id='wrapper' style={{'textAlign': 'center'}}>
             
             <label htmlFor="toggle" className={"toggle-switch "+isDark} onClick={toggleDarkmode}>
