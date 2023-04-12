@@ -21,11 +21,11 @@ function Main(){
       <div className={'main start '+ fade}>
         <h1>게시판</h1>
         <div className='main-img'>
-          <div className={'img-overlay main-' + isDark} onClick={()=>{navigate('/list/front/0')}}>Front</div>
+          <div className={'img-overlay main-' + isDark} onClick={()=>{navigate('/list/board/front/0')}}>Front</div>
           <img alt='main_img1' src={process.env.PUBLIC_URL + '/main_img1.jpg'}/>
         </div>
         <div className='main-img'>
-        <div className={'img-overlay main-' + isDark} onClick={()=>{navigate('/list/server/0')}}>Server</div>
+        <div className={'img-overlay main-' + isDark} onClick={()=>{navigate('/list/board/server/0')}}>Server</div>
           <img alt='main_img2' src={process.env.PUBLIC_URL + '/main_img2.jpg'}/>
         </div>
         <h1>게임</h1>

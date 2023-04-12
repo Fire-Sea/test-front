@@ -81,7 +81,6 @@ function Detail(){
   }
   const getList = async ()=>{
     const res = await axios.get(`http://${ip}/api/comment/list?id=${id}&page=${currentPage}`);
-    console.log(res)
     setCommentList(res.data.data.content);
     setTotalCnt(res.data.data.totalElements);
   }

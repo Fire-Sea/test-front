@@ -19,7 +19,8 @@ function Navbar(){
   const menuStatus = useSelector(state=>{return state.menuStatus});
 
   const [themeMode, toggleTheme] = useTheme();
-  const isDark = themeMode;
+  const value = localStorage.getItem('theme');
+  const isDark = value == undefined ? themeMode : value;
 
   const toggleSidebar = ()=>{
     if(menuStatus){
@@ -84,8 +85,8 @@ function Navbar(){
         <div className='sidebar-box'>
           <ul className='sidebar-title'>
             <h3>게시판</h3>
-            <ul onClick={()=>navigate('/list/front/0')}><p>Front 게시판</p></ul>
-            <ul onClick={()=>navigate('/list/server/0')}><p>Server 게시판</p></ul>
+            <ul onClick={()=>navigate('/list/board/front/0')}><p>Front 게시판</p></ul>
+            <ul onClick={()=>navigate('/list/board/server/0')}><p>Server 게시판</p></ul>
           </ul>
           <ul className='sidebar-title'>
             <h3>게임하기</h3>

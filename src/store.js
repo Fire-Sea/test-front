@@ -30,13 +30,30 @@ let menuStatus = createSlice({
         }
     }
 })
+let searchData = createSlice({
+    name: 'searchData',
+    initialState: {
+        option: 'textTitle',
+        content: '',
+    },
+    reducers: {
+        changeSearchOption(state, option){
+            state.option = option.payload;
+        },
+        changeSearchContent(state, content){
+            state.content = content.payload;
+        }
+    }
+})
 export default configureStore({
     reducer: { 
         ip : ip.reducer,
         loginInfo : loginInfo.reducer,
         menuStatus : menuStatus.reducer,
+        searchData : searchData.reducer,
     }
 })
 
 export let {changeLoginStatus, changeNickname} = loginInfo.actions;
 export let {changeMenuStatus} = menuStatus.actions;
+export let {changeSearchOption, changeSearchContent} = searchData.actions;

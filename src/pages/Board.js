@@ -4,29 +4,32 @@ import { Input } from '../components/Input';
 import useGetTextData from '../hooks/useGetTextData';
 import useCheckToken from '../hooks/useCheckToken';
 import '../styles/Board.css';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 function Board(){
   const navigate = useNavigate();
-  const {category, currentPage} = useParams();
+  const {category, currentPage, type} = useParams();
   const [textList, setTextList] = useState([]);
   const [totalNum, setTotalNum] = useState(0);
   const [totalPage, setTotalPage] = useState(0);
   const [fade, setFade] = useState('');
   const {checkToken} = useCheckToken();
   const {getTextData} = useGetTextData();
+  const searchData = useSelector((state)=>{return state.searchData})
+  const ip = useSelector((state)=>{return state.ip})
 
   // 게시판 페이지 표시 함수
   const addPageNum = (pageNum, currentPage)=>{
     const newArr = [];
     currentPage = parseInt(currentPage);
-    
     for(let i=0; i<pageNum; i++){
       let template = '';
       if(i === currentPage){
-        template = <button className='board-clicked' onClick={()=>navigate(`/list/${category}/${i}`)} key={i}>{i+1}</button>;
+        template = <button className='board-clicked' onClick={()=>navigate(`/list/${type}/${category}/${i}`)} key={i}>{i+1}</button>;
       }
       else{
-        template = <button onClick={()=>navigate(`/list/${category}/${i}`)} key={i}>{i+1}</button>;
+        template = <button onClick={()=>navigate(`/list/${type}/${category}/${i}`)} key={i}>{i+1}</button>;
       }
       newArr.push(template);
     }
@@ -35,12 +38,24 @@ function Board(){
 
   useEffect(()=>{
     // 글 목록 GET
-    (async ()=>{
-      const data = await getTextData({parent: 'list', child:'board'});
-      setTextList(data.content);
-      setTotalNum(data.totalElements);
-      setTotalPage(data.totalPages);
-    })()
+    if(type == 'board'){
+      (async ()=>{
+        const data = await getTextData({parent: 'list', child:'board'});
+        setTextList(data.content);
+        setTotalNum(data.totalElements);
+        setTotalPage(data.totalPages);
+      })()
+    }
+    else if(type == 'search'){
+      (async ()=>{
+        const response = await axios.get(`http://${ip}/search?option=${searchData.option}&content=${searchData.content}/0`);
+        setTextList(response.content);
+        setTotalNum(response.totalElements);
+        setTotalPage(response.totalPages);
+        console.log(response);
+      })()
+    }
+    
     const fadeTimer = setTimeout(()=>setFade('end'), 100);
     return ()=>{
       clearTimeout(fadeTimer);
@@ -52,7 +67,8 @@ function Board(){
     <>
     <Input/>
     <div className={'board-container start ' + fade}>
-      <h1 className='board-category' onClick={()=>navigate(`/list/${category}/0`)}>{category}</h1>
+      <h1>{type}</h1>
+      <h1 className='board-category' onClick={()=>navigate(`/list/board/${category}/0`)}>{category}</h1>
       <table className='board-pc'>
         <thead>
           <tr>
