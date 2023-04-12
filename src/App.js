@@ -38,8 +38,8 @@ function App() {
           {/* <Banner/> */}
           <div id='wrapper' style={{'textAlign': 'center'}}>
             
-            <label htmlFor="toggle" className={"toggle-switch "+isDark} onClick={toggleDarkmode}>
-              <h4>{isDark}</h4>
+            <label htmlFor="toggle" className={"toggle-switch "+themeMode} onClick={toggleDarkmode}>
+              <h4>{themeMode}</h4>
               <span className="toggle-btn"></span>
             </label>
             <Routes>

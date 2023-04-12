@@ -7,16 +7,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Navbar.css'
 import { useState } from 'react';
+import { useTheme } from '../theme/useTheme';
 
 function Navbar(){
   let navigate = useNavigate();
   let dispatch = useDispatch();
   const [cookies, setCookie, removeCookie] = useCookies();
   const nickname = cookies.nickname;
-  const isDark = localStorage.getItem('theme');
   const {checkToken} = useCheckToken();
   const [iconState, setIconState] = useState({t:false, m:false, b:false});
   const menuStatus = useSelector(state=>{return state.menuStatus});
+
+  const [themeMode, toggleTheme] = useTheme();
+  const isDark = themeMode;
 
   const toggleSidebar = ()=>{
     if(menuStatus){
