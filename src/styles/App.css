@@ -46,28 +46,7 @@ button:hover{
   margin-top: 50px;
 }
 
-.search-container{
-  margin-left: auto;
-  margin-right: auto;
-  min-width: 350px;
-  display: block;
-  width: 20%;
-  position: relative;
-  transition: 0.5s all;
-}
 
-.search-input{
-  width: 100%;
-  min-width: 350px;
-  height: 40px;
-  padding-left: 10px;
-  font-size: 15px;
-  box-sizing: border-box;
-  border-radius: 5px;
-  border: 2px solid rgb(228, 76, 76);
-  outline: none;
-  transition: 1s all;
-}
 
 
 .start{

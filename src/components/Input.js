@@ -12,7 +12,8 @@ function Input(){
   const searchData = useSelector((state)=>{return state.searchData});
   const navigate = useNavigate();
   const [data, setData] = useState('');
-  
+  const [isFocus, setIsFocus] = useState(null);
+
   const onInput = (e)=>{
     const value = e.target.value;
     setData(value);
@@ -27,15 +28,20 @@ function Input(){
       alert('검색할 내용을 입력해주세요.');
     }
   }
-
+  const onFocus = ()=>{
+    setIsFocus('focus')
+  }
+  const onBlur = ()=>{
+    setIsFocus(null)
+  }
   return(
     <div className={'search search-'+localSettingTheme}>
-      <div className='search-container'>
+      <div className={'search-container '+ isFocus}>
         <select name="type" className="search-select" onChange={(e)=>{dispatch(changeSearchOption(e.target.value))}}>
           <option value="textMessage" default>글정보</option>
           <option value="nickname">작성자</option>
         </select>
-        <input className='search-input' placeholder='검색어를 입력하세요' onInput={onInput}/>
+        <input type='text' className='search-input' placeholder='검색어를 입력하세요' onInput={onInput} onFocus={onFocus} onBlur={onBlur}/>
         <button className='search-btn' onClick={onClick}>검색</button>
       </div>
     </div>
