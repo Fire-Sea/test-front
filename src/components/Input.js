@@ -21,8 +21,15 @@ function Input(){
   }
   const onClick = async (e)=>{
     if(data){
-      console.log(searchData);
-      navigate('/list/search/result/0');
+      // navigate('/list/search/result/0');
+      
+      (async ()=>{
+        console.log('search data 요청중')
+        console.log(searchData)
+        const response = await axios.post(`http://${ip}/search2?page=0`, searchData);
+        
+        console.log(response);
+      })()
     }
     else{
       alert('검색할 내용을 입력해주세요.');

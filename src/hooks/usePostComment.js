@@ -6,7 +6,7 @@ import { changeLoginStatus } from "../store";
 
 function usePostComment(comment){
   const dispatch = useDispatch();
-  const [cookies] = useCookies();
+  const [cookies, removeCookie] = useCookies();
   const {silentRefresh} = useSilentRefresh();
   const ip = useSelector(state=>state.ip);
 

@@ -5,7 +5,7 @@ import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 
 function useSendUserInfo(data){
-  const [cookies, setCookie] = useCookies();
+  const [cookies, setCookie, removeCookie] = useCookies();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const ip = useSelector((state) => {return state.ip});
@@ -30,8 +30,8 @@ function useSendUserInfo(data){
               access_token: res.headers.access_token,
               refresh_token: res.headers.refresh_token
             };
-            setCookie('token', token, {path: '/', expires});
-            setCookie('nickname', nickname, {path: '/', expires});
+            setCookie('token', token, {path: '/'});
+            setCookie('nickname', nickname, {path: '/'});
             dispatch(changeNickname(nickname));
             dispatch(changeLoginStatus(false));
             alert('어서오세요!');
@@ -39,6 +39,8 @@ function useSendUserInfo(data){
         }
         catch(e){
           console.log(e)
+          removeCookie('token', {path: '/'});
+          removeCookie('nickname', {path: '/'});
           alert('서버와 연결이 원할하지 않습니다.');
         }
         break;
@@ -53,6 +55,8 @@ function useSendUserInfo(data){
           }
         }
         catch(e){
+          removeCookie('token', {path: '/'});
+          removeCookie('nickname', {path: '/'});
           alert('서버와 연결이 원할하지 않습니다.');
         }
         break;

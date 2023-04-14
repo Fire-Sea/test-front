@@ -48,7 +48,10 @@ function Board(){
     }
     else if(type == 'search'){
       (async ()=>{
-        const response = await axios.get(`http://${ip}/search?option=${searchData.option}&content=${searchData.content}/0`);
+        console.log('search data 요청중')
+        console.log(searchData)
+        const response = await axios.post(`http://${ip}/search2?page=0`, searchData);
+        
         setTextList(response.content);
         setTotalNum(response.totalElements);
         setTotalPage(response.totalPages);

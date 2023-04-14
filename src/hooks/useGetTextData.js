@@ -11,7 +11,7 @@ function useGetTextData(data){
   const ip = useSelector((state)=>{return state.ip});
   const {category, id, currentPage} = useParams();
   const [textData, setTextData] = useState({});
-  const [cookies] = useCookies();
+  const [cookies, removeCookie] = useCookies();
   const dispatch = useDispatch();
   const getTextData = async (type)=>{
     switch(type.parent){
@@ -44,6 +44,8 @@ function useGetTextData(data){
         catch(e){
           console.log(e);
           alert('서버와 연결이 원할하지 않습니다. 다시 로그인해주세요');
+          removeCookie('token', {path: '/'});
+          removeCookie('nickname', {path: '/'});
           dispatch(changeLoginStatus(true));;
           window.location.replace('/');
 
@@ -59,6 +61,8 @@ function useGetTextData(data){
         }
         catch(e){
           alert('서버와의 연결이 원할하지 않습니다.');
+          removeCookie('token', {path: '/'});
+          removeCookie('nickname', {path: '/'});
         }
         break;
       default:

@@ -29,7 +29,7 @@ function useSilentRefresh(){
           access_token: res.headers.access_token,
           refresh_token: cookies.token.refresh_token
         }
-        setCookie('token', token, {expires: expires})
+        setCookie('token', token, {path: '/'})
         return 1;
       }
       // 2-2. refresh_token: 5분미만 유효
@@ -41,7 +41,7 @@ function useSilentRefresh(){
           access_token: res.headers.access_token,
           refresh_token: res.headers.refresh_token,
         }
-        setCookie('token', token, {expires: expires})
+        setCookie('token', token, {path: '/'})
         return 1;
       }
       // 2-3. refresh_token: 만료

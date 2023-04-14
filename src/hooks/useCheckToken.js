@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import useSilentRefresh from "./useSilentRefresh";
 
 function useCheckToken(){
-  const [cookies] = useCookies();
+  const [cookies, removeCookie] = useCookies();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const ip = useSelector((state) => {return state.ip});
@@ -51,6 +51,8 @@ function useCheckToken(){
       catch(e){
         console.log(e);
         alert('로그인이 필요한 서비스입니다.');
+        removeCookie('token', {path: '/'});
+        removeCookie('nickname', {path: '/'});
         dispatch(changeLoginStatus(true));
       }
     }

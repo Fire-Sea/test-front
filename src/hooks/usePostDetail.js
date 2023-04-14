@@ -41,11 +41,11 @@ function usePostDetail(data){
         console.log(statusCode)
         if(statusCode === 20000){
           alert('글이 저장되었습니다.');
-          navigate(`/list/${category}/0`);
+          navigate(`/list/board/${category}/0`);
         }
         else if(statusCode === 20015){
           alert('정상적으로 수정되었습니다.');
-          navigate(`/list/${category}/0`);
+          navigate(`/list/board/${category}/0`);
         }
         else{
           const code = await silentRefresh();

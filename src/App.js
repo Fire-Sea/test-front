@@ -26,7 +26,9 @@ function App() {
     toggleTheme();
     e.currentTarget.classList.toggle('dark');
   }
+  
   return (
+    <>
     <ThemeProvider theme={theme}>
       <S.Main>
         <div className="App">
@@ -60,7 +62,8 @@ function App() {
           
         </div>
       </S.Main>
-    </ThemeProvider>
+      
+    </ThemeProvider></>
   );
 }
 
@@ -76,6 +79,7 @@ const S = {};
 S.Main = styled.div`
   width: 100%;
   height: 100%;
+  overflow: auto;
   background-color: ${props => props.theme.colors.bgColor};
   color: ${props => props.theme.colors.titleColor};
   transition: 0.5s all;
