@@ -41,7 +41,7 @@ function useSendUserInfo(data){
           console.log(e)
           removeCookie('token', {path: '/'});
           removeCookie('nickname', {path: '/'});
-          alert('서버와 연결이 원할하지 않습니다.');
+          alert('서버와 연결이 원할하지 않습니다. 잠시후 다시 시도해주세요.');
         }
         break;
 

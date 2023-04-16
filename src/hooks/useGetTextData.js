@@ -43,12 +43,8 @@ function useGetTextData(data){
         }
         catch(e){
           console.log(e);
-          alert('서버와 연결이 원할하지 않습니다. 다시 로그인해주세요');
-          removeCookie('token', {path: '/'});
-          removeCookie('nickname', {path: '/'});
-          dispatch(changeLoginStatus(true));;
+          alert('서버에 문제가 발생하여 응답하지 않습니다. 잠시후 시도해주세요.');
           window.location.replace('/');
-
         }
         break;
       case 'detail':
