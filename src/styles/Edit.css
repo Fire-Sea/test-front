@@ -74,8 +74,17 @@ input:focus{
   outline: none;
 }
 .edit-type{
-  margin: 100px auto -40px auto;
+  margin: 50px auto 0 auto;
   text-align: left;
   width: 50%;
   border-bottom: 2px solid lightcoral;
+}
+
+@media screen and (max-width: 1199px) {
+  .edit-type{
+    margin: 100px auto -40px auto;
+    text-align: left;
+    width: 50%;
+    border-bottom: 2px solid lightcoral;
+  }
 }
