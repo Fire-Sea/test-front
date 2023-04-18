@@ -85,11 +85,14 @@ function Board(){
           : <h1>검색</h1>
       }
       <div className='board-box'>
-      <h1 className='board-category' onClick={()=>navigate(`/list/board/${category}/0`)}>{category}</h1>
           {
-            !totalNum ?
+
+            type == 'search'
+            ? !totalNum ?
             <h1 style={{'textAlign' : 'center'}}>검색 결과가 없습니다.</h1>
-            : <><table className='board-pc'>
+            : <>
+            <h1 className='board-category'>{category}</h1>
+            <table className='board-pc'>
             <thead>
               <tr>
                 <th>No</th>
@@ -106,8 +109,20 @@ function Board(){
                   return(
                     <tr className='board-tr' key={data.id}>
                       <td className='board-id'>{totalNum-(currentPage*20)-i}</td>
-                      <td className='board-title' onClick={()=>navigate(`/detail/${category}/${data.id}/0`)}><a>{data.textTitle}</a></td>
-                      <td className='board-nickname'>{data.nickname}</td>
+                      <td className='board-title' onClick={()=>navigate(`/detail/${category}/${data.id}/0`)}>{
+                        localSearchData.option == 'textMessage' 
+                        ? <a>{data.textTitle.split(localSearchData.content)[0]} 
+                            <span style={{'background':'yellow', 'color':'black'}}>{localSearchData.content}</span>  
+                          {data.textTitle.split(localSearchData.content)[1]}</a>
+                        : <a>{data.textTitle}</a>
+                      }</td>
+                      <td className='board-nickname'>{
+                        localSearchData.option == 'nickname' 
+                        ? <a>{data.nickname.split(localSearchData.content)[0]} 
+                            <span style={{'background':'yellow', 'color':'black'}}>{localSearchData.content}</span>  
+                          {data.nickname.split(localSearchData.content)[1]}</a>
+                        : <a>{data.nickname}</a>
+                      }</td>
                       <td className='board-date'>{data.createdTime}</td>
                       <td className='board-views'>{data.views}</td>
                       <td className='board-likes'>{data.likes - data.dislikes}</td>
@@ -136,7 +151,59 @@ function Board(){
                 })
               }
             </tbody>
-          </table></>
+          </table>
+          </>
+          : <>
+          <h1 className='board-category' onClick={()=>navigate(`/list/board/${category}/0`)}>{category}</h1>
+          <table className='board-pc'>
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>제목</th>
+              <th>작성자</th>
+              <th>작성일</th>
+              <th>조회수</th>
+              <th>추천</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              textList.map((data, i)=>{
+                return(
+                  <tr className='board-tr' key={data.id}>
+                    <td className='board-id'>{totalNum-(currentPage*20)-i}</td>
+                    <td className='board-title' onClick={()=>navigate(`/detail/${category}/${data.id}/0`)}><a>{data.textTitle}</a></td>
+                    <td className='board-nickname'>{data.nickname}</td>
+                    <td className='board-date'>{data.createdTime}</td>
+                    <td className='board-views'>{data.views}</td>
+                    <td className='board-likes'>{data.likes - data.dislikes}</td>
+                  </tr>
+                )
+              })
+            }  
+          </tbody>
+        </table>
+  
+        <table className='board-m'>
+          <tbody>
+            {
+              textList.map((data, i)=>{
+                return(
+                  <tr className='board-tr-m' key={data.id}>
+                    <td className='board-title-m' colSpan={2} onClick={()=>navigate(`/detail/${category}/${data.id}/0`)}>
+                      <p className='p-title'>{data.textTitle}</p>
+                      <p className='p-nickname'>{data.nickname}</p>
+                      <p className='p-likes'>추천 {data.likes - data.dislikes}</p>
+                      <p className='p-likes'>조회수 {data.views}</p>
+                      <p className='p-views'>{data.createdTime}</p>
+                    </td>
+                  </tr>
+                )
+              })
+            }
+          </tbody>
+        </table>
+        </>
           }
       
       </div>
