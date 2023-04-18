@@ -55,7 +55,8 @@ button:hover{
 
 .toggle-switch {
   width: 80px;
-  right: 35px;
+  left: 300px;
+  top: 18px;
   height: 25px;
   display: block;
   position: fixed;
@@ -181,9 +182,9 @@ button:hover{
   }
   
   .toggle-switch{
-    margin-left: 120px;
+    left: 75%;
+    top: 70px;
   }
-
 }
 
 @media screen and (max-width: 544px) {
@@ -197,10 +198,6 @@ button:hover{
   }
   .gacha-result p{
     font-size: 12px;
-  }
-  .toggle-switch{
-    margin-left: 120px;
-    margin-top: 5px;
   }
   .top-btn{
     right: 10px;
