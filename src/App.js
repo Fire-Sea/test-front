@@ -15,6 +15,7 @@ import { useTheme } from './theme/useTheme';
 import {Mypage} from './pages/Mypage';
 import {Main} from './pages/Main';
 import {Footer} from './components/Footer'
+import GlobalStyles from './components/GlobalStyles';
 
 function App() {
   const [themeMode, toggleTheme] = useTheme();
@@ -30,7 +31,7 @@ function App() {
   return (
     <>
     <ThemeProvider theme={theme}>
-      <S.Main>
+      <GlobalStyles theme={theme}/>
         <div className="App">
           <div id='pageTop'></div>
           {
@@ -38,8 +39,7 @@ function App() {
           }
           <Navbar/>
           {/* <Banner/> */}
-          <div id='wrapper' style={{'textAlign': 'center'}}>
-            
+          <div id='wrapper'>
             <label htmlFor="toggle" className={"toggle-switch "+themeMode} onClick={toggleDarkmode}>
               <h4>{themeMode}</h4>
               <span className="toggle-btn"></span>
@@ -61,8 +61,6 @@ function App() {
           </div>
           
         </div>
-      </S.Main>
-      
     </ThemeProvider></>
   );
 }
@@ -75,12 +73,11 @@ function Error(){
 
 export default App;
 
-const S = {};
-S.Main = styled.div`
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: ${props => props.theme.colors.bgColor};
-  color: ${props => props.theme.colors.titleColor};
-  transition: 0.5s all;
-`;
+// const S = {};
+// S.Main = styled.div`
+//   width: 100%;
+//   min-height: 100%;
+//   background-color: ${props => props.theme.colors.bgColor};
+//   color: ${props => props.theme.colors.titleColor};
+//   transition: 0.5s all;
+// `;

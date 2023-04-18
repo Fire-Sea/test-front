@@ -27,12 +27,12 @@ function Input(){
       navigate('/list/search/result/0');
     }
     else if(type=='search'){
-      const data = JSON.parse(localStorage.getItem('searchData'))
-      const content = data.content;
-      const option = data.option;
-      dispatch(changeSearchContent(content))
-      dispatch(changeSearchOption(option))
-      dispatch(changeSearchFlag(!searchData.flag))
+      // const data = JSON.parse(localStorage.getItem('searchData'))
+      // const content = data.content;
+      // const option = data.option;
+      // dispatch(changeSearchContent(content))
+      // dispatch(changeSearchOption(option))
+      // dispatch(changeSearchFlag(!searchData.flag))
     }
     else{
       alert('검색할 내용을 입력해주세요.');
@@ -41,7 +41,7 @@ function Input(){
   const onFocus = ()=>{
     setIsFocus('focus')
   }
-  const onBlur = ()=>{
+  const onBlur = (e)=>{
     setIsFocus(null)
   }
   return(
@@ -51,8 +51,13 @@ function Input(){
           <option value="textMessage" default>글정보</option>
           <option value="nickname">작성자</option>
         </select>
-        <input type='text' className='search-input' placeholder='검색어를 입력하세요' onInput={onInput} onFocus={onFocus} onBlur={onBlur}
-        defaultValue={type && JSON.parse(localStorage.getItem('searchData')).content}/>
+        <input type='text' className='search-input' placeholder='검색어를 입력하세요' onInput={onInput} onMouseEnter={onFocus} onMouseLeave={onBlur}
+        onKeyUp={(e)=>{
+          if(e.key == 'Enter'){
+            e.preventDefault()
+            e.target.nextSibling.click();
+          }
+        }}/>
         <button className='search-btn' onClick={onClick}>검색</button>
       </div>
     </div>

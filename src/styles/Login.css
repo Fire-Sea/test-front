@@ -10,6 +10,7 @@
     height: 60%;
     min-width: 200px;
     min-height: 500px;
+    overflow: hidden;
   }
   .dark{
     background-color: rgb(238, 238, 238);

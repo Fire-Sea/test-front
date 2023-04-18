@@ -78,10 +78,15 @@ function Board(){
     <>
     <Input/>
     <div className={'board-container start ' + fade}>
-      <h1>{type}</h1>
       {
-        type == 'search' && <h2>'{search.content}' 검색결과 {totalNum}개</h2>
+        type == 'search' 
+        ?
+        <h2>'{search.content}' 검색결과 {totalNum}개</h2>
+        : type == 'board'
+          ? <h1>게시판</h1>
+          : <h1>검색</h1>
       }
+      <div className='board-box'>
       <h1 className='board-category' onClick={()=>navigate(`/list/board/${category}/0`)}>{category}</h1>
           {
             !totalNum ?
@@ -112,7 +117,6 @@ function Board(){
                   )
                 })
               }  
-              <tr><td className='board-line' colSpan={6}></td></tr>
             </tbody>
           </table>
     
@@ -132,12 +136,12 @@ function Board(){
                     </tr>
                   )
                 })
-              }  
-              <tr><td className='board-line' colSpan={6}></td></tr>
+              }
             </tbody>
           </table></>
           }
       
+      </div>
       <div className='board-pages'>
         {
           addPageNum(totalPage, currentPage)

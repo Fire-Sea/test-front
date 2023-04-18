@@ -3,12 +3,12 @@
   margin-right: auto;
   min-width: 350px;
   display: block;
-  width: 20%;
+  width: 30%;
   position: relative;
   transition: 0.5s all;
 }
 .focus{
-  width: 70%;
+  width: 50%;
 }
 .search-input{
   width: 100%;
@@ -38,7 +38,9 @@
   background-color: rgb(228, 76, 76);
 }
 .search input{
-  padding-left: 70px;
+  padding-left: 80px;
+  border: 3px solid rgb(228, 76, 76);
+  z-index: 5;
 }
 .search-light input{
   background-color: rgb(58, 58, 58);

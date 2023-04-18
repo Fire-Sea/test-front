@@ -45,8 +45,6 @@ button:hover{
 }
 
 
-
-
 .start{
   opacity: 0;
 }
@@ -119,7 +117,7 @@ button:hover{
   color: white;
 }
 .top-btn p{
-  margin: 12px;
+  margin: 15px 12px 12px 12px;
 }
 .top-btn:hover{
   animation: topBtn 1 0.5s;
@@ -147,8 +145,12 @@ button:hover{
     left: 10%;
     right: 10%;
   }
+  .edit-type{
+    width: 90%;
+  }
   .edit-container{
     width: 90%;
+    margin-top: 10%;
   }
   .edit-btn button{
     width: 100%;
