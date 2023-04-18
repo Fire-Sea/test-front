@@ -99,18 +99,39 @@ function Mypage(){
                 <th>제목</th>
                 <th>작성일</th>
                 <th>조회수</th>
+                <th>추천</th>
               </tr>
             </thead>
             <tbody>
               {
                 textList.map((data, i)=>{
                   return(
-                    <tr className='mypage-tr' onClick={()=>{navigate(`/detail/${data.category}/${data.id}/0`)}} key={i}>
-                      <td className='mypage-id'>{totalNum-(currentPage*20)-i}</td>
-                      <td className='mypage-category'>{data.category}</td>
-                      <td className='mypage-title'>{data.textTitle}</td>
-                      <td className='mypage-date'>{data.createdTime}</td>
-                      <td className='mypage-views'>{data.views}</td>
+                    <tr className='board-tr' onClick={()=>{navigate(`/detail/${data.category}/${data.id}/0`)}} key={i}>
+                    <td className='board-id'>{totalNum-(currentPage*20)-i}</td>
+                    <td className='mypage-category'>{data.category}</td>
+                    <td className='board-title'>{data.textTitle}</td>
+                    <td className='board-date'>{data.createdTime}</td>
+                    <td className='board-views'>{data.views}</td>
+                    <td className='board-likes'>{data.likes - data.dislikes}</td>
+                    </tr>
+                  )
+                })
+              }
+            </tbody>
+          </table>
+          <table className='board-m'>
+            <tbody>
+              {
+                textList.map((data, i)=>{
+                  return(
+                    <tr className='board-tr-m' onClick={()=>{navigate(`/detail/${data.category}/${data.id}/0`)}} key={i}>
+                      <td className='board-title-m' colSpan={2}>
+                        <p className='p-title'>{data.textTitle}</p>
+                        <p className='p-nickname'>{data.category}</p>
+                        <p className='p-likes'>추천 {data.likes - data.dislikes}</p>
+                        <p className='p-likes'>조회수 {data.views}</p>
+                        <p className='p-views'>{data.createdTime}</p>
+                      </td>
                     </tr>
                   )
                 })

@@ -1,5 +1,5 @@
 .mypage-bg{
-  width: 50%;
+  width: 60%;
   margin: 100px auto;
   padding: 50px;
 }
@@ -66,11 +66,25 @@ table{
   width: 15%;
 }
 
+.mypage-id-m{
+  width: 20%;
+}
 @media screen and (max-width: 1199px) {
   .mypage-bg{
+    width: 100%;
+    padding: 5%;
+  }
+  .mypage-board{
     width: 100%;
   }
   .mypage-date{
     font-size: 12px;
+  }
+  .board-pc{
+    display: none;
+  }
+  .board-m{
+    display: block;
+    border: 1px solid white;
   }
 }

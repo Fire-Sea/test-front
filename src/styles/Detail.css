@@ -8,8 +8,7 @@
 
 /* 상세글 스타일 */
 .detail-category{
-  border-bottom: 1px solid lightcoral;
-  background-color: lightcoral;
+  background-color: rgb(228, 76, 76);
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   padding-left: 10px;
