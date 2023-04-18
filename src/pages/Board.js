@@ -4,8 +4,9 @@ import { Input } from '../components/Input';
 import useGetTextData from '../hooks/useGetTextData';
 import useCheckToken from '../hooks/useCheckToken';
 import '../styles/Board.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
+import { changeSearchContent, changeSearchFlag } from '../store';
 
 function Board(){
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ function Board(){
   const {getTextData} = useGetTextData();
   const searchData = useSelector((state)=>{return state.searchData})
   const ip = useSelector((state)=>{return state.ip})
+  const search = JSON.parse(localStorage.getItem('searchData'));
 
   // 게시판 페이지 표시 함수
   const addPageNum = (pageNum, currentPage)=>{
@@ -50,11 +52,17 @@ function Board(){
       (async ()=>{
         console.log('search data 요청중')
         console.log(searchData)
-        const response = await axios.post(`http://${ip}/search2?page=0`, searchData);
-        
-        setTextList(response.content);
-        setTotalNum(response.totalElements);
-        setTotalPage(response.totalPages);
+        let response;
+        if(searchData.content == ''){
+          response = await axios.post(`http://${ip}/api/search?page=0`, search)
+        }
+        else{
+          response = await axios.post(`http://${ip}/api/search?page=0`, searchData);
+        }
+        const data = response.data
+        setTextList(data.content);
+        setTotalNum(data.totalElements);
+        setTotalPage(data.totalPages);
         console.log(response);
       })()
     }
@@ -64,64 +72,72 @@ function Board(){
       clearTimeout(fadeTimer);
       setFade('');
     }
-  }, [currentPage, category])
-
+  }, [currentPage, category, searchData.flag])
+  // 
   return(
     <>
     <Input/>
     <div className={'board-container start ' + fade}>
       <h1>{type}</h1>
+      {
+        type == 'search' && <h2>'{search.content}' 검색결과 {totalNum}개</h2>
+      }
       <h1 className='board-category' onClick={()=>navigate(`/list/board/${category}/0`)}>{category}</h1>
-      <table className='board-pc'>
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>작성일</th>
-            <th>조회수</th>
-            <th>추천</th>
-          </tr>
-        </thead>
-        <tbody>
           {
-            textList.map((data, i)=>{
-              return(
-                <tr className='board-tr' key={data.id}>
-                  <td className='board-id'>{totalNum-(currentPage*20)-i}</td>
-                  <td className='board-title' onClick={()=>navigate(`/detail/${category}/${data.id}/0`)}><a>{data.textTitle}</a></td>
-                  <td className='board-nickname'>{data.nickname}</td>
-                  <td className='board-date'>{data.createdTime}</td>
-                  <td className='board-views'>{data.views}</td>
-                  <td className='board-likes'>{data.likes - data.dislikes}</td>
-                </tr>
-              )
-            })
-          }  
-          <tr><td className='board-line' colSpan={6}></td></tr>
-        </tbody>
-      </table>
-
-      <table className='board-m'>
-        <tbody>
-          {
-            textList.map((data, i)=>{
-              return(
-                <tr className='board-tr-m' key={data.id}>
-                  <td className='board-title-m' colSpan={2} onClick={()=>navigate(`/detail/${category}/${data.id}/0`)}>
-                    <p className='p-title'>{data.textTitle}</p>
-                    <p className='p-nickname'>{data.nickname}</p>
-                    <p className='p-likes'>추천 {data.likes - data.dislikes}</p>
-                    <p className='p-likes'>조회수 {data.views}</p>
-                    <p className='p-views'>{data.createdTime}</p>
-                  </td>
-                </tr>
-              )
-            })
-          }  
-          <tr><td className='board-line' colSpan={6}></td></tr>
-        </tbody>
-      </table>
+            !totalNum ?
+            <h1 style={{'textAlign' : 'center'}}>검색 결과가 없습니다.</h1>
+            : <><table className='board-pc'>
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>작성일</th>
+                <th>조회수</th>
+                <th>추천</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                textList.map((data, i)=>{
+                  return(
+                    <tr className='board-tr' key={data.id}>
+                      <td className='board-id'>{totalNum-(currentPage*20)-i}</td>
+                      <td className='board-title' onClick={()=>navigate(`/detail/${category}/${data.id}/0`)}><a>{data.textTitle}</a></td>
+                      <td className='board-nickname'>{data.nickname}</td>
+                      <td className='board-date'>{data.createdTime}</td>
+                      <td className='board-views'>{data.views}</td>
+                      <td className='board-likes'>{data.likes - data.dislikes}</td>
+                    </tr>
+                  )
+                })
+              }  
+              <tr><td className='board-line' colSpan={6}></td></tr>
+            </tbody>
+          </table>
+    
+          <table className='board-m'>
+            <tbody>
+              {
+                textList.map((data, i)=>{
+                  return(
+                    <tr className='board-tr-m' key={data.id}>
+                      <td className='board-title-m' colSpan={2} onClick={()=>navigate(`/detail/${category}/${data.id}/0`)}>
+                        <p className='p-title'>{data.textTitle}</p>
+                        <p className='p-nickname'>{data.nickname}</p>
+                        <p className='p-likes'>추천 {data.likes - data.dislikes}</p>
+                        <p className='p-likes'>조회수 {data.views}</p>
+                        <p className='p-views'>{data.createdTime}</p>
+                      </td>
+                    </tr>
+                  )
+                })
+              }  
+              <tr><td className='board-line' colSpan={6}></td></tr>
+            </tbody>
+          </table></>
+          }
+      
       <div className='board-pages'>
         {
           addPageNum(totalPage, currentPage)

@@ -2,9 +2,9 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 
 let ip = createSlice({
     name: 'ip',
-    initialState: 'firesea.o-r.kr:8080',
+    // initialState: 'firesea.o-r.kr:8080',
     // initialState: '172.30.1.45:8080'
-    // initialState: '192.168.0.6:8080'
+    initialState: '192.168.0.3:8080'
 })
 let loginInfo = createSlice({
     name: 'loginInfo',
@@ -33,8 +33,9 @@ let menuStatus = createSlice({
 let searchData = createSlice({
     name: 'searchData',
     initialState: {
-        option: 'textTitle',
+        option: 'textMessage',
         content: '',
+        flag: false
     },
     reducers: {
         changeSearchOption(state, option){
@@ -42,6 +43,9 @@ let searchData = createSlice({
         },
         changeSearchContent(state, content){
             state.content = content.payload;
+        },
+        changeSearchFlag(state, flag){
+            state.flag = flag.payload;
         }
     }
 })
@@ -56,4 +60,4 @@ export default configureStore({
 
 export let {changeLoginStatus, changeNickname} = loginInfo.actions;
 export let {changeMenuStatus} = menuStatus.actions;
-export let {changeSearchOption, changeSearchContent} = searchData.actions;
+export let {changeSearchOption, changeSearchContent, changeSearchFlag} = searchData.actions;
