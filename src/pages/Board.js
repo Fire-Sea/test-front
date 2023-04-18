@@ -19,7 +19,7 @@ function Board(){
   const {getTextData} = useGetTextData();
   const searchData = useSelector((state)=>{return state.searchData})
   const ip = useSelector((state)=>{return state.ip})
-  const search = JSON.parse(localStorage.getItem('searchData'));
+  const localSearchData = JSON.parse(localStorage.getItem('searchData'));
 
   // 게시판 페이지 표시 함수
   const addPageNum = (pageNum, currentPage)=>{
@@ -51,10 +51,9 @@ function Board(){
     else if(type == 'search'){
       (async ()=>{
         console.log('search data 요청중')
-        console.log(searchData)
         let response;
         if(searchData.content == ''){
-          response = await axios.post(`http://${ip}/api/search?page=0`, search)
+          response = await axios.post(`http://${ip}/api/search?page=0`, localSearchData);
         }
         else{
           response = await axios.post(`http://${ip}/api/search?page=0`, searchData);
@@ -63,7 +62,6 @@ function Board(){
         setTextList(data.content);
         setTotalNum(data.totalElements);
         setTotalPage(data.totalPages);
-        console.log(response);
       })()
     }
     
@@ -81,7 +79,7 @@ function Board(){
       {
         type == 'search' 
         ?
-        <h2>'{search.content}' 검색결과 {totalNum}개</h2>
+        <h2>'{localSearchData.content}' 검색결과 {totalNum}개</h2>
         : type == 'board'
           ? <h1>게시판</h1>
           : <h1>검색</h1>
