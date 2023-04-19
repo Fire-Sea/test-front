@@ -27,6 +27,7 @@
 }
 th{
   padding-bottom: 10px;
+  font-size: 12px;
 }
 .board-tr td{
   border-top: solid 1px rgb(223, 162, 162);
@@ -40,28 +41,43 @@ th{
 .board-pc{
   width: 100%;
   text-align: center;
-  border-collapse: separate;
   border-spacing: 0px;
   margin-top: -10px;
 }
 .board-id{
-  width: 5%;
+  width: 10%;
   font-size: 12px;
 }
 .board-title{
-  width: 45%;
+  width: 50%;
   text-align: left;
-  overflow: hidden;
   cursor: pointer;
   padding-left: 10px;
   font-size: 14px;
 }
-.board-nickname, .board-date{
+.board-title-div{
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-right: -500px;
+}
+.board-nickname{
   width: 15%;
   font-size: 12px;
+  padding: 0;
+  border: 1px solid white;
 }
-.board-views, .board-likes{
-  width: 10%;
+.board-nickname-div{
+  width: 80%;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: auto;
+}
+.board-date, .board-views, .board-likes{
   font-size: 12px;
 }
 
@@ -86,10 +102,18 @@ th{
 .p-title{
   font-size: 13px;
 }
+.p-title-div{
+  width: 320px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .p-nickname{
   font-size: 11px;
   float: left;
 }
+
 .p-date, .p-views{
   float: right;
   font-size: 11px;

@@ -137,44 +137,55 @@ function Detail(){
                 <li key={i}>
                   <div className='comment-l'>
                   <h4>{data.nickname}</h4>
+                  {
+                    nickname == data.nickname
+                    &&  <div className='comment-modify'>
+                          <p onClick={(e)=>{
+                            const childrens = e.target.parentNode.parentNode.children
+                            childrens[3].style.display = 'block';
+                            childrens[2].style.display = 'none';
+                          }}>수정</p>
+                          <p onClick={(e)=>{
+                            (async ()=>{
+                              axios.defaults.headers.common['Authorization'] = cookies.token.access_token;
+                              const response = await axios.delete(`http://${ip}/api/user/comment/delete`, {
+                                headers: {"Content-Type": "application/json"},
+                                data: JSON.stringify({commentId: data.commentId})
+                              });
+                              if(response.data.statusCode != 20027){
+                                silentRefresh();
+                              }
+                              else{
+                                alert('삭제되었습니다.')
+                              }
+                            })()
+                          }}>삭제</p>
+                        </div>
+                  }
                   <p className='comment-body'>{data.commentBody}</p>
                   {
                     nickname == data.nickname
-                    && <input defaultValue={data.commentBody} onInput={(e)=>{
-                      const value = e.target.value;
-                      setModifyComment({
-                        ...modifyComment,
-                        ['commentId'] : data.commentId,
-                        ['commentBody'] : value
-                      })
-                      console.log(modifyComment)
-                    }}></input>
+                    && <div className='comment-input'>
+                        <textarea className='comment-textarea' defaultValue={data.commentBody} onInput={(e)=>{
+                          const value = e.target.value;
+                          setModifyComment({
+                            ...modifyComment,
+                            ['commentId'] : data.commentId,
+                            ['commentBody'] : value
+                          })
+                          console.log(modifyComment)
+                        }}></textarea>
+                        <button onClick={(e)=>{
+                          const childrens = e.target.parentNode.parentNode.children;
+                          childrens[3].style.display = 'none'
+                          childrens[2].style.display = 'block'
+                        }}>수정하기</button>
+                      </div>
                   }
                   </div>
                   {
                     nickname == data.nickname
                     && <div className='comment-r'>
-                      <p onClick={(e)=>{
-                        (async ()=>{
-                          axios.defaults.headers.common['Authorization'] = cookies.token.access_token;
-                          const response = await axios.delete(`http://${ip}/api/user/comment/delete`, {
-                            headers: {"Content-Type": "application/json"},
-                            data: JSON.stringify({commentId: data.commentId})
-                          });
-                          if(response.data.statusCode != 20027){
-                            silentRefresh();
-                          }
-                          else{
-                            alert('삭제되었습니다.')
-                          }
-                        })()
-                      }}>X</p>
-                      <button onClick={(e)=>{
-                      e.target.parentNode.parentNode.children[0].children[2].style.display = 'block';
-                      e.target.parentNode.parentNode.children[0].children[1].style.display = 'none';
-                      e.target.style.display = 'none'
-                      e.target.nextSibling.style.display = 'block';
-                    }}>수정하기</button>
                       <button style={{'display':'none'}} onClick={(e)=>{
                         e.target.parentNode.children[1].style.display = 'block';
                         (async ()=>{

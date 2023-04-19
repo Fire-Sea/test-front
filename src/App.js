@@ -22,7 +22,7 @@ function App() {
   const theme = themeMode === 'light' ? light : dark;
   const login_status = useSelector((state)=> {return state.loginInfo.login_status});
   const isDark = localStorage.getItem('theme');
-  //localStorage.setItem('searchData', JSON.stringify({content: '', option: 'textMessage', flag: false}))
+  
   const toggleDarkmode = (e)=>{
     toggleTheme();
     e.currentTarget.classList.toggle('dark');
@@ -72,12 +72,3 @@ function Error(){
 }
 
 export default App;
-
-// const S = {};
-// S.Main = styled.div`
-//   width: 100%;
-//   min-height: 100%;
-//   background-color: ${props => props.theme.colors.bgColor};
-//   color: ${props => props.theme.colors.titleColor};
-//   transition: 0.5s all;
-// `;
