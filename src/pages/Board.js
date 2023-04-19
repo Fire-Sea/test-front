@@ -140,8 +140,20 @@ function Board(){
                   return(
                     <tr className='board-tr-m' key={data.id}>
                       <td className='board-title-m' colSpan={2} onClick={()=>navigate(`/detail/${category}/${data.id}/0`)}>
-                        <p className='p-title'>{data.textTitle}</p>
-                        <p className='p-nickname'>{data.nickname}</p>
+                        <p className='p-title'>{
+                          localSearchData.option == 'textMessage'
+                          ? <span>{data.textTitle.split(localSearchData.content)[0]}
+                            <span style={{'background' : 'yellow', 'color': 'black'}}>{localSearchData.content}</span>
+                            {data.textTitle.split(localSearchData.content)[1]}</span>
+                          : <span>{data.textTitle}</span>
+                        }</p>
+                        <p className='p-nickname'>{
+                          localSearchData.option == 'nickname'
+                          ? <span>{data.nickname.split(localSearchData.content)[0]}
+                            <span style={{'background' : 'yellow', 'color': 'black'}}>{localSearchData.content}</span>
+                            {data.nickname.split(localSearchData.content)[1]}</span>
+                          : <span>{data.nickname}</span>
+                        }</p>
                         <p className='p-likes'>추천 {data.likes - data.dislikes}</p>
                         <p className='p-likes'>조회수 {data.views}</p>
                         <p className='p-views'>{data.createdTime}</p>

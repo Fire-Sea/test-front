@@ -65,12 +65,12 @@ function Input(){
     <div className={'search search-'+localSettingTheme}>
       <div className={'search-container '+ isFocus}>
         <select name="type" className="search-select" onChange={(e)=>{dispatch(changeSearchOption(e.target.value))}}
-        defaultValue={localSearchData.option}>
+        defaultValue={localSearchData != null ? localSearchData.option : 'textMessage'}>
           <option value="textMessage">글정보</option>
           <option value="nickname">작성자</option>
         </select>
         <input type='text' className='search-input' placeholder='검색어를 입력하세요' onInput={onInput}
-        onKeyUp={onKeyUp} defaultValue={localSearchData.content}/>
+        onKeyUp={onKeyUp} defaultValue={localSearchData != null ? localSearchData.content : ''}/>
         <button className='search-btn' onClick={onClick}>검색</button>
       </div>
     </div>
