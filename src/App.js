@@ -22,7 +22,7 @@ function App() {
   const theme = themeMode === 'light' ? light : dark;
   const login_status = useSelector((state)=> {return state.loginInfo.login_status});
   const isDark = localStorage.getItem('theme');
-  
+  // localStorage.setItem('searchData', JSON.stringify({content: '', option: 'textMessage', flag: false}))
   const toggleDarkmode = (e)=>{
     toggleTheme();
     e.currentTarget.classList.toggle('dark');

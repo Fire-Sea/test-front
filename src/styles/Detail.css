@@ -112,6 +112,32 @@
   border-radius: 20px;
   padding-left: 10px;
   margin-bottom: 1px;
+  display: flex;
+}
+.comment-l{
+  width: 89%;
+}
+.comment-l input{
+  width: 89%;
+  display: none;
+  background-color: black;
+  color: white;
+  border: 1px solid white;
+}
+.comment-r{
+  display: flex;
+  position: relative;
+  margin-top: 70px;
+  height: fit-content;
+}
+.comment-r p{
+  position: absolute;
+  top: -80px;
+  right: 0;
+  cursor: pointer;
+}
+.comment-r button{
+  margin-right: 2px;
 }
 .detail-input{
   width: 100%;
@@ -140,4 +166,9 @@
 .detail-light{
   color: white;
   background-color: rgb(39, 39, 39);
+}
+
+
+.show{
+  display: block;
 }

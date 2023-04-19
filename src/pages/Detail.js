@@ -9,6 +9,7 @@ import useGetTextData from '../hooks/useGetTextData';
 import useDelete from '../hooks/useDeleteDetail';
 import useControlLikes from '../hooks/useControlLikes';
 import usePostComment from '../hooks/usePostComment';
+import useSilentRefresh from '../hooks/useSilentRefresh';
 
 function Detail(){
   const navigate = useNavigate();
@@ -28,7 +29,10 @@ function Detail(){
     commentBody: '',
     id: 0
   })
-
+  const [modifyComment, setModifyComment] = useState({
+    commentId: '',
+    commentBody: ''
+  })
   const [commentList, setCommentList] = useState({
     nickname: '',
     commentBody: ''
@@ -43,6 +47,7 @@ function Detail(){
   const [currentPage, setCurrentPage] = useState(0);
   const [totalCnt, setTotalCnt] = useState(null);
   const isDark = localStorage.getItem('theme')
+  const {silentRefresh} = useSilentRefresh();
   // 글 수정, 삭제 버튼 출력
   const showAdminBtn = ()=>{
     return(
@@ -129,7 +134,63 @@ function Detail(){
             ?
             commentList.map((data, i)=>{
               return(
-                <li key={i}><h4>{data.nickname}</h4><p>{data.commentBody}</p></li>
+                <li key={i}>
+                  <div className='comment-l'>
+                  <h4>{data.nickname}</h4>
+                  <p className='comment-body'>{data.commentBody}</p>
+                  {
+                    nickname == data.nickname
+                    && <input defaultValue={data.commentBody} onInput={(e)=>{
+                      const value = e.target.value;
+                      setModifyComment({
+                        ...modifyComment,
+                        ['commentId'] : data.commentId,
+                        ['commentBody'] : value
+                      })
+                      console.log(modifyComment)
+                    }}></input>
+                  }
+                  </div>
+                  {
+                    nickname == data.nickname
+                    && <div className='comment-r'>
+                      <p onClick={(e)=>{
+                        (async ()=>{
+                          axios.defaults.headers.common['Authorization'] = cookies.token.access_token;
+                          const response = await axios.delete(`http://${ip}/api/user/comment/delete`, {
+                            headers: {"Content-Type": "application/json"},
+                            data: JSON.stringify({commentId: data.commentId})
+                          });
+                          if(response.data.statusCode != 20027){
+                            silentRefresh();
+                          }
+                          else{
+                            alert('삭제되었습니다.')
+                          }
+                        })()
+                      }}>X</p>
+                      <button onClick={(e)=>{
+                      e.target.parentNode.parentNode.children[0].children[2].style.display = 'block';
+                      e.target.parentNode.parentNode.children[0].children[1].style.display = 'none';
+                      e.target.style.display = 'none'
+                      e.target.nextSibling.style.display = 'block';
+                    }}>수정하기</button>
+                      <button style={{'display':'none'}} onClick={(e)=>{
+                        e.target.parentNode.children[1].style.display = 'block';
+                        (async ()=>{
+                          axios.defaults.headers.common['Authorization'] = cookies.token.access_token;
+                          const response = await axios.patch(`http://${ip}/api/user/comment/update`, modifyComment);
+                          if(response.data.statusCode != 20026){
+                            silentRefresh();
+                          }
+                          else{
+                            alert('수정되었습니다.')
+                          }
+                        })()
+                      }}>수정완료하기</button>
+                    </div>
+                  }
+                </li>
               )
             })
             : null
