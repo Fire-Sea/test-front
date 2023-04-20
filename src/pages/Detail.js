@@ -157,6 +157,7 @@ function Detail(){
                               }
                               else{
                                 alert('삭제되었습니다.')
+                                await getList();
                               }
                             })()
                           }}>삭제</p>
@@ -177,30 +178,23 @@ function Detail(){
                         }}></textarea>
                         <button onClick={(e)=>{
                           const childrens = e.target.parentNode.parentNode.children;
+                          (async ()=>{
+                            axios.defaults.headers.common['Authorization'] = cookies.token.access_token;
+                            const response = await axios.patch(`http://${ip}/api/user/comment/update`, modifyComment);
+                            if(response.data.statusCode != 20026){
+                              silentRefresh();
+                            }
+                            else{
+                              alert('수정되었습니다.')
+                              await getList();
+                            }
+                          })()
                           childrens[3].style.display = 'none'
                           childrens[2].style.display = 'block'
                         }}>수정하기</button>
                       </div>
                   }
                   </div>
-                  {
-                    nickname == data.nickname
-                    && <div className='comment-r'>
-                      <button style={{'display':'none'}} onClick={(e)=>{
-                        e.target.parentNode.children[1].style.display = 'block';
-                        (async ()=>{
-                          axios.defaults.headers.common['Authorization'] = cookies.token.access_token;
-                          const response = await axios.patch(`http://${ip}/api/user/comment/update`, modifyComment);
-                          if(response.data.statusCode != 20026){
-                            silentRefresh();
-                          }
-                          else{
-                            alert('수정되었습니다.')
-                          }
-                        })()
-                      }}>수정완료하기</button>
-                    </div>
-                  }
                 </li>
               )
             })
