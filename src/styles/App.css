@@ -204,3 +204,26 @@ button:hover{
     bottom: 10px;
   }
 }
+
+.hello-h1{
+  margin: 200px auto 0 auto;
+}
+.hello-container{
+  width: 80%;
+  margin: 200px auto;
+  border: 1px solid white;
+}
+.hello-box{
+  width: 100%;
+  top: 200px;
+  height: 500px;
+  position: sticky;
+  border: 1px solid red;
+}
+.hello-img-l{
+  float:left;
+
+}
+.hello-img-r{
+  float:right
+}
