@@ -101,9 +101,10 @@ th{
 }
 .p-title{
   font-size: 13px;
+  border: 3px solid red;
 }
 .p-title-div{
-  width: 320px;
+  border: 1px solid white;
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -127,6 +128,9 @@ th{
 }
 .board-tr-m:hover {
   background-color: rgba(85, 85, 85, 0.5);
+}
+td{
+  width: 50%;
 }
 
 /* 홈, 글쓰기, 페이지 버튼 */

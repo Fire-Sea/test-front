@@ -20,6 +20,7 @@ function Board(){
   const searchData = useSelector((state)=>{return state.searchData})
   const ip = useSelector((state)=>{return state.ip})
   const localSearchData = JSON.parse(localStorage.getItem('searchData'));
+  const reg = /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/ ]/gim;
 
   // 게시판 페이지 표시 함수
   const addPageNum = (pageNum, currentPage)=>{
@@ -59,6 +60,7 @@ function Board(){
           response = await axios.post(`http://${ip}/api/search?page=0`, searchData);
         }
         const data = response.data
+        
         setTextList(data.content);
         setTotalNum(data.totalElements);
         setTotalPage(data.totalPages);
@@ -112,18 +114,19 @@ function Board(){
                         <div className='board-title-div'>
                           {
                             localSearchData.option == 'textMessage' 
-                            ? <a>{data.textTitle.split(localSearchData.content)[0]} 
-                                <span style={{'background':'yellow', 'color':'black'}}>{localSearchData.content}</span>  
-                              {data.textTitle.split(localSearchData.content)[1]}</a>
+                            ? <a>{data.textTitle.split(localSearchData.content.replace(reg, ''))[0]} 
+                                <span style={{'background':'yellow', 'color':'black'}}>
+                                  {localSearchData.content.replace(reg, '')}</span>  
+                              {data.textTitle.split(localSearchData.content.replace(reg, ''))[1]}</a>
                             : <a>{data.textTitle}</a>
                           }
                         </div>
                       </td>
                       <td className='board-nickname'>{
                         localSearchData.option == 'nickname' 
-                        ? <a>{data.nickname.split(localSearchData.content)[0]} 
-                            <span style={{'background':'yellow', 'color':'black'}}>{localSearchData.content}</span>  
-                          {data.nickname.split(localSearchData.content)[1]}</a>
+                        ? <a>{data.nickname.split(localSearchData.content.replace(reg, ''))[0]} 
+                            <span style={{'background':'yellow', 'color':'black'}}>{localSearchData.content.replace(reg, '')}</span>  
+                          {data.nickname.split(localSearchData.content.replace(reg, ''))[1]}</a>
                         : <a>{data.nickname}</a>
                       }</td>
                       <td className='board-date'>{data.createdTime}</td>
@@ -143,13 +146,14 @@ function Board(){
                   return(
                     <tr className='board-tr-m' key={data.id}>
                       <td className='board-title-m' colSpan={2} onClick={()=>navigate(`/detail/${category}/${data.id}/0`)}>
+                        <div id='test1'>
                         <p className='p-title'>
                           <span className='p-title-div'>
                             {
                               localSearchData.option == 'textMessage'
-                              ? <span>{data.textTitle.split(localSearchData.content)[0]}
-                                <span style={{'background' : 'yellow', 'color': 'black'}}>{localSearchData.content}</span>
-                                {data.textTitle.split(localSearchData.content)[1]}</span>
+                              ? <span>{data.textTitle.split(localSearchData.content.replace(reg, ''))[0]}
+                                <span style={{'background' : 'yellow', 'color': 'black'}}>{localSearchData.content.replace(reg, '')}</span>
+                                {data.textTitle.split(localSearchData.content.replace(reg, ''))[1]}</span>
                               : <span>{data.textTitle}</span>
                             }
                           </span>
@@ -157,14 +161,15 @@ function Board(){
                         <p className='p-nickname'>
                           {
                             localSearchData.option == 'nickname'
-                            ? <span>{data.nickname.split(localSearchData.content)[0]}
-                              <span style={{'background' : 'yellow', 'color': 'black'}}>{localSearchData.content}</span>
-                              {data.nickname.split(localSearchData.content)[1]}</span>
+                            ? <span>{data.nickname.split(localSearchData.content.replace(reg, ''))[0]}
+                              <span style={{'background' : 'yellow', 'color': 'black'}}>{localSearchData.content.replace(reg, '')}</span>
+                              {data.nickname.split(localSearchData.content.replace(reg, ''))[1]}</span>
                             : <span>{data.nickname}</span>
                           }</p>
                         <p className='p-likes'>추천 {data.likes - data.dislikes}</p>
                         <p className='p-likes'>조회수 {data.views}</p>
                         <p className='p-views'>{data.createdTime}</p>
+                        </div>
                       </td>
                     </tr>
                   )
