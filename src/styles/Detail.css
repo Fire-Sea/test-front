@@ -230,6 +230,10 @@
   .comment-container{
     width: 95%;
   }
+  .comment-nickname{
+    font-size: 0.2em;
+    margin-top: 10px;
+  }
   .comment-r p{
     right: 20px;
   }
