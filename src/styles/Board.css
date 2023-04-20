@@ -12,6 +12,9 @@
   min-height: 500px;
 }
 /* 게시판 스타일 */
+.board-type{
+  margin: 0 0 10px 10px;
+}
 .board-category{
   width: 100%;
   margin-top: 0;
@@ -45,51 +48,59 @@ th{
   margin-top: -10px;
 }
 .board-id{
-  width: 10%;
+  width: 100px;
+  min-width: 50px;
   font-size: 12px;
 }
 .board-title{
-  width: 50%;
   text-align: left;
   cursor: pointer;
-  padding-left: 10px;
   font-size: 14px;
 }
 .board-title-div{
-  width: 100%;
+  width: 98%;
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  margin-right: -500px;
+  margin-right: -100vw;
+}
+.th-title, .th-nickname{
+  text-align: left;
 }
 .board-nickname{
-  width: 15%;
+  text-align: left;
+  width: 100px;
   font-size: 12px;
   padding: 0;
-  border: 1px solid white;
 }
 .board-nickname-div{
-  width: 80%;
+  width: 90%;
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  margin: auto;
+  margin-right: -100vw;
 }
-.board-date, .board-views, .board-likes{
+.board-views, .board-likes{
   font-size: 12px;
+  width: 7%;
 }
-
+.board-date{
+  font-size: 12px;
+  width: 11%;
+}
 /* 모바일버전 게시판 스타일 */
 .board-m{
-  width: 100%;
   border-spacing: 0px;
   display: none;
 }
+.board-tr-m:hover {
+  background-color: rgba(85, 85, 85, 0.5);
+}
 .board-title-m{
-  text-align: left;
   width: 100vw;
+  text-align: left;
   cursor: pointer;
   font-size: 12px;
   border-top: 1px solid lightcoral;
@@ -101,10 +112,9 @@ th{
 }
 .p-title{
   font-size: 13px;
-  border: 3px solid red;
 }
 .p-title-div{
-  border: 1px solid white;
+  width: 80vw;
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -114,7 +124,6 @@ th{
   font-size: 11px;
   float: left;
 }
-
 .p-date, .p-views{
   float: right;
   font-size: 11px;
@@ -126,12 +135,7 @@ th{
   font-size: 11px;
   padding: 0 5px;
 }
-.board-tr-m:hover {
-  background-color: rgba(85, 85, 85, 0.5);
-}
-td{
-  width: 50%;
-}
+
 
 /* 홈, 글쓰기, 페이지 버튼 */
 .board-home{
@@ -162,6 +166,13 @@ td{
 @media screen and (max-width: 1199px) {
   .board-container{
     width: 90%;
+  }
+  .board-type{
+    font-size: 25px;
+    margin-top: 20px;
+  }
+  .board-box{
+    min-width: 200px;
   }
   .board-pc{
     display: none;

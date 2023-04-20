@@ -107,6 +107,7 @@ function Detail(){
     <>
     <Input/>
     <div className={'detail-container start ' + fade}>
+      <div className='detail-box'>
         <h1 className='detail-category'>{category}</h1>
         <div className='detail-title'>
             <h3>{textData.textTitle}</h3>
@@ -128,6 +129,7 @@ function Detail(){
           <button className='detail-savecomment' onClick={chkComment}>댓글 저장하기</button>
         </div>
 
+        </div>
         <div className='comment-container'>
           {
             totalCnt != null
@@ -136,7 +138,7 @@ function Detail(){
               return(
                 <li key={i}>
                   <div className='comment-l'>
-                  <h4>{data.nickname}</h4>
+                  <h4 className='comment-nickname'>{data.nickname}</h4>
                   {
                     nickname == data.nickname
                     &&  <div className='comment-modify'>
@@ -176,7 +178,12 @@ function Detail(){
                           })
                           console.log(modifyComment)
                         }}></textarea>
-                        <button onClick={(e)=>{
+                        <button className='comment-cancelmodify' onClick={(e)=>{
+                          const childrens = e.target.parentNode.parentNode.children;
+                          childrens[3].style.display = 'none'
+                          childrens[2].style.display = 'block'
+                        }}>X</button>
+                        <button className='comment-modifybtn' onClick={(e)=>{
                           const childrens = e.target.parentNode.parentNode.children;
                           (async ()=>{
                             axios.defaults.headers.common['Authorization'] = cookies.token.access_token;
@@ -200,11 +207,11 @@ function Detail(){
             })
             : null
           }
-        </div>
         <button className={'detail-backBtn'} onClick={()=>navigate(-1)}>뒤로가기</button>
         {
           nickname === textData.nickname && showAdminBtn()
         }
+      </div>
     </div>
     </>
     )

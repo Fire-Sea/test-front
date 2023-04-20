@@ -7,7 +7,7 @@ export const dark ={
 
 export const light ={
   colors:{
-      titleColor : 'white',
-      bgColor: '#121212',
+      titleColor : 'lightgray',
+      bgColor: 'rgb(30, 30, 30)',
   }
 }

@@ -3,18 +3,28 @@
     margin-left: auto;
     margin-right: auto;
     text-align: left;
-    margin-top: 20px;
+    margin-top: 100px;
 }
 
 /* 상세글 스타일 */
 .detail-category{
   background-color: rgb(228, 76, 76);
+  border-top-left-radius: 17px;
+  border-top-right-radius: 17px;
+  padding-left: 20px;
+  padding-bottom: 5px;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+}
+.detail-box{
+  border: 3px solid lightcoral;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  padding-left: 10px;
-  margin: 0px;
+  min-height: 500px;
+  margin: -15px auto 10px auto;
+  width: 100%;
 }
-
 /* 상세글 정보 스타일 */
 .detail-title{
   width: 100%;
@@ -105,6 +115,8 @@
 /* 댓글 스타일 */
 .comment-container{
   border-radius: 20px;
+  margin: auto;
+  width: 100%;
 }
 .comment-container li{
   list-style: none;
@@ -118,8 +130,14 @@
 .comment-l{
   width: 89%;
 }
+.comment-nickname{
+  font-size: 0.9em;
+}
+.comment-body{
+  font-size: 0.8em;
+}
 .comment-input{
-  width: 108%;
+  width: 109%;
   height: 100px;
   position: relative;
   display: none;
@@ -134,7 +152,12 @@
   font-size: 15px;
   margin-bottom: 18px;
 }
-.comment-input button{
+.comment-cancelmodify{
+  position: absolute;
+  right: 0;
+  top: 5px;
+}
+.comment-modifybtn{
   position: absolute;
   width: 70px;
   height: 30px;
@@ -151,7 +174,7 @@
 }
 .comment-modify p{
   margin: 0 5px;
-  font-size: 15px;
+  font-size: 0.8em;
   cursor: pointer;
 }
 .comment-r{
@@ -175,7 +198,7 @@
   vertical-align: top;
   box-sizing: border-box;
   padding: 15px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   resize: none;
 }
@@ -191,17 +214,22 @@
   height: 120px;
   border: 1px solid red;
   position: relative;
-  margin-bottom: 10px;
 }
 .detail-light{
   color: white;
   background-color: rgb(39, 39, 39);
 }
 
-
-
-
 @media screen and (max-width: 1199px) {
+  .detail-container{
+    margin-top: 50px;
+  }
+  .detail-box{
+    width: 95%;
+  }
+  .comment-container{
+    width: 95%;
+  }
   .comment-r p{
     right: 20px;
   }

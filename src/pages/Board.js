@@ -82,9 +82,7 @@ function Board(){
         type == 'search' 
         ?
         <h2>'{localSearchData.content}' 검색결과 {totalNum}개</h2>
-        : type == 'board'
-          ? <h1>게시판</h1>
-          : <h1>검색</h1>
+        : <h1 className='board-type'>게시판</h1>
       }
       <div className='board-box'>
           {
@@ -97,8 +95,8 @@ function Board(){
             <thead>
               <tr>
                 <th>No</th>
-                <th>제목</th>
-                <th>작성자</th>
+                <th className='th-title'>제목</th>
+                <th className='th-nickname'>작성자</th>
                 <th>작성일</th>
                 <th>조회수</th>
                 <th>추천</th>
@@ -146,7 +144,6 @@ function Board(){
                   return(
                     <tr className='board-tr-m' key={data.id}>
                       <td className='board-title-m' colSpan={2} onClick={()=>navigate(`/detail/${category}/${data.id}/0`)}>
-                        <div id='test1'>
                         <p className='p-title'>
                           <span className='p-title-div'>
                             {
@@ -167,9 +164,8 @@ function Board(){
                             : <span>{data.nickname}</span>
                           }</p>
                         <p className='p-likes'>추천 {data.likes - data.dislikes}</p>
-                        <p className='p-likes'>조회수 {data.views}</p>
-                        <p className='p-views'>{data.createdTime}</p>
-                        </div>
+                        <p className='p-views'>조회수 {data.views}</p>
+                        <p className='p-date'>{data.createdTime}</p>
                       </td>
                     </tr>
                   )
@@ -184,8 +180,8 @@ function Board(){
           <thead>
             <tr>
               <th>No</th>
-              <th>제목</th>
-              <th>작성자</th>
+              <th className='th-title'>제목</th>
+              <th className='th-nickname'>작성자</th>
               <th>작성일</th>
               <th>조회수</th>
               <th>추천</th>

@@ -49,10 +49,14 @@ function Edit(){
 
   // textTitle 추출함수
   const onChange = (e)=>{
-    setTextData({
+    if(e.target.value.length > 63){
+      alert('제목은 64글자를 넘길 수 없습니다.')
+    }
+    else{
+      setTextData({
       ...textData,
       textTitle: e.target.value
-    });
+    });}
   };
  // api/user/update?id=${}
   // textBody 추출함수
@@ -110,7 +114,7 @@ function Edit(){
       : <h1 className='edit-type'>글작성</h1>
     }
       <div className={'edit-container start ' + fade}>
-        <input className='edit-title' placeholder='제목을 입력하세요' name='textTitle' value={textTitle}
+        <input className='edit-title' placeholder='제목을 입력하세요' name='textTitle' value={textTitle} maxLength={'63'}
         onChange={onChange}/>
         <div className="edit-menu">
           <button id="btn-bold" onClick={()=>{setStyle('bold');}}>

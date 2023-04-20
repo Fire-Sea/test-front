@@ -36,10 +36,6 @@
   height: 20px;
   background-color: rgb(165, 55, 55)
 }
-table{
-  width: 100%;
-  border-spacing: 0;
-}
 .mypage-tr{
   cursor: pointer;
 }
@@ -79,12 +75,5 @@ table{
   }
   .mypage-date{
     font-size: 12px;
-  }
-  .board-pc{
-    display: none;
-  }
-  .board-m{
-    display: block;
-    border: 1px solid white;
   }
 }
