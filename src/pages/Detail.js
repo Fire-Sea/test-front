@@ -142,6 +142,7 @@ function Detail(){
                   {
                     nickname == data.nickname
                     &&  <div className='comment-modify'>
+                          <p>{`${data.createdTime.substr(0,10)} ${data.createdTime.substr(11)}`}</p>
                           <p onClick={(e)=>{
                             const childrens = e.target.parentNode.parentNode.children
                             childrens[3].style.display = 'block';

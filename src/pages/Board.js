@@ -60,7 +60,18 @@ function Board(){
           response = await axios.post(`http://${ip}/api/search?page=0`, searchData);
         }
         const data = response.data
-        
+        const now = new Date();
+        const today = new Date(`${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`);
+
+        data.content.forEach((a,i)=>{
+          const date = new Date(a.createdTime);
+          if(date > today){
+            a.createdTime = date.toString().substring(16, 21);
+          }
+          else{
+            a.createdTime = date.toISOString().substring(0, 10)
+          }
+        })
         setTextList(data.content);
         setTotalNum(data.totalElements);
         setTotalPage(data.totalPages);
