@@ -1,78 +1,78 @@
 .login-bg{
-    position: absolute;
-    left: 30%;
-    right: 20%;
-    top: 20%;
-    background-color: rgb(238, 238, 238);
-    border-radius: 5px;
-    z-index: 5;
-    width: 40%;
-    height: 60%;
-    min-width: 200px;
-    min-height: 500px;
-    overflow: hidden;
-  }
-  .dark{
-    background-color: rgb(238, 238, 238);
-  }
-  .light{
-    background-color: rgb(29, 29, 29);
-  }
-  .login-logo{
-    width: 100%;
-    height: 50px;
-    background-color: rgb(228, 76, 76);
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    padding: 1px;
-    text-align: center;
-    color: white;
-  }
-  .login-logo h1{
-    margin: 0px;
-  }
-  .login-container{
-    text-align: center;
-    display: grid;
-  }
-  .login-container h1{
-    margin-top: 4%;
-  }
-  .login-container input, .login-container button{
-    width: 70%;
-    height: 40px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .login-container input{
-    font-size: 18px;
-    padding-left: 5px;
-    box-sizing: border-box;
-    margin-bottom: 2px;
-  }
-  
-  .login-container button{
-    margin-top: 5px;
-  }
-  .login-container p{
-    text-align: left;
-    margin-left: 15%;
-    width: 100%;
-    margin-bottom: 0px;
-    font-size: 14px;
-  }
-  .login-text{
-    text-align: center;
-    margin-top: 20px;
-    font-size: 14px;
-  }
-  .login-container button:hover{
-    color: lightgray;
-    background-color: rgb(167, 56, 56);
-  }
-  .login-cancelBtn{
-    background-color: white;
-    border: 3px solid rgb(228, 76, 76);
-    color: rgb(228, 76, 76);
-  }
+  position: fixed;
+  left: 30%;
+  right: 20%;
+  top: 20%;
+  background-color: rgb(238, 238, 238);
+  border-radius: 5px;
+  z-index: 5;
+  width: 40%;
+  height: 60%;
+  min-width: 200px;
+  min-height: 500px;
+  overflow: hidden;
+}
+.dark{
+  background-color: rgb(238, 238, 238);
+}
+.light{
+  background-color: rgb(29, 29, 29);
+}
+.login-logo{
+  width: 100%;
+  height: 50px;
+  background-color: rgb(228, 76, 76);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding: 1px;
+  text-align: center;
+  color: white;
+}
+.login-logo h1{
+  margin: 0px;
+}
+.login-container{
+  text-align: center;
+  display: grid;
+}
+.login-container h1{
+  margin-top: 4%;
+}
+.login-container input, .login-container button{
+  width: 70%;
+  height: 40px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.login-container input{
+  font-size: 18px;
+  padding-left: 5px;
+  box-sizing: border-box;
+  margin-bottom: 2px;
+}
+
+.login-container button{
+  margin-top: 5px;
+}
+.login-container p{
+  text-align: left;
+  margin-left: 15%;
+  width: 100%;
+  margin-bottom: 0px;
+  font-size: 14px;
+}
+.login-text{
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+}
+.login-container button:hover{
+  color: lightgray;
+  background-color: rgb(167, 56, 56);
+}
+.login-cancelBtn{
+  background-color: white;
+  border: 3px solid rgb(228, 76, 76);
+  color: rgb(228, 76, 76);
+}

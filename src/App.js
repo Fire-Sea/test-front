@@ -91,19 +91,19 @@ function Hello(){
   <>
   <h1 className='hello-h1'>어서오세요!</h1>
     <div className='hello-container'>
-      <div className='hello-box' ref={el => testRef.current[0] = el}>
-        <img className='hello-img-l' alt='main_img1' src={process.env.PUBLIC_URL + '/main_img1.jpg'}/>
-        <h4>hello-box1</h4>
+      <div className='hello-box hello1' ref={el => testRef.current[0] = el}>
+        <img className='hello-img-l' alt='hello_img1' src={process.env.PUBLIC_URL + '/hello_img1.jpg'}/>
+        <h4>아직도 개발을 혼자하세요??</h4>
       </div>
-      <div className='hello-box' ref={el => testRef.current[1] = el}>
+      <div className='hello-box hello2' ref={el => testRef.current[1] = el}>
         <img className='hello-img-r' alt='main_img2' src={process.env.PUBLIC_URL + '/main_img2.jpg'}/>
         <h4>hello-box2</h4>
       </div>
-      <div className='hello-box' ref={el => testRef.current[2] = el}>
+      <div className='hello-box hello3' ref={el => testRef.current[2] = el}>
         <img className='hello-img-l' alt='main_img1' src={process.env.PUBLIC_URL + '/main_img1.jpg'}/>
         <h4>hello-box3</h4>
       </div>
-      <div className='hello-box'>
+      <div className='hello-box hello4'>
         <img className='hello-img-r' alt='main_img2' src={process.env.PUBLIC_URL + '/main_img2.jpg'}/>
         <h4>hello-box4</h4>
       </div>

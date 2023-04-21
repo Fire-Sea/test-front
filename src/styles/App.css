@@ -215,15 +215,30 @@ button:hover{
 }
 .hello-box{
   width: 100%;
-  top: 200px;
+  top: 100px;
   height: 500px;
   position: sticky;
-  border: 1px solid red;
+  border-radius: 50px;
+  border: 1px solid white;
+  overflow: hidden;
 }
 .hello-img-l{
   float:left;
-
+  width: 80%;
+  height: 100%;
 }
 .hello-img-r{
   float:right
+}
+.hello1{
+  background-color: rgb(245, 81, 81);
+}
+.hello2{
+  background-color: rgb(255, 175, 70);
+}
+.hello3{
+  background-color: rgb(163, 245, 81);
+}
+.hello4{
+  background-color: rgb(169, 81, 245);
 }
