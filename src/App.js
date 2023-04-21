@@ -45,7 +45,7 @@ function App() {
               <span className="toggle-btn"></span>
             </label>
             <Routes>
-              <Route path="/" element={<Main/>}/>
+              <Route path="/" element={<Hello/>}/>
               <Route path="/list/:type/:category/:currentPage" element={<Board/> } />
               <Route path="/detail/:category/:id/:currentPage" element={<Detail/>}/>
               <Route path="/modify/:category/:id" element={<Edit/>}/>
