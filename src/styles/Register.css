@@ -9,6 +9,12 @@
   height: 30px;
   padding-left: 5px;
   box-sizing: border-box;
+  box-shadow: inset 3em 3em white;
+  -webkit-text-fill-color: black;
+}
+.register-container-light input{
+  box-shadow: inset 3em 3em black;
+  -webkit-text-fill-color: lightgray;
 }
 input:focus{
   outline: none;
@@ -21,6 +27,7 @@ input:focus{
 }
 .register-email, .register-id, .register-nickname, .code-chk{
   width: 300px;
+  border: 1px solid gray;
 }
 
 .register-registerBtn{
@@ -44,21 +51,22 @@ input:focus{
 }
 .id-chk, .nickname-chk, .email-chk, .codechk-btn{
   width: 70px;
-  height: 29px;
+  height: 30px;
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
 }
 .email-box, .code-box{ 
   position: relative;
-  display: inline;
 }
 .code-box{
   display: none;
+  width: fit-content;
+  margin: auto;
 }
 .email-cnt{
   position: absolute;
-  top: 0;
-  right: 41%;
+  top: -11px;
+  right: 75px;
   width: 30px;
   height: 28px;
 }

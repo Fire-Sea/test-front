@@ -3,6 +3,7 @@ import {useSelector} from 'react-redux';
 import axios from 'axios';
 import '../styles/Register.css';
 import useSendUserInfo from '../hooks/useSendUserInfo';
+import { useTheme } from '../theme/useTheme';
 
 function Register(){
   const ip = useSelector((state) => {return state.ip});
@@ -17,6 +18,10 @@ function Register(){
   let sendEmail = false;
   // 가입 정보 POST하는 hook
   const {sendUserInfo} = useSendUserInfo(registerData);
+
+  const [themeMode, toggleTheme] = useTheme();
+  const value = localStorage.getItem('theme');
+  const isDark = value == undefined ? themeMode : value;
 
   const onChange = (e)=>{
     const type = e.target.name;
@@ -69,7 +74,7 @@ function Register(){
   }, [])
   return(
   <>
-  <div className={'register-container start ' + fade}>
+  <div className={'register-container start ' + fade + ' register-container-'+isDark}>
     <h1>회원가입</h1>
     <p>이메일</p>
     <div className='email-box'>
@@ -142,7 +147,7 @@ function Register(){
           if(res.statusCode === 20003){
             warning.classList.add('valid-success');
             warning.innerHTML = '사용 가능한 아이디입니다.';
-            usernameBox.style.border = '1px solid blue';
+            usernameBox.style.border = '2px solid blue';
             let copy = [...validList]
             copy[1] = 1;
             setValidList(copy)
@@ -178,7 +183,7 @@ function Register(){
     <p className='valid-fail' id='id-chk'></p>
     <p>비밀번호</p>
     <input className='register-passwd' id='registerPasswd' type={'password'} placeholder='비밀번호' onChange={onChange} name='password'/>
-    <p className='valid-fail' id='passwd-chk'></p>
+    <span></span><p className='valid-fail' id='passwd-chk'></p>
     <p>닉네임</p>
     <input className='register-id' id='registerNickname' type={'text'} placeholder='닉네임'/>
     <button className='nickname-chk' onClick={()=>{
@@ -192,7 +197,7 @@ function Register(){
           if(res.statusCode === 20004){
             warning.classList.add('valid-success');
             warning.innerHTML = '사용 가능한 닉네임입니다.';
-            nicknameBox.style.border = '1px solid blue';
+            nicknameBox.style.border = '2px solid blue';
             let copy = [...validList]
             copy[3] = 1;
             setValidList(copy)
