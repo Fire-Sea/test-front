@@ -16,10 +16,10 @@ input:focus{
 .register-container p{
   margin-bottom: 5px;
 }
-.register-email, .register-passwd{
+.register-passwd{
   width: 370px;
 }
-.register-id, .register-nickname{
+.register-email, .register-id, .register-nickname, .code-chk{
   width: 300px;
 }
 
@@ -42,13 +42,26 @@ input:focus{
   color: blue;
   margin: 0px;
 }
-.id-chk, .nickname-chk{
+.id-chk, .nickname-chk, .email-chk, .codechk-btn{
   width: 70px;
   height: 29px;
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
 }
-
+.email-box, .code-box{ 
+  position: relative;
+  display: inline;
+}
+.code-box{
+  display: none;
+}
+.email-cnt{
+  position: absolute;
+  top: 0;
+  right: 41%;
+  width: 30px;
+  height: 28px;
+}
 .warning{
   border: 3px solid red;
 }
