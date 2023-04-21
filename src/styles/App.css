@@ -131,6 +131,85 @@ button:hover{
     transform: translateY(-10px);
   }
 }
+
+.hello-h1{
+  margin: 200px auto 0 auto;
+}
+.hello-container{
+  width: 80%;
+  margin: 100px auto 200px auto;
+  /* border: 1px solid white; */
+}
+.hello-box{
+  width: 100%;
+  top: 150px;
+  height: 500px;
+  position: sticky;
+  border-radius: 50px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  text-align: center;
+}
+.hello-img-l{
+  float:left;
+  width: 70%;
+  height: 100%;
+}
+.hello-img-r{
+  float:right;
+  width: 70%;
+  height: 100%;
+}
+.hello-text-l{
+  float: left;
+  width: 30%;
+  height: 100%;
+  text-align: left;
+  padding: 20px;
+}
+.hello-text-r{
+  float: right;
+  width: 30%;
+  height: 100%;
+  text-align: left;
+  padding: 20px;
+}
+.hello1{
+  background-color: rgb(226, 74, 74);
+}
+.hello2{
+  background-color: rgb(231, 160, 66);
+}
+.hello3{
+  background-color: rgb(151, 230, 72);
+}
+.hello4{
+  background-color: rgb(223, 223, 223);
+  padding-top: 5%;
+}
+.hello4 button{
+  width: 200px;
+  height: 50px;
+}
+
+.hello-container-light{
+  color: white;
+}
+.hello-container-light .hello4{
+  background-color: rgb(43, 43, 43);
+}
+.hello-container-light .hello1{
+  background-color: rgb(155, 49, 49);
+}
+.hello-container-light .hello2{
+  background-color: rgb(173, 119, 48);
+}
+.hello-container-light .hello3{
+  background-color: rgb(102, 156, 49);
+}
+
+
+
 @media screen and (max-width: 1199px) {
   .banner-l{
     display: none;
@@ -185,6 +264,32 @@ button:hover{
     left: 75%;
     top: 70px;
   }
+  .hello-container{
+    width: 90%;
+  }
+  .hello-box{
+    height: 350px;
+  }
+  .hello-box h2{
+    font-size: 20px;
+  }
+  .hello-img-l, .hello-img-r{
+    width: 50%;
+  }
+  .hello-text-l, .hello-text-r{
+    width: 50%;
+    margin-top: -20px;
+  }
+  .hello4 img{
+    width: 200px;
+  }
+  .hello4 button{
+    width: 100px;
+    height: 30px;
+  }
+  .hello4 h1{
+    font-size: 20px;
+  }
 }
 
 @media screen and (max-width: 544px) {
@@ -203,42 +308,15 @@ button:hover{
     right: 10px;
     bottom: 10px;
   }
+  .hello-img-l, .hello-img-r{
+    display: none;
+  }
+  .hello-text-l, .hello-text-r{
+    width: 100%;
+    text-align: center;
+  }
+  .hello4 img{
+    width: 250px;
+  }
 }
 
-.hello-h1{
-  margin: 200px auto 0 auto;
-}
-.hello-container{
-  width: 80%;
-  margin: 200px auto;
-  border: 1px solid white;
-}
-.hello-box{
-  width: 100%;
-  top: 100px;
-  height: 500px;
-  position: sticky;
-  border-radius: 50px;
-  border: 1px solid white;
-  overflow: hidden;
-}
-.hello-img-l{
-  float:left;
-  width: 80%;
-  height: 100%;
-}
-.hello-img-r{
-  float:right
-}
-.hello1{
-  background-color: rgb(245, 81, 81);
-}
-.hello2{
-  background-color: rgb(255, 175, 70);
-}
-.hello3{
-  background-color: rgb(163, 245, 81);
-}
-.hello4{
-  background-color: rgb(169, 81, 245);
-}
