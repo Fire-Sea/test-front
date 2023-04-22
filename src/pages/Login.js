@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { changeLoginStatus } from '../store';
 import '../styles/Login.css';
 import useSendUserInfo from '../hooks/useSendUserInfo';
-
+import { NaverLogin } from './NaverLogin';
 function Login(){
   const [fade, setFade] = useState('');
   const dispatch = useDispatch();
@@ -15,11 +15,10 @@ function Login(){
   })
   const localSettingTheme = localStorage.getItem('theme');
   const {username, password} = loginData;
-
-
+  const params = useParams();
   // 로그인 정보 POST하는 hook
   const {sendUserInfo} = useSendUserInfo(loginData);
-  
+
   
   // 각 input에서 username, password 저장
   const onChange = (e)=>{
@@ -42,6 +41,7 @@ function Login(){
 
   useEffect(()=>{
     const fadeTimer = setTimeout(()=>setFade('end'), 100);
+    console.log(params.code)
     return ()=>{
       clearTimeout(fadeTimer);
       setFade('');
