@@ -18,6 +18,8 @@ function Register(){
   let sendEmail = false;
   // 가입 정보 POST하는 hook
   const {sendUserInfo} = useSendUserInfo(registerData);
+  const [emailCode, setEmailCode] = useState('')
+  const [authCode, setAuthCode] = useState('')
 
   const [themeMode, toggleTheme] = useTheme();
   const value = localStorage.getItem('theme');
@@ -64,7 +66,7 @@ function Register(){
       })
     }
   }
-  
+  let cnt = 180;
   useEffect(()=>{
     const fadeTimer = setTimeout(()=>setFade('end'), 100);
     return ()=>{
@@ -88,10 +90,12 @@ function Register(){
             alert('이미 이메일을 전송했습니다.')
           }
           else{
-            let cnt = 10
             let timer = e.target.parentNode.nextSibling.children[3]
             let codeBox = e.target.parentNode.nextSibling;
-            codeBox.style.display = 'block'
+            sendEmail = true;
+            alert('이메일로 인증코드를 전송했습니다.');
+            console.log(codeBox);
+            codeBox.style.display = 'block';
             const counter = setInterval(()=>{
               if(cnt <= 0){
                 timer.innerHTML = '';
@@ -100,8 +104,18 @@ function Register(){
               }
               timer.innerHTML = `${cnt}s`;
               cnt-=1;
-            }, 1000)
-            sendEmail = true;
+            }, 1000);
+
+            (async()=>{
+              const response = await axios.get(`http://${ip}/api/checkEmail?email=${registerData.email}`)
+              console.log(response.data)
+              if(response.data.statusCode === 20030){
+                setAuthCode(response.data.data)
+              }
+              else{
+                alert('서버와 소통에 실패함')
+              }
+            })()
           }
         }
         else{
@@ -113,10 +127,9 @@ function Register(){
     </div>
 
     <div className='code-box'>
-      <input className='code-chk' placeholder='인증번호'/>
+      <input className='code-chk' placeholder='인증번호' onChange={(e)=>{setEmailCode(e.target.value)}}/>
       <button className='codechk-btn' onClick={(e)=>{
-        const code = e.target.parentNode.children[0].value;
-        if(code){
+        if(emailCode == authCode){
           alert('인증되었습니다.');
           e.target.parentNode.style.display = 'none';
           let copy = [...validList]
