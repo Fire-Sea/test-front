@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { changeLoginStatus } from '../store';
 import '../styles/Login.css';
 import useSendUserInfo from '../hooks/useSendUserInfo';
-import { NaverLogin } from './NaverLogin';
+
 function Login(){
   const [fade, setFade] = useState('');
   const dispatch = useDispatch();

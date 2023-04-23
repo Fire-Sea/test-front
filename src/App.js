@@ -34,8 +34,9 @@ function App() {
       <GlobalStyles theme={theme}/>
         <div className="App">
           <div id='pageTop'></div>
+
           {
-            login_status && <Login/>
+            login_status && <div style={{'textAlign':'center'}}><Login/></div>
           }
           <Navbar/>
           {/* <Banner/> */}
@@ -85,10 +86,12 @@ function Hello(){
     const scrollY = window.scrollY;
     let i = 0;
     testRef.current.map((el)=>{
-      el.style.transform = `scale(${(5250+i*40-scrollY)/5270})`;
-      console.log((5523-scrollY)/5270)
-      el.style.opacity = (16+i)/9 - scrollY/450;
-      i += 10
+      if(el){
+        el.style.transform = `scale(${(5250+i*40-scrollY)/5270})`;
+        console.log((5523-scrollY)/5270)
+        el.style.opacity = (16+i)/9 - scrollY/450;
+        i += 10
+      }
     })
   }
 

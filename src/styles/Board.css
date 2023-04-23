@@ -88,7 +88,7 @@ th{
 }
 .board-date{
   font-size: 12px;
-  width: 11%;
+  width: 16%;
 }
 /* 모바일버전 게시판 스타일 */
 .board-m{
@@ -172,7 +172,7 @@ th{
     margin-top: 20px;
   }
   .board-box{
-    min-width: 200px;
+    min-width: 100px;
   }
   .board-pc{
     display: none;

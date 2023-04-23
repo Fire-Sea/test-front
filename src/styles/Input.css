@@ -1,7 +1,7 @@
 .search-container{
   margin-left: auto;
   margin-right: auto;
-  min-width: 350px;
+  min-width: 250px;
   display: block;
   width: 30%;
   position: relative;
@@ -12,10 +12,10 @@
 }
 .search-input{
   width: 100%;
-  min-width: 350px;
+  min-width: 250px;
   height: 40px;
   padding-left: 10px;
-  font-size: 15px;
+  font-size: 0.7em;
   box-sizing: border-box;
   border-radius: 5px;
   border: 2px solid rgb(228, 76, 76);
