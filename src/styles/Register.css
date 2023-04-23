@@ -24,6 +24,7 @@ input:focus{
 }
 .register-passwd{
   width: 370px;
+  border: 1px solid gray;
 }
 .register-email, .register-id, .register-nickname, .code-chk{
   width: 300px;
@@ -87,5 +88,8 @@ input:focus{
   .id-chk, .nickname-chk, .email-chk, .codechk-btn{
     width: 60px;
     font-size: 10px;
+  }
+  .register-registerBtn{
+    width: 80%;
   }
 }

@@ -4,7 +4,7 @@ import {Edit} from './pages/Edit'
 import {Detail} from './pages/Detail'
 import {Register} from './pages/Register'
 import {Login} from './pages/Login';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {Banner} from './components/Banner';
 import { Gacha } from './pages/Gacha';
 import './styles/App.css';
@@ -16,7 +16,8 @@ import {Mypage} from './pages/Mypage';
 import {Main} from './pages/Main';
 import {Footer} from './components/Footer'
 import GlobalStyles from './components/GlobalStyles';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useDebugValue } from 'react';
+import { changeLoginStatus } from './store';
 
 function App() {
   const [themeMode, toggleTheme] = useTheme();
@@ -74,7 +75,7 @@ function Hello(){
   const [themeMode, toggleTheme] = useTheme();
   const value = localStorage.getItem('theme');
   const isDark = value == undefined ? themeMode : value;
-
+  const dispatch = useDispatch();
   useEffect(()=>{
     window.addEventListener('scroll', handleScroll, {capture: true})
     return()=>{
@@ -132,7 +133,7 @@ function Hello(){
       <div className='hello-box hello4'>
         <img alt='main_img' src={process.env.PUBLIC_URL + '/main_img1.jpg'} width={300}/>
         <h1>지금 시작해보세요!</h1>
-        <button onClick={()=>{alert('이걸ㅋㅋㅋ진짴ㅋㅋㅋ클릭하는놈이있넼ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ')}}>지금 시작하기</button>
+        <button onClick={()=>{dispatch(changeLoginStatus(true))}}>지금 시작하기</button>
       </div>
     </div>
   </>
