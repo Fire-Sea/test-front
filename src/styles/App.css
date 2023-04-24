@@ -140,6 +140,22 @@ button:hover{
   margin: 100px auto 200px auto;
   /* border: 1px solid white; */
 }
+.hello-content{
+  display: flex;
+  margin-bottom: 100px;
+}
+.hello-direct{
+  margin-left: auto;
+  margin-right: auto;
+  width: 45%;
+  height: 200px;
+  background-color: rgba(255, 98, 59, 0.644);
+  padding-top: 5%;
+  font-size: 30px;
+  font-weight: bold;
+  border-radius: 20px;
+  cursor: pointer;
+}
 .hello-box{
   width: 100%;
   top: 150px;

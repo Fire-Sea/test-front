@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import {Board} from './pages/Board'
 import {Edit} from './pages/Edit'
 import {Detail} from './pages/Detail'
@@ -73,7 +73,7 @@ function Hello(){
   const [themeMode, toggleTheme] = useTheme();
   const value = localStorage.getItem('theme');
   const isDark = value == undefined ? themeMode : value;
-
+  const navigate = useNavigate();
   useEffect(()=>{
     window.addEventListener('scroll', handleScroll, {capture: true})
     return()=>{
@@ -84,18 +84,28 @@ function Hello(){
     //console.log(window.scrollY)
     const scrollY = window.scrollY;
     let i = 0;
+
     testRef.current.map((el)=>{
-      el.style.transform = `scale(${(5250+i*40-scrollY)/5270})`;
-      console.log((5523-scrollY)/5270)
-      el.style.opacity = (16+i)/9 - scrollY/450;
-      i += 10
+      console.log(el)
+      if(el){
+        el.style.transform = `scale(${(5250+i*40-scrollY)/5270})`;
+        //console.log((5523-scrollY)/5270)
+        el.style.opacity = (16+i)/9 - scrollY/450;
+        i += 10
+      }
+      
     })
+    
   }
 
   return(
   <>
   <h1 className='hello-h1'>어서오세요!</h1>
     <div className={'hello-container hello-container-' + isDark}>
+      <div className='hello-content'>
+        <div className='hello-direct' onClick={()=>navigate('/list/board/front/0')}>게시판 가기</div>
+        <div className='hello-direct' onClick={()=>navigate('/gacha')}>게임하러 가기</div>
+      </div>
       <div className='hello-box hello1' ref={el => testRef.current[0] = el}>
         <img className='hello-img-l' alt='hello_img1' src={process.env.PUBLIC_URL + '/janga.gif'}/>
         <div className='hello-text-r'>
