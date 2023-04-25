@@ -17,6 +17,7 @@ import {Main} from './pages/Main';
 import {Footer} from './components/Footer'
 import GlobalStyles from './components/GlobalStyles';
 import { useEffect, useState, useRef } from 'react';
+import { SNSRegister } from './pages/SNSRegister';
 
 function App() {
   const [themeMode, toggleTheme] = useTheme();
@@ -53,6 +54,7 @@ function App() {
               <Route path="/mypage/:nickname/:currentPage" element={<Mypage/>}/>
               <Route path="/gacha" element={<Gacha/>}/>
               <Route path="/register" element={<Register/>}/>
+              <Route path="/snsregister" element={<SNSRegister/>}/>
               <Route path="/hello" element={<Hello/>}/>
               <Route path="*" element={<Error/>}/>
             </Routes>
