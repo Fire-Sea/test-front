@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import {Board} from './pages/Board'
 import {Edit} from './pages/Edit'
 import {Detail} from './pages/Detail'
@@ -18,6 +18,7 @@ import {Footer} from './components/Footer'
 import GlobalStyles from './components/GlobalStyles';
 import { useEffect, useState, useRef, useDebugValue } from 'react';
 import { changeLoginStatus } from './store';
+import { SNSRegister } from './pages/SNSRegister';
 
 function App() {
   const [themeMode, toggleTheme] = useTheme();
@@ -55,6 +56,7 @@ function App() {
               <Route path="/mypage/:nickname/:currentPage" element={<Mypage/>}/>
               <Route path="/gacha" element={<Gacha/>}/>
               <Route path="/register" element={<Register/>}/>
+              <Route path="/snsregister" element={<SNSRegister/>}/>
               <Route path="/hello" element={<Hello/>}/>
               <Route path="*" element={<Error/>}/>
             </Routes>
@@ -71,7 +73,7 @@ function App() {
 function Hello(){
   const [scrollY, setScrollY] = useState(window.scrollY);
   const testRef = useRef([]);
-
+  const navigate = useNavigate();
   const [themeMode, toggleTheme] = useTheme();
   const value = localStorage.getItem('theme');
   const isDark = value == undefined ? themeMode : value;
@@ -86,6 +88,7 @@ function Hello(){
     //console.log(window.scrollY)
     const scrollY = window.scrollY;
     let i = 0;
+
     testRef.current.map((el)=>{
       if(el){
         el.style.transform = `scale(${(5250+i*40-scrollY)/5270})`;
@@ -94,12 +97,17 @@ function Hello(){
         i += 10
       }
     })
+    
   }
 
   return(
   <>
   <h1 className='hello-h1'>어서오세요!</h1>
     <div className={'hello-container hello-container-' + isDark}>
+      <div className='hello-content'>
+        <div className='hello-direct' onClick={()=>navigate('/list/board/front/0')}>게시판 가기</div>
+        <div className='hello-direct' onClick={()=>navigate('/gacha')}>게임하러 가기</div>
+      </div>
       <div className='hello-box hello1' ref={el => testRef.current[0] = el}>
         <img className='hello-img-l' alt='hello_img1' src={process.env.PUBLIC_URL + '/janga.gif'}/>
         <div className='hello-text-r'>
