@@ -16,6 +16,7 @@ function usePostComment(comment){
       const res = await axios.post(`http://${ip}/api/user/comment/send`,comment);
       if(res.data.statusCode === 20021){
         alert('저장됨');
+        return;
       }
       else{
         const code = await silentRefresh();

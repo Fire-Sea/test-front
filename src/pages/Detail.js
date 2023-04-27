@@ -87,6 +87,7 @@ function Detail(){
   const getList = async ()=>{
     const res = await axios.get(`http://${ip}/api/comment/list?id=${id}&page=${currentPage}`);
     setCommentList(res.data.data.content);
+    console.log('괴리감 테스트')
     setTotalCnt(res.data.data.totalElements);
   }
   useEffect(()=>{
@@ -135,6 +136,7 @@ function Detail(){
             totalCnt != null
             ?
             commentList.map((data, i)=>{
+              console.log('댓글 그리기')
               return(
                 <li key={i}>
                   <div className='comment-l'>
@@ -147,6 +149,7 @@ function Detail(){
                             const childrens = e.target.parentNode.parentNode.children
                             childrens[3].style.display = 'block';
                             childrens[2].style.display = 'none';
+                            console.log(commentList)
                           }}>수정</p>
                           <p onClick={(e)=>{
                             (async ()=>{
@@ -170,7 +173,7 @@ function Detail(){
                   {
                     nickname == data.nickname
                     && <div className='comment-input'>
-                        <textarea className='comment-textarea' defaultValue={data.commentBody} onInput={(e)=>{
+                        <textarea className='comment-textarea' defaultValue={JSON.stringify(data)} onInput={(e)=>{
                           const value = e.target.value;
                           setModifyComment({
                             ...modifyComment,

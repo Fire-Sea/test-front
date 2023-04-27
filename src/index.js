@@ -7,14 +7,15 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store.js';
 import { CookiesProvider } from 'react-cookie';
-
+import { ScrollTop } from './components/ScrollTop'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   //<React.StrictMode>
   <CookiesProvider>
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+        <ScrollTop/>
+          <App />
       </BrowserRouter>
     </Provider>
   </CookiesProvider>

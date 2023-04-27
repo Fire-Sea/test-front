@@ -19,7 +19,7 @@ import GlobalStyles from './components/GlobalStyles';
 import { useEffect, useState, useRef, useDebugValue } from 'react';
 import { changeLoginStatus } from './store';
 import { SNSRegister } from './pages/SNSRegister';
-
+import {SNSLogin} from './pages/SNSLogin';
 function App() {
   const [themeMode, toggleTheme] = useTheme();
   const theme = themeMode === 'light' ? light : dark;
@@ -56,9 +56,10 @@ function App() {
               <Route path="/mypage/:nickname/:currentPage" element={<Mypage/>}/>
               <Route path="/gacha" element={<Gacha/>}/>
               <Route path="/register" element={<Register/>}/>
-              <Route path="/snsregister" element={<SNSRegister/>}/>
+              <Route path="/sns_register" element={<SNSRegister/>}/>
               <Route path="/hello" element={<Hello/>}/>
               <Route path="*" element={<Error/>}/>
+              <Route path="/snslogin" element={<SNSLogin/>}/>
             </Routes>
             <a href='#pageTop' className='top-btn'><p>Top</p></a>
 
@@ -92,7 +93,7 @@ function Hello(){
     testRef.current.map((el)=>{
       if(el){
         el.style.transform = `scale(${(5250+i*40-scrollY)/5270})`;
-        console.log((5523-scrollY)/5270)
+        //console.log((5523-scrollY)/5270)
         el.style.opacity = (16+i)/9 - scrollY/450;
         i += 10
       }
@@ -141,7 +142,7 @@ function Hello(){
       <div className='hello-box hello4'>
         <img alt='main_img' src={process.env.PUBLIC_URL + '/main_img1.jpg'} width={300}/>
         <h1>지금 시작해보세요!</h1>
-        <button onClick={()=>{dispatch(changeLoginStatus(true))}}>지금 시작하기</button>
+        <button onClick={()=>{navigate('list/board/front/0')}}>지금 시작하기</button>
       </div>
     </div>
   </>

@@ -6,7 +6,7 @@ import { useCookies } from "react-cookie";
 function NaverLogin({setGetToken, setUserInfo}){
   const {naver} = window;
   const NAVER_CLIENT_ID = '';
-  const NAVER_CALLBACK_URL = 'http://localhost:3000';
+  const NAVER_CALLBACK_URL = 'http://localhost:3000/sns_register';
   const ip = useSelector(state=>{return state.ip});
   const [cookies, setCookie, removeCookie] = useCookies();
   const nickname = cookies.nickname;
@@ -16,7 +16,7 @@ function NaverLogin({setGetToken, setUserInfo}){
       clientId: NAVER_CLIENT_ID,
       callbackUrl: NAVER_CALLBACK_URL,
       isPopup: false,
-      loginButton: {color: 'green', type: 3, height: 40},
+      loginButton: {color: 'green', type: 3, height: 45},
       callbackHandle: true,
     })
     naverLogin.init();
