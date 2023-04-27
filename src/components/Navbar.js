@@ -79,7 +79,6 @@ function Navbar(){
             <p className='login-nickname'>{nickname ? nickname : `로그인하세요`}</p>
             {toggleLogin(cookies.nickname)}
           </div>
-          <button onClick={()=>{navigate('/snsregister')}}>sns로그인 테스트</button>
         </div>
       </div>
       <div className={'sidebar ' + menuStatus + ' sidebar-'+isDark}>
