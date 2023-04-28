@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
-import { useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { changeLoginStatus, changeNickname } from "../store";
 
 function NaverLogin(){
   const {naver} = window;
@@ -9,10 +11,12 @@ function NaverLogin(){
   const NAVER_CALLBACK_URL = 'http://localhost:3000';
   const ip = useSelector(state=>{return state.ip});
   const [cookies, setCookie, removeCookie] = useCookies();
-  const nickname = cookies.nickname;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({
     snsId: '',
     email: '',
+    name: '',
   })
   const initializeNaverLogin = ()=>{
     const naverLogin = new naver.LoginWithNaverId({
@@ -26,14 +30,15 @@ function NaverLogin(){
 
     naverLogin.getLoginStatus(async function(status){
       if(status){
-        const email = naverLogin.user.getEmail();
-        const name = naverLogin.user.getName();
-        const snsId = naverLogin.user.getId();
+        const userInfo = {
+          snsId: naverLogin.user.getId(),
+          email: naverLogin.user.getEmail(),
+          name: naverLogin.user.getName(),
+        }
         setUserInfo({
-          snsId: snsId,
-          email: email,
-          name: name
+          ...userInfo,
         })
+        localStorage.setItem('naverUserInfo', JSON.stringify(userInfo))
       }
     })
   }
@@ -41,35 +46,41 @@ function NaverLogin(){
     // window.location.href.includes('access_token') && getToken();
     window.location.href.includes('access_token') && sendUserInfo();
   }
-  // const getToken = ()=>{
-  //   const token = window.location.href.split('=')[1].split('&')[0];
-  //   console.log(token)
-  // }
   const sendUserInfo = async ()=>{
     // const token = window.location.href.split('=')[1].split('&')[0];
     const response = await axios.post(`http://${ip}/api/oauth2`, userInfo);
     const statusCode = response.data.statusCode;
     console.log(response);
+    localStorage.setItem('test', JSON.stringify(response));
     if(statusCode === 20031){
-      console.log('최초로그인')
+      console.log('첫방문, 회원가입이동')
     }
     else if(statusCode === 20032){
-      console.log('로그인성공')
+      console.log('DB에 계정이 존재함(로그인)')
+      const nickname = response.data.data;
+      const expires = new Date();
+      expires.setMinutes(expires.getMinutes()+300);
+
+      const token = {
+        access_token: response.headers.access_token,
+        refresh_token: response.headers.refresh_token
+      };
+      setCookie('token', token, {path: '/'});
+      setCookie('nickname', nickname, {path: '/'});
+      dispatch(changeNickname(nickname));
+      dispatch(changeLoginStatus(false));
+      alert('어서오세요!');
     }
   }
   useEffect(()=>{
-    initializeNaverLogin();
-    if(nickname){
-
-    }
-    else{
-      userAccessToken();
-    }
   }, [])
 
   return(
     <>
-      <div id='naverIdLogin'/>
+      <div id='naverIdLogin' onClick={()=>{
+        initializeNaverLogin();
+        sendUserInfo();
+      }}/>
     </>
   )
 }

@@ -19,17 +19,21 @@ import GlobalStyles from './components/GlobalStyles';
 import { useEffect, useState, useRef, useDebugValue } from 'react';
 import { changeLoginStatus } from './store';
 import { SNSRegister } from './pages/SNSRegister';
-import {SNSLogin} from './pages/SNSLogin';
 function App() {
   const [themeMode, toggleTheme] = useTheme();
   const theme = themeMode === 'light' ? light : dark;
   const login_status = useSelector((state)=> {return state.loginInfo.login_status});
-  
+  const navigate = useNavigate();
   const toggleDarkmode = (e)=>{
     toggleTheme();
     e.currentTarget.classList.toggle('dark');
   }
-  
+  useEffect(()=>{
+    if(localStorage.getItem('snsLogin')){
+      localStorage.removeItem('snsLogin');
+      navigate('/sns')
+    }
+  })
   return (
     <>
     <ThemeProvider theme={theme}>
@@ -56,16 +60,13 @@ function App() {
               <Route path="/mypage/:nickname/:currentPage" element={<Mypage/>}/>
               <Route path="/gacha" element={<Gacha/>}/>
               <Route path="/register" element={<Register/>}/>
-              <Route path="/sns_register" element={<SNSRegister/>}/>
+              <Route path="/sns" element={<SNSRegister/>}/>
               <Route path="/hello" element={<Hello/>}/>
               <Route path="*" element={<Error/>}/>
-              <Route path="/snslogin" element={<SNSLogin/>}/>
             </Routes>
             <a href='#pageTop' className='top-btn'><p>Top</p></a>
-
             <Footer/>
           </div>
-          
         </div>
     </ThemeProvider></>
   );
