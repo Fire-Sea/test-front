@@ -31,9 +31,9 @@
 th{
   padding-bottom: 10px;
   font-size: 12px;
+  border-bottom: 2px solid rgb(223, 162, 162);
 }
 .board-tr td{
-  border-top: solid 1px rgb(223, 162, 162);
   border-bottom: solid 1px rgb(223, 162, 162);
 }
 .board-tr:hover {
@@ -103,8 +103,7 @@ th{
   text-align: left;
   cursor: pointer;
   font-size: 12px;
-  border-top: 1px solid lightcoral;
-  border-bottom: solid 1px lightcoral;
+  border-bottom: solid 2px lightcoral;
   padding: 5px;
 }
 .board-title-m p{
