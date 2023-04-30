@@ -5,5 +5,4 @@
 <br>
 <br>
 
-
-![Fire-Sea1](https://user-images.githubusercontent.com/93258358/235358385-aa685009-9c76-4f24-a374-d72e75dadbd9.PNG)
+![Fire-Sea1](https://user-images.githubusercontent.com/93258358/235358403-7e9730e0-268a-419c-a1b2-caff09a350f1.PNG)
