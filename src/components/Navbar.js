@@ -90,7 +90,7 @@ function Navbar(){
           </ul>
           <ul className='sidebar-title'>
             <h3>게임하기</h3>
-            <ul><p>게임1</p></ul>
+            <ul onClick={()=>{navigate('/gacha')}}><p>게임1</p></ul>
             <ul><p>게임2</p></ul>
           </ul>
         </div>
