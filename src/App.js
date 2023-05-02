@@ -107,8 +107,14 @@ function Hello(){
   <h1 className='hello-h1'>어서오세요!</h1>
     <div className={'hello-container hello-container-' + isDark}>
       <div className='hello-content'>
-        <div className='hello-direct' onClick={()=>navigate('/list/board/front/0')}>게시판 가기</div>
-        <div className='hello-direct' onClick={()=>navigate('/gacha')}>게임하러 가기</div>
+        <div className='hello-direct'>
+          <p className='hello-title'>게시판 가기</p>
+          <div className='hello-hidden'>
+            <div className='hello-board' onClick={()=>navigate('/list/board/front/0')}>Front</div>
+            <div className='hello-board' onClick={()=>navigate('/list/board/server/0')}>Server</div>
+          </div>
+        </div>
+        <div className='hello-direct' onClick={()=>navigate('/gacha')}><p>게임하러 가기</p></div>
       </div>
       <div className='hello-box hello1' ref={el => testRef.current[0] = el}>
         <img className='hello-img-l' alt='hello_img1' src={process.env.PUBLIC_URL + '/janga.gif'}/>

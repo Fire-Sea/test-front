@@ -147,14 +147,44 @@ button:hover{
 .hello-direct{
   margin-left: auto;
   margin-right: auto;
+  padding: auto;
   width: 45%;
   height: 200px;
   background-color: rgba(255, 98, 59, 0.644);
-  padding-top: 5%;
+  padding-top: 75px;
   font-size: 30px;
   font-weight: bold;
   border-radius: 20px;
+  overflow: hidden;
+}
+.hello-direct p{
+  margin: 0 auto;
+}
+.hello-direct:hover .hello-board{
+  transform: translateY(0px);
+}
+.hello-direct:hover .hello-title{
+  transform: translateY(-20px);
+}
+.hello-title{
+  transition: 1s transform;
+}
+.hello-hidden{
+  display: flex;
+}
+.hello-board{
+  margin-left: auto;
+  margin-right: auto;
+  width: 200px;
+  height: 50px;
+  border-radius: 15px;
+  background-color: #f03d3d;
+  transform: translateY(200px);
+  transition: 1s all;
   cursor: pointer;
+}
+.hello-board:hover{
+  background-color: #852121;
 }
 .hello-box{
   width: 100%;
@@ -280,6 +310,21 @@ button:hover{
   }
   .hello-box{
     height: 350px;
+  }
+  .hello-direct{
+    
+    padding-top: 50px;
+  }
+  .hello-hidden{
+    flex-direction: column;
+  }
+  .hello-board{
+    width: 90%;
+    margin-bottom: 5px;
+  }
+  .hello-direct p{
+    font-size: 20px;
+    margin-top: 15px;
   }
   .hello-box h2{
     font-size: 20px;
