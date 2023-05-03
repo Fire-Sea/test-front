@@ -312,14 +312,16 @@ button:hover{
     height: 350px;
   }
   .hello-direct{
-    
     padding-top: 50px;
   }
   .hello-hidden{
     flex-direction: column;
   }
   .hello-board{
-    width: 90%;
+    width: 80%;
+    height: 40px;
+    font-size: 20px;
+    padding-top: 5px;
     margin-bottom: 5px;
   }
   .hello-direct p{
