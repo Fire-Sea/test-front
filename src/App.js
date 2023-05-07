@@ -114,7 +114,7 @@ function Hello(){
             <div className='hello-board' onClick={()=>navigate('/list/board/server/0')}>Server</div>
           </div>
         </div>
-        <div className='hello-direct' onClick={()=>navigate('/gacha')}><p>게임하러 가기</p></div>
+        <div className='hello-direct' style={{'cursor':'pointer'}} onClick={()=>navigate('/gacha')}><p>게임하러 가기</p></div>
       </div>
       <div className='hello-box hello1' ref={el => testRef.current[0] = el}>
         <img className='hello-img-l' alt='hello_img1' src={process.env.PUBLIC_URL + '/janga.gif'}/>
