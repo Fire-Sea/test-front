@@ -108,7 +108,7 @@ function Detail(){
     <Input/>
     <div className={'detail-container start ' + fade}>
       <div className='detail-box'>
-        <h1 className='detail-category'>{category}</h1>
+        <h1 className='detail-category' onClick={()=>navigate(`/list/board/${category}/0`)}>{category}</h1>
         <div className='detail-title'>
             <h3>{textData.textTitle}</h3>
         </div>
