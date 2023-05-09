@@ -73,6 +73,7 @@ function NaverLogin(){
     }
   }
   useEffect(()=>{
+    initializeNaverLogin();
   }, [])
 
   return(
