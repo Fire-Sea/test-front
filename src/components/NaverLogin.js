@@ -23,7 +23,7 @@ function NaverLogin(){
       clientId: NAVER_CLIENT_ID,
       callbackUrl: NAVER_CALLBACK_URL,
       isPopup: false,
-      loginButton: {color: 'green', type: 3, height: 45},
+      loginButton: {color: 'white', type: 1, height: 30},
       callbackHandle: true,
     })
     naverLogin.init();
@@ -54,6 +54,8 @@ function NaverLogin(){
     localStorage.setItem('test', JSON.stringify(response));
     if(statusCode === 20031){
       console.log('첫방문, 회원가입이동')
+      alert('연동된 아이디가 없습니다. 회원가입 해주세요.')
+      navigate('/sns')
     }
     else if(statusCode === 20032){
       console.log('DB에 계정이 존재함(로그인)')
@@ -74,6 +76,7 @@ function NaverLogin(){
   }
   useEffect(()=>{
     initializeNaverLogin();
+    userAccessToken();
   }, [])
 
   return(

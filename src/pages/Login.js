@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { changeLoginStatus } from '../store';
 import '../styles/Login.css';
 import useSendUserInfo from '../hooks/useSendUserInfo';
-import { NaverLogin } from '../components/NaverLogin';
 
 function Login(){
   const [fade, setFade] = useState('');
@@ -70,7 +69,6 @@ function Login(){
           <button className='login-loginBtn' onClick={checkValue}>로그인</button>
           <span className='login-text'>회원이 아니신가요?</span>
           <button className='login-registerBtn' onClick={()=>{navigate('/register'); dispatch(changeLoginStatus(false));}}>회원가입 하기</button>
-          <NaverLogin/>
           <button className='login-cancelBtn' onClick={()=>{dispatch(changeLoginStatus(false))}}>닫기</button>
         </div>
       </div>
