@@ -1,11 +1,14 @@
 import { useState } from "react"
 import axios from 'axios'
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function SNSRegister(){
   const [nickname, setNickname] = useState('');
   const [valid, setValid] = useState(false);
-  const ip = useSelector(state => {return state.ip})
+  const ip = useSelector(state => {return state.ip});
+  const navigate = useNavigate();
+
   return(
     <>
       <div>
@@ -34,7 +37,16 @@ function SNSRegister(){
           }}>중복체크</button>
           <button className="register-registerBtn" onClick={()=>{
             if(valid){
-              alert('회원가입 완료')
+              const registerInfo = JSON.parse(localStorage.getItem('naverUserInfo'));
+              registerInfo.nickname = nickname;
+              axios.post(`http://${ip}/api/oauth2/register`, registerInfo)
+                .then(res=>{
+                  res = res.data;
+                  if(res.statusCode === 20033){
+                    alert('회원가입 완료');
+                    navigate('/')
+                  }
+                })
             }
             else{
               alert('닉네임 중복체크를 확인하세요.')

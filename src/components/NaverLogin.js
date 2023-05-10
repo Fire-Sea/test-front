@@ -47,11 +47,10 @@ function NaverLogin(){
     window.location.href.includes('access_token') && sendUserInfo();
   }
   const sendUserInfo = async ()=>{
-    // const token = window.location.href.split('=')[1].split('&')[0];
+    const userInfo = JSON.parse(localStorage.getItem('naverUserInfo'));
     const response = await axios.post(`http://${ip}/api/oauth2`, userInfo);
     const statusCode = response.data.statusCode;
     console.log(response);
-    localStorage.setItem('test', JSON.stringify(response));
     if(statusCode === 20031){
       console.log('첫방문, 회원가입이동')
       alert('연동된 아이디가 없습니다. 회원가입 해주세요.')
