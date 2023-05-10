@@ -29,11 +29,8 @@ function App() {
     e.currentTarget.classList.toggle('dark');
   }
   useEffect(()=>{
-    if(localStorage.getItem('snsLogin')){
-      localStorage.removeItem('snsLogin');
-      navigate('/sns')
-    }
-  })
+    navigate('/')
+  }, [])
   return (
     <>
     <ThemeProvider theme={theme}>
