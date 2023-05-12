@@ -5,9 +5,16 @@
 <br>
 <br>
 
-
-![Fire-Sea1-1](https://user-images.githubusercontent.com/93258358/236479740-2ccdc7cb-36a0-461c-b0ac-c1f3a084f2bb.PNG)
+![fire_sea1](https://github.com/Fire-Sea/test-front/assets/93258358/4d9b6e82-d8a6-4c20-9aae-ae842e1a7c1a)
 
 <br>
 
-![Fire-Sea2](https://user-images.githubusercontent.com/93258358/236479730-48ffac5b-03fd-4b79-b996-097a58964122.PNG)
+![fire_sea2](https://github.com/Fire-Sea/test-front/assets/93258358/1aafb08b-0d3d-4f50-a12a-7cb5e3c13f56)
+
+<br>
+
+![fire_sea3](https://github.com/Fire-Sea/test-front/assets/93258358/2d7c7178-16d6-4ac7-a999-65ba939d606f)
+
+<br>
+
+
