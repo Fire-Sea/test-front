@@ -6,8 +6,17 @@
 <br>
 
 
-![Fire-Sea1-1](https://user-images.githubusercontent.com/93258358/236479740-2ccdc7cb-36a0-461c-b0ac-c1f3a084f2bb.PNG)
+![fire_sea1](https://github.com/Fire-Sea/test-front/assets/93258358/f721ad1d-639e-4f82-b697-d9d6d5808022)
+다크모드 적용 메인화면
 
 <br>
 
-![Fire-Sea2](https://user-images.githubusercontent.com/93258358/236479730-48ffac5b-03fd-4b79-b996-097a58964122.PNG)
+![fire_sea2](https://github.com/Fire-Sea/test-front/assets/93258358/39d20b1d-f54f-4ad1-a31a-2c5c72052d46)
+라이트모드 적용 메인화면
+
+<br>
+
+![fire_sea3](https://github.com/Fire-Sea/test-front/assets/93258358/140b708f-6d94-4ef1-94f1-be0b907064f8)
+게시판 화면
+
+<br>
