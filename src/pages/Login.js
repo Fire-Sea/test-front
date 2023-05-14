@@ -50,7 +50,8 @@ function Login(){
 
   return(
     <>
-      <div className={'login-bg start ' + fade + ' '+localSettingTheme}>
+    <div className={'login-layout start ' + fade}>
+      <div className={'login-bg ' + localSettingTheme}>
         <div className='login-logo'>
           <h1>Fire Sea</h1>
         </div>
@@ -71,6 +72,7 @@ function Login(){
           <button className='login-registerBtn' onClick={()=>{navigate('/register'); dispatch(changeLoginStatus(false));}}>회원가입 하기</button>
           <button className='login-cancelBtn' onClick={()=>{dispatch(changeLoginStatus(false))}}>닫기</button>
         </div>
+      </div>
       </div>
     </>
   )
