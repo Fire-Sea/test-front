@@ -41,10 +41,11 @@ function Login(){
 
   useEffect(()=>{
     const fadeTimer = setTimeout(()=>setFade('end'), 100);
-    console.log(params.code)
+    document.body.style.overflow = 'hidden';
     return ()=>{
       clearTimeout(fadeTimer);
       setFade('');
+      document.body.style.overflowY = 'scroll';
     }
   }, [])
 
