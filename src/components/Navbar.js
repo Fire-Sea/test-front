@@ -75,7 +75,9 @@ function Navbar(){
           <ul className='navbar-logo' onClick={()=>navigate('/')}><h1>Fire Sea</h1></ul>
         </div>
         <div className='navbar-right'>
-          <div style={{'margin':'15px'}}><NaverLogin/></div>
+          {
+            nickname ? null : <div style={{'margin':'15px'}}><NaverLogin/></div>
+          }
           <p className='navbar-icon'><FontAwesomeIcon icon={faUser} className='fa-2x' onClick={goMypage}/></p>
           <div className='login-box'>
             <p className='login-nickname'>{nickname ? nickname : `로그인하세요`}</p>
