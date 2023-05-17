@@ -86,8 +86,8 @@ function Mypage(){
           <button className='mypage-change' onClick={changeNickname}>변경하기</button>
         </div>
         <div className='mypage-board'>
-          <h4>작성한 글 개수</h4>
-          <p className='mypage-textCnt'>{totalNum}개</p>
+          <h4>작성한 글 개수 {totalNum}개</h4>
+          <p className='mypage-textCnt'></p>
           {
             totalNum == 0
             ? <h1>작성된 글이 없습니다.</h1>
