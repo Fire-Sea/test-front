@@ -2,6 +2,16 @@
 
 <P>백엔드는 CRUD, 프론트와의 연동 및 POST, GET 과같은 HTTP통신 처리를,</P>
 프론트는 백엔드와 연동, 데이터 송수신 및 가공을 연습하기 위한 첫번째 프로젝트.
+
+<br>
+<br>
+
+Front-end: 
+<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> 
+<img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
+<img src="https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=redux&logoColor=white">
 <br>
 <br>
 
