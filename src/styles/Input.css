@@ -68,3 +68,8 @@ select option{
   background-color: white;
   color: black;
 }
+@media screen and (max-width: 544px){
+  .search-container{
+    min-width: 325px;
+  }
+}

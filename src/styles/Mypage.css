@@ -68,9 +68,6 @@
 .mypage-id-m{
   width: 20%;
 }
-.mypage-board-pc{
-  border: 2px solid rgb(255, 123, 123);
-}
 @media screen and (max-width: 1199px) {
   .mypage-bg{
     width: 90%;

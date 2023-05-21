@@ -46,12 +46,6 @@ function Input(){
       alert('검색할 내용을 입력해주세요.');
     }
   }
-  const onFocus = ()=>{
-    setIsFocus('focus')
-  }
-  const onBlur = ()=>{
-    setIsFocus(null)
-  }
   const onKeyUp = (e)=>{
     if(e.key == 'Enter'){
       e.preventDefault()
