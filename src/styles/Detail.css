@@ -218,6 +218,10 @@
   border: 1px solid red;
   position: relative;
 }
+.detail-comment textarea{
+  outline: none;
+  font-family: 'Nanum Gothic', sans-serif;
+}
 .detail-light{
   color: white;
   background-color: rgb(39, 39, 39);
