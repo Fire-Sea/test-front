@@ -14,7 +14,6 @@
   width: 500px;
   height: 550px;
   overflow: hidden;
-  border: 3px solid white;
 }
 .dark{
   background-color: rgb(238, 238, 238);
