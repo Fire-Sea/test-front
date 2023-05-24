@@ -119,7 +119,9 @@
 .hello-container-light .hello3{
   background-color: rgb(102, 156, 49);
 }
-
+.hello-dummy{
+  height:10%;
+}
 
 @media screen and (max-width: 1199px){
   .hello-container{

@@ -43,6 +43,7 @@ function Main(){
         </div>
         <div className='hello-direct' style={{'cursor':'pointer'}} onClick={()=>navigate('/gacha')}><p>게임하러 가기</p></div>
       </div>
+      <div className="hello-dummy"></div>
       <div className='hello-box hello1' ref={el => testRef.current[0] = el}>
         <img className='hello-img-l' alt='hello_img1' src={process.env.PUBLIC_URL + '/janga.gif'}/>
         <div className='hello-text-r'>
