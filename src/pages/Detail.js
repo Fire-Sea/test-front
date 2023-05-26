@@ -170,7 +170,7 @@ function Detail(){
                   {
                     nickname == data.nickname
                     && <div className='comment-input'>
-                        <textarea className='comment-textarea' value={data.commentBody} onChange={(e)=>{
+                        <textarea className={'comment-textarea textarea-' + isDark} value={data.commentBody} onChange={(e)=>{
                           const value = e.target.value;
                           setModifyComment({
                             ...modifyComment,

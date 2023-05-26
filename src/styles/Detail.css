@@ -159,6 +159,16 @@
   font-size: 15px;
   margin-bottom: 18px;
 }
+.textarea-light{
+  background-color: black;
+  color: white;
+}
+.textarea-dark{
+  background-color: rgb(228, 228, 228);
+  color: black;
+  outline: none;
+  border: 1px solid rgb(155, 155, 155);
+}
 .comment-cancelmodify{
   position: absolute;
   right: 0;
@@ -224,6 +234,7 @@
 }
 .detail-comment textarea{
   outline: none;
+  border: none;
   font-family: 'Nanum Gothic', sans-serif;
 }
 .detail-light{
