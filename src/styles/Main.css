@@ -8,7 +8,7 @@
 }
 .hello-content{
   display: flex;
-  margin-bottom: 100px;
+  margin-bottom: -150px;
 }
 .hello-direct{
   margin-left: auto;
