@@ -23,7 +23,7 @@ function Main(){
     testRef.current.map((el)=>{
       if(el){
         el.style.transform = `scale(${(5250+i*40-scrollY)/5270})`;
-        el.style.opacity = (16+i)/9 - scrollY/450;
+        el.style.opacity = (25+i)/9 - scrollY/450;
         i += 10
       }
     })
