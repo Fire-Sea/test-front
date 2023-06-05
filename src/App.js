@@ -19,6 +19,8 @@ import GlobalStyles from './components/GlobalStyles';
 import { useEffect, useState, useRef, useDebugValue } from 'react';
 import { changeLoginStatus } from './store';
 import { SNSRegister } from './pages/SNSRegister';
+import {Game} from './pages/Game';
+
 function App() {
   const [themeMode, toggleTheme] = useTheme();
   const theme = themeMode === 'light' ? light : dark;
@@ -58,6 +60,7 @@ function App() {
               <Route path="/gacha" element={<Gacha/>}/>
               <Route path="/register" element={<Register/>}/>
               <Route path="/sns" element={<SNSRegister/>}/>
+              <Route path="/game" element={<Game/>}/>
               <Route path="*" element={<Error/>}/>
             </Routes>
             <a href='#pageTop' className='top-btn'><p>Top</p></a>
