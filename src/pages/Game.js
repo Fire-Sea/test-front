@@ -18,8 +18,13 @@ function Game(){
         alert('UP!')
         setChance(chance-1)
       }
+      else if(guess == answer){
+        alert(`정답! ${6-chance}번만에 맞추셨군요!`)
+        setChance(5)
+      }
       else{
-        alert('정답!')
+        alert('저런... 게임에서 지셨습니다.');
+        setChance(5)
       }
     }
     else{
