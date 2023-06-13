@@ -23,7 +23,7 @@ function Main(){
     testRef.current.map((el)=>{
       if(el){
         el.style.transform = `scale(${(5250+i*40-scrollY)/5270})`;
-        el.style.opacity = (16+i)/9 - scrollY/450;
+        el.style.opacity = (25+i)/9 - scrollY/450;
         i += 10
       }
     })
@@ -41,7 +41,13 @@ function Main(){
             <div className='hello-board' onClick={()=>navigate('/list/board/server/0')}>Server</div>
           </div>
         </div>
-        <div className='hello-direct' style={{'cursor':'pointer'}} onClick={()=>navigate('/gacha')}><p>게임하러 가기</p></div>
+        <div className='hello-direct' style={{'cursor':'pointer'}}>
+          <p className='hello-title'>게임하러 가기</p>
+          <div className='hello-hidden'>
+            <div className='hello-board' onClick={()=>navigate('/gacha')}>Gacha</div>
+            <div className='hello-board' onClick={()=>navigate('/game')}>Game</div>
+          </div>
+        </div>
       </div>
       <div className="hello-dummy"></div>
       <div className='hello-box hello1' ref={el => testRef.current[0] = el}>

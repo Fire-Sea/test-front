@@ -2,13 +2,12 @@
   margin: 200px auto 0 auto;
 }
 .hello-container{
-  width: 80%;
+  width: 60%;
   margin: 100px auto 200px auto;
   /* border: 1px solid white; */
 }
 .hello-content{
   display: flex;
-  margin-bottom: -100px;
 }
 .hello-direct{
   margin-left: auto;
@@ -98,6 +97,7 @@
 .hello4{
   background-color: rgb(223, 223, 223);
   padding-top: 5%;
+  margin-bottom: 180px;
 }
 .hello4 button{
   width: 200px;
