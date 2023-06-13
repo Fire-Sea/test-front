@@ -19,7 +19,6 @@ function Login(){
   // 로그인 정보 POST하는 hook
   const {sendUserInfo} = useSendUserInfo(loginData);
 
-  
   // 각 input에서 username, password 저장
   const onChange = (e)=>{
     const {name, value} = e.target;

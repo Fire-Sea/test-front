@@ -75,6 +75,7 @@ function Detail(){
       id: id
     })
   }
+
   const chkComment = async (e)=>{
     if(comment.commentBody !== ''){
       await postComment();

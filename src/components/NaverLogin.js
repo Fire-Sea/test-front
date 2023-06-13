@@ -8,7 +8,7 @@ import { changeLoginStatus, changeNickname } from "../store";
 function NaverLogin(){
   const {naver} = window;
   const NAVER_CLIENT_ID = '';
-  const NAVER_CALLBACK_URL = 'http://localhost:3000';
+  const NAVER_CALLBACK_URL = 'http://192.168.0.6:3000';
   const ip = useSelector(state=>{return state.ip});
   const [cookies, setCookie, removeCookie] = useCookies();
   const dispatch = useDispatch();
