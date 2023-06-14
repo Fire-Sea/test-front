@@ -23,6 +23,7 @@ function Navbar(){
   const value = localStorage.getItem('theme');
   const isDark = value == undefined ? themeMode : value;
 
+  // 사이드바 아이콘 애니메이션
   const toggleSidebar = ()=>{
     if(menuStatus){
       dispatch(changeMenuStatus(false));
@@ -37,6 +38,8 @@ function Navbar(){
       })
     }
   }
+
+  // 로그인 모달창 토글
   const toggleLogin = (nickname)=>{
     if(nickname){
       return(
@@ -54,6 +57,8 @@ function Navbar(){
       }}>로그인</button>
     )
   }
+
+  // 마이페이지 접근을 위한 토큰검증
   const goMypage = async ()=>{
     if(!nickname){
       alert('로그인을 먼저 해주세요');

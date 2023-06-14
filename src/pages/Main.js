@@ -16,6 +16,8 @@ function Main(){
       window.removeEventListener('scroll', handleScroll)
     }
   }, [])
+
+  // 스크롤 애니메이션
   const handleScroll = (e)=>{
     const scrollY = window.scrollY;
     let i = 0;

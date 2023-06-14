@@ -42,10 +42,13 @@ function NaverLogin(){
       }
     })
   }
+  // 토큰이 검출되면 서버로 토큰 전송
   const userAccessToken = ()=>{
     // window.location.href.includes('access_token') && getToken();
     window.location.href.includes('access_token') && sendUserInfo();
   }
+  
+  // 서버로 토큰 전송
   const sendUserInfo = async ()=>{
     const userInfo = JSON.parse(localStorage.getItem('naverUserInfo'));
     const response = await axios.post(`http://${ip}/api/oauth2`, userInfo);
